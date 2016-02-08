@@ -9,15 +9,55 @@
 /* Begin PBXFileReference section */
 		2FDE96EB1C6909A700F44DFF /* Main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Main.cpp; sourceTree = "<group>"; };
 		2FDE96EC1C6909A700F44DFF /* Main.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Main.hpp; sourceTree = "<group>"; };
+		2FDE96F61C690DFC00F44DFF /* CastleModel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CastleModel.cpp; sourceTree = "<group>"; };
+		2FDE96F71C690DFC00F44DFF /* CastleModel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CastleModel.hpp; sourceTree = "<group>"; };
+		2FDE96F81C690E0400F44DFF /* GameModel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameModel.cpp; sourceTree = "<group>"; };
+		2FDE96F91C690E0400F44DFF /* GameModel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GameModel.hpp; sourceTree = "<group>"; };
+		2FDE96FA1C690E1500F44DFF /* EnemyModel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EnemyModel.cpp; sourceTree = "<group>"; };
+		2FDE96FB1C690E1500F44DFF /* EnemyModel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EnemyModel.hpp; sourceTree = "<group>"; };
+		2FDE96FC1C690E3500F44DFF /* PowerUpModel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PowerUpModel.cpp; sourceTree = "<group>"; };
+		2FDE96FD1C690E3500F44DFF /* PowerUpModel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PowerUpModel.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
 		2FDE96E41C69096B00F44DFF = {
 			isa = PBXGroup;
 			children = (
+				2FDE96EF1C690D5E00F44DFF /* View */,
+				2FDE96EE1C690D5800F44DFF /* Controller */,
+				2FDE96ED1C690D4C00F44DFF /* Model */,
 				2FDE96EB1C6909A700F44DFF /* Main.cpp */,
 				2FDE96EC1C6909A700F44DFF /* Main.hpp */,
 			);
+			sourceTree = "<group>";
+		};
+		2FDE96ED1C690D4C00F44DFF /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2FDE96F61C690DFC00F44DFF /* CastleModel.cpp */,
+				2FDE96F71C690DFC00F44DFF /* CastleModel.hpp */,
+				2FDE96F81C690E0400F44DFF /* GameModel.cpp */,
+				2FDE96F91C690E0400F44DFF /* GameModel.hpp */,
+				2FDE96FA1C690E1500F44DFF /* EnemyModel.cpp */,
+				2FDE96FB1C690E1500F44DFF /* EnemyModel.hpp */,
+				2FDE96FC1C690E3500F44DFF /* PowerUpModel.cpp */,
+				2FDE96FD1C690E3500F44DFF /* PowerUpModel.hpp */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		2FDE96EE1C690D5800F44DFF /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		2FDE96EF1C690D5E00F44DFF /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
