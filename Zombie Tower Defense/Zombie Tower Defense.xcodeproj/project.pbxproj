@@ -26,7 +26,7 @@
 		2FDE96E51C69096B00F44DFF /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0710;
+				LastUpgradeCheck = 0720;
 			};
 			buildConfigurationList = 2FDE96E81C69096B00F44DFF /* Build configuration list for PBXProject "Zombie Tower Defense" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -47,6 +47,8 @@
 		2FDE96E91C69096B00F44DFF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				ONLY_ACTIVE_ARCH = YES;
 			};
 			name = Debug;
 		};

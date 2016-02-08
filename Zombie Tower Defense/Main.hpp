@@ -3,7 +3,7 @@
 //  Zombie Tower Defense
 //
 //  Created by Tyler Younkins on 2/8/16.
-//
+//  Edited by Juan Salazar on 2/8/16
 //
 
 #ifndef Main_hpp
