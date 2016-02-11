@@ -25,6 +25,15 @@
 		2FDE96FB1C690E1500F44DFF /* EnemyModel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EnemyModel.hpp; sourceTree = "<group>"; };
 		2FDE96FC1C690E3500F44DFF /* PowerUpModel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PowerUpModel.cpp; sourceTree = "<group>"; };
 		2FDE96FD1C690E3500F44DFF /* PowerUpModel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PowerUpModel.hpp; sourceTree = "<group>"; };
+		D2B206491C69A11500AA4BAE /* PowerUpView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PowerUpView.cpp; sourceTree = "<group>"; };
+		D2B2064A1C69A11500AA4BAE /* PowerUpView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PowerUpView.hpp; sourceTree = "<group>"; };
+		D2B2064B1C69A12300AA4BAE /* EnemyView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EnemyView.cpp; sourceTree = "<group>"; };
+		D2B2064C1C69A12300AA4BAE /* EnemyView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EnemyView.hpp; sourceTree = "<group>"; };
+		D2B2064D1C69A13200AA4BAE /* GameView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameView.cpp; sourceTree = "<group>"; };
+		D2B2064E1C69A13200AA4BAE /* GameView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GameView.hpp; sourceTree = "<group>"; };
+		D2B2064F1C69A14000AA4BAE /* CastleView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CastleView.cpp; sourceTree = "<group>"; };
+		D2B206501C69A14000AA4BAE /* CastleView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CastleView.hpp; sourceTree = "<group>"; };
+		D2DF64821C6BF85D00C880F5 /* Makefile */ = {isa = PBXFileReference; explicitFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; usesTabs = 1; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -35,6 +44,7 @@
 				2FDE96EE1C690D5800F44DFF /* Controller */,
 				2FDE96ED1C690D4C00F44DFF /* Model */,
 				2FDE96EB1C6909A700F44DFF /* Main.cpp */,
+				D2DF64821C6BF85D00C880F5 /* Makefile */,
 				2FDE96EC1C6909A700F44DFF /* Main.hpp */,
 			);
 			sourceTree = "<group>";
@@ -72,6 +82,14 @@
 		2FDE96EF1C690D5E00F44DFF /* View */ = {
 			isa = PBXGroup;
 			children = (
+				D2B206491C69A11500AA4BAE /* PowerUpView.cpp */,
+				D2B2064A1C69A11500AA4BAE /* PowerUpView.hpp */,
+				D2B2064B1C69A12300AA4BAE /* EnemyView.cpp */,
+				D2B2064C1C69A12300AA4BAE /* EnemyView.hpp */,
+				D2B2064D1C69A13200AA4BAE /* GameView.cpp */,
+				D2B2064E1C69A13200AA4BAE /* GameView.hpp */,
+				D2B2064F1C69A14000AA4BAE /* CastleView.cpp */,
+				D2B206501C69A14000AA4BAE /* CastleView.hpp */,
 			);
 			name = View;
 			sourceTree = "<group>";
