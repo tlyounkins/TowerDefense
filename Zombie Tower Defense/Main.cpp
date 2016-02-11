@@ -18,6 +18,7 @@
 
 // Function Prototypes
 void display();
+void keyFunc(unsigned char key, int x, int y);
 
 int main(int argc, char *argv[]){
     // Initialize GLUT
@@ -39,6 +40,7 @@ int main(int argc, char *argv[]){
     
     // Define Callbacks
     glutDisplayFunc(display);
+    glutKeyboardFunc(keyFunc);
     
     // Set Background Color
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -55,4 +57,13 @@ void display(){
     
     // Swap Buffers
     glutSwapBuffers();
+}
+
+// Keyboard Callback
+void keyFunc(unsigned char key, int x, int y){
+    // Exit Program with ESC
+    // Temp until menu works
+    if (key == 27){
+        exit(0);
+    }
 }
