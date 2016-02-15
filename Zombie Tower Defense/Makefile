@@ -24,5 +24,5 @@ $(EXE) : clean $(OBJ)
 nonexistent :
 
 # Remove generated files.
-clean :S
+clean :
 	rm -f *.o *.exe
