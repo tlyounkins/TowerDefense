@@ -4,7 +4,7 @@ OS = $(shell uname -s)
 # Mac OSX
 ifeq ($(OS),Darwin)
 OSDEF = OSX
-LIBS = -lSOIL -framework GLUT -framework OpenGL -framework Cocoa -framework CoreFoundation
+LIBS = -framework GLUT -framework OpenGL -framework Cocoa -framework CoreFoundation
 else
 OSDEF = Linux
 LIBS = -lGLEW -lglut -lSOIL -lGLU -lGL

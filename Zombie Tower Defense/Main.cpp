@@ -20,7 +20,7 @@
 void display();
 void keyFunc(unsigned char key, int x, int y);
 
-int main(int argc, char *argv[]){
+int main(int argc, char *argv[]) {
     // Initialize GLUT
     glutInit(&argc, argv);
     
@@ -51,7 +51,11 @@ int main(int argc, char *argv[]){
 }
 
 // Display Callback
-void display(){
+void display() {
+
+    // Reset background
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
     // Flush Buffer
     glFlush();
     
@@ -60,7 +64,7 @@ void display(){
 }
 
 // Keyboard Callback
-void keyFunc(unsigned char key, int x, int y){
+void keyFunc(unsigned char key, int x, int y) {
     // Exit Program with ESC
     // Temp until menu works
     if (key == 27){
