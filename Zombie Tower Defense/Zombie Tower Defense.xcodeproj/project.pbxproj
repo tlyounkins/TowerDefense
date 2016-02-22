@@ -10,7 +10,6 @@
 		0D0FACCA1C69105000E80012 /* GameController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameController.cpp; sourceTree = "<group>"; };
 		0D0FACCB1C69105000E80012 /* GameController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GameController.hpp; sourceTree = "<group>"; };
 		2FDE96EB1C6909A700F44DFF /* Main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Main.cpp; sourceTree = "<group>"; };
-		2FDE96EC1C6909A700F44DFF /* Main.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Main.hpp; sourceTree = "<group>"; };
 		2FDE96F61C690DFC00F44DFF /* CastleModel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CastleModel.cpp; sourceTree = "<group>"; };
 		2FDE96F71C690DFC00F44DFF /* CastleModel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CastleModel.hpp; sourceTree = "<group>"; };
 		2FDE96F81C690E0400F44DFF /* GameModel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameModel.cpp; sourceTree = "<group>"; };
@@ -33,7 +32,6 @@
 				2FDE96ED1C690D4C00F44DFF /* Model */,
 				2FDE96EB1C6909A700F44DFF /* Main.cpp */,
 				D2DF64821C6BF85D00C880F5 /* Makefile */,
-				2FDE96EC1C6909A700F44DFF /* Main.hpp */,
 			);
 			sourceTree = "<group>";
 		};

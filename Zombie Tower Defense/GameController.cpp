@@ -8,32 +8,39 @@
 
 #include "GameController.hpp"
 
-// Start Game
-template <Class T>
-void GameModel<T>::startGame() {
+// Constructor
+GameController::GameController() {
+   
+}
+
+// Destructor
+GameController::~GameController() {
     
 }
 
+// Start Game
+void GameController::startGame(int argc, char *argv[]) {
+    //GameView view;
+    //view.Initialize(argc, argv);
+    printf("Game Started\n");
+}
+
 // End Game
-template <Class T>
-void GameModel<T>::endGame() {
+void GameController::endGame() {
     
 }
 
 // Start level
-template <Class T>
-void GameModel<T>::startLevel() {
+void GameController::startLevel() {
     
 }
 
 // End level
-template <Class T>
-void GameModel<T>::endLevel() {
+void GameController::endLevel() {
     
 }
 
 // Update total_points
-template <Class T>
-int GameModel<T>::update_total_points() {
+int GameController::update_total_points() {
     
 }

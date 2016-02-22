@@ -10,5 +10,29 @@
 #define GameView_hpp
 
 #include <stdio.h>
+#ifdef OSX
+#include <GLUT/glut.h>
+#else
+#include <GL/glew.h>
+#include <GL/glut.h>
+#endif
+#include <stdio.h>
+#include <stdlib.h>
 
+class GameView {
+    
+public:
+    // Constructor, destructor
+    GameView();
+    ~GameView();
+    
+    // Variables
+  
+    
+    // Public interface
+    void display();
+    int Initialize(int argc, char *argv[]);
+    
+    
+};
 #endif /* GameView_hpp */

@@ -6,7 +6,9 @@
 //
 //
 
-#include "Main.hpp"
+#include "GameController.hpp"
+#include "GameController.cpp"
+
 #ifdef OSX
     #include <GLUT/glut.h>
 #else
@@ -17,50 +19,15 @@
 #include <stdlib.h>
 
 // Function Prototypes
-void display();
 void keyFunc(unsigned char key, int x, int y);
 
 int main(int argc, char *argv[]) {
-    // Initialize GLUT
-    glutInit(&argc, argv);
     
-    // Initialize the window with double buffering and RGB colors
-    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-    
-    // Set window size
-    glutInitWindowSize(512, 512);
-    
-    // Create WIndow
-    glutCreateWindow("Tower Defense");
-    
-#ifndef OSX
-    // Initialize GLEW
-    glewInit();
-#endif
-    
-    // Define Callbacks
-    glutDisplayFunc(display);
-    glutKeyboardFunc(keyFunc);
-    
-    // Set Background Color
-    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-    
-    // Begin event loop
-    glutMainLoop();
+    // Start Game
+    GameController game;
+    game.startGame(argc, argv);
+
     return 0;
-}
-
-// Display Callback
-void display() {
-
-    // Reset background
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    
-    // Flush Buffer
-    glFlush();
-    
-    // Swap Buffers
-    glutSwapBuffers();
 }
 
 // Keyboard Callback

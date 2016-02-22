@@ -9,24 +9,27 @@
 #ifndef GameController_hpp
 #define GameController_hpp
 
+#include "GameView.hpp"
+#include "GameView.cpp"
+
 #include <stdio.h>
 
-template <class T>
-class GameModel {
+class GameController {
     
 public:
     // Constructor, destructor
-    GameMode();
-    ~GameModel();
+    GameController();
+    ~GameController();
     
     // Variables
     int total_points;
     
-    // Public interface (GameModel's functions)
-    void startGame();
+    // Public interface
+    void startGame(int argc, char *argv[]);
     void endGame();
     void startLevel();
     void endLevel();
+    void pause_game();
     int update_total_points();
 };
 

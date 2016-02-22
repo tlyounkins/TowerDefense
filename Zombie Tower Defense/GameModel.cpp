@@ -9,14 +9,12 @@
 #include "GameModel.hpp"
 
 // Constructor
-template <Class T>
-GameModel<T>::GameModel() {
+GameModel::GameModel() {
     int total_points = 0;
 }
 
 // Destructor
-template <Class T>
-GameModel<T>::~GameModel() {
+GameModel::~GameModel() {
     
 }
 
