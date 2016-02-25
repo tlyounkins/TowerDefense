@@ -29,9 +29,14 @@ public:
   
     
     // Public interface
-    void display();
     void test();
     int Initialize(int argc, char *argv[]);
+    // TODO: Make these non-static functions
+    void static display();
+    void static keyFunc(unsigned char key, int x, int y);
+    
+    
+    
     
     
 };

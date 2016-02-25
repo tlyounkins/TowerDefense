@@ -35,6 +35,6 @@ void keyFunc(unsigned char key, int x, int y) {
     // Exit Program with ESC
     // Temp until menu works
     if (key == 27){
-        exit(0);
+        //exit(0);
     }
 }
