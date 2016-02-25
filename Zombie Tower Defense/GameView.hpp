@@ -9,12 +9,11 @@
 #ifndef GameView_hpp
 #define GameView_hpp
 
-#include <stdio.h>
 #ifdef OSX
-#include <GLUT/glut.h>
+    #include <GLUT/glut.h>
 #else
-#include <GL/glew.h>
-#include <GL/glut.h>
+    #include <GL/glew.h>
+    #include <GL/glut.h>
 #endif
 #include <stdio.h>
 #include <stdlib.h>
@@ -31,6 +30,7 @@ public:
     
     // Public interface
     void display();
+    void test();
     int Initialize(int argc, char *argv[]);
     
     

@@ -19,7 +19,7 @@ GameView::~GameView() {
 }
 
 // Display Callback
-void display() {
+void GameView::display() {
     
     // Reset background
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -31,7 +31,10 @@ void display() {
     glutSwapBuffers();
 }
 
-int Initialize(int argc, char *argv[]) {
+void GameView::test() {
+    printf("Test works!/n");
+}
+int GameView::Initialize(int argc, char *argv[]) {
     // Initialize GLUT
     glutInit(&argc, argv);
     
@@ -50,6 +53,7 @@ int Initialize(int argc, char *argv[]) {
 #endif
     
     // Define Callbacks
+    // TODO: Fix this
     glutDisplayFunc(display);
     
     // Set Background Color
@@ -60,5 +64,6 @@ int Initialize(int argc, char *argv[]) {
     
     return 0;
 }
+
 
 

@@ -20,8 +20,9 @@ GameController::~GameController() {
 
 // Start Game
 void GameController::startGame(int argc, char *argv[]) {
-    //GameView view;
-    //view.Initialize(argc, argv);
+    GameView view;
+    view.Initialize(argc, argv);
+    //view.test();
     printf("Game Started\n");
 }
 
