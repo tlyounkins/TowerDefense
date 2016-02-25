@@ -11,4 +11,17 @@
 
 #include <stdio.h>
 
+class CastleModel {
+    
+public:
+    // Constructor, destructor
+    CastleModel();
+    ~CastleModel();
+    
+    // Variables
+    int health;
+    
+    // Public interface
+   
+};
 #endif /* CastleModel_hpp */

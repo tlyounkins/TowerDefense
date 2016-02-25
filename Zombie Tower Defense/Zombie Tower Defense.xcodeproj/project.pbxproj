@@ -9,6 +9,10 @@
 /* Begin PBXFileReference section */
 		0D0FACCA1C69105000E80012 /* GameController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameController.cpp; sourceTree = "<group>"; };
 		0D0FACCB1C69105000E80012 /* GameController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GameController.hpp; sourceTree = "<group>"; };
+		2F85887A1C7F6D7B00FB3727 /* ZombieModel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ZombieModel.cpp; sourceTree = "<group>"; };
+		2F85887B1C7F6D7B00FB3727 /* ZombieModel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ZombieModel.hpp; sourceTree = "<group>"; };
+		2F85887C1C7F6D9A00FB3727 /* UpgradesModel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = UpgradesModel.cpp; sourceTree = "<group>"; };
+		2F85887D1C7F6D9A00FB3727 /* UpgradesModel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = UpgradesModel.hpp; sourceTree = "<group>"; };
 		2FDE96EB1C6909A700F44DFF /* Main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Main.cpp; sourceTree = "<group>"; };
 		2FDE96F61C690DFC00F44DFF /* CastleModel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CastleModel.cpp; sourceTree = "<group>"; };
 		2FDE96F71C690DFC00F44DFF /* CastleModel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CastleModel.hpp; sourceTree = "<group>"; };
@@ -46,6 +50,10 @@
 				2FDE96FB1C690E1500F44DFF /* EnemyModel.hpp */,
 				2FDE96FC1C690E3500F44DFF /* PowerUpModel.cpp */,
 				2FDE96FD1C690E3500F44DFF /* PowerUpModel.hpp */,
+				2F85887A1C7F6D7B00FB3727 /* ZombieModel.cpp */,
+				2F85887B1C7F6D7B00FB3727 /* ZombieModel.hpp */,
+				2F85887C1C7F6D9A00FB3727 /* UpgradesModel.cpp */,
+				2F85887D1C7F6D9A00FB3727 /* UpgradesModel.hpp */,
 			);
 			name = Model;
 			sourceTree = "<group>";

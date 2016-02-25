@@ -7,3 +7,13 @@
 //
 
 #include "CastleModel.hpp"
+
+// Constructor
+CastleModel::CastleModel() {
+   
+}
+
+// Destructor
+CastleModel::~CastleModel() {
+    
+}

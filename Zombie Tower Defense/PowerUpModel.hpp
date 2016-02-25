@@ -11,4 +11,20 @@
 
 #include <stdio.h>
 
+class PowerUpModel {
+    
+public:
+    // Constructor, destructor
+    PowerUpModel();
+    ~PowerUpModel();
+    
+    // Variables
+   
+    
+    // Public interface (PowerUpModel's functions)
+    
+    
+    
+};
+
 #endif /* PowerUpModel_hpp */

@@ -7,3 +7,13 @@
 //
 
 #include "EnemyModel.hpp"
+
+// Constructor
+EnemyModel::EnemyModel() {
+    
+}
+
+// Destructor
+EnemyModel::~EnemyModel() {
+    
+}
