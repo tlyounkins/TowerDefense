@@ -2,9 +2,7 @@
 //  EnemyModel.hpp
 //  Zombie Tower Defense
 //
-//  Created by Tyler Younkins on 2/8/16.
-//
-//
+
 
 #ifndef EnemyModel_hpp
 #define EnemyModel_hpp
@@ -19,19 +17,24 @@ public:
     ~EnemyModel();
     
     // Variables
-    int health;
+    int enemy_health;
     int speed;
     // TODO: some color variable(s) -> R, G, B?
+    
+    // Location Variables
     int x;
     int y;
     
     // Public interface
     
-    // get_location();
-    //void set_location(int x, int y);
+    int get_x_location();
+    void set_x_location(int x);
     
-    int get_health();
-    void set_health(int health);
+    int get_y_location();
+    void set_y_location(int y);
+    
+    int get_enemy_health();
+    void set_enemy_health(int enemy_health);
     
     //void get_color()
     //void set_color(color);

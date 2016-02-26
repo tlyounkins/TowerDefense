@@ -2,9 +2,7 @@
 //  GameView.hpp
 //  Zombie Tower Defense
 //
-//  Created by Michael Fioravanti on 2/8/16.
-//
-//
+
 
 #ifndef GameView_hpp
 #define GameView_hpp
@@ -34,10 +32,6 @@ public:
     // TODO: Make these non-static functions
     void static display();
     void static keyFunc(unsigned char key, int x, int y);
-    
-    
-    
-    
-    
+
 };
 #endif /* GameView_hpp */

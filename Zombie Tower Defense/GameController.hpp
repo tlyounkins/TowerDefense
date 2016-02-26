@@ -2,15 +2,19 @@
 //  GameController.hpp
 //  Zombie Tower Defense
 //
-//  Created by Juan A. Salazar on 2/8/16.
-//
-//
+
 
 #ifndef GameController_hpp
 #define GameController_hpp
 
 #include "GameView.hpp"
 #include "GameView.cpp"
+#include "GameModel.hpp"
+#include "GameModel.cpp"
+#include "CastleModel.hpp"
+#include "CastleModel.cpp"
+#include "EnemyModel.hpp"
+#include "EnemyModel.cpp"
 
 #include <stdio.h>
 
@@ -22,7 +26,6 @@ public:
     ~GameController();
     
     // Variables
-    int total_points;
     
     // Public interface
     void startGame(int argc, char *argv[]);
@@ -31,6 +34,8 @@ public:
     void endLevel();
     void pause_game();
     int update_total_points();
+    void damageCastle(int damage);
+    void spawn_enemy(int wave_num, int level);
 };
 
 #endif /* GameController_hpp */

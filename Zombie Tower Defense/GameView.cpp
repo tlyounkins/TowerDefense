@@ -2,9 +2,7 @@
 //  GameView.cpp
 //  Zombie Tower Defense
 //
-//  Created by Michael Fioravanti on 2/8/16.
-//
-//
+
 
 #include "GameView.hpp"
 
@@ -74,7 +72,3 @@ void GameView::keyFunc(unsigned char key, int x, int y) {
         exit(0);
     }
 }
-
-
-
-

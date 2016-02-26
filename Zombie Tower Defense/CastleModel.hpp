@@ -2,9 +2,7 @@
 //  CastleModel.hpp
 //  Zombie Tower Defense
 //
-//  Created by Tyler Younkins on 2/8/16.
-//
-//
+
 
 #ifndef CastleModel_hpp
 #define CastleModel_hpp
@@ -19,9 +17,14 @@ public:
     ~CastleModel();
     
     // Variables
-    int health;
+    int castle_health;
+    // ArrayList<>Castle ?
     
     // Public interface
-   
+    // ArrayList<>getCastle(); ?
+    // ArrayList<>setCastle(); ?
+    int get_castle_health();
+    void set_castle_health(int castle_health);
+    
 };
 #endif /* CastleModel_hpp */
