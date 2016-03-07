@@ -25,6 +25,7 @@ public:
     // ArrayList<>setCastle(); ?
     int get_castle_health();
     void set_castle_health(int castle_health);
+    void draw();
     
 };
 #endif /* CastleModel_hpp */

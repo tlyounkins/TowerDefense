@@ -17,6 +17,7 @@
 #include <stdlib.h>
 #include "EnemyModel.hpp"
 #include "ZombieModel.hpp"
+#include "CastleModel.hpp"
 
 class GameView {
     

@@ -63,6 +63,9 @@ void GameView::display() {
     ZombieModel zombie;
     zombie.draw();
     
+    CastleModel castle;
+    castle.draw();
+    
     // Swap Buffers
     glutSwapBuffers();
 }
