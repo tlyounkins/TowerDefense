@@ -15,6 +15,8 @@
 #endif
 #include <stdio.h>
 #include <stdlib.h>
+#include "EnemyModel.hpp"
+#include "ZombieModel.hpp"
 
 class GameView {
     
@@ -29,7 +31,6 @@ public:
     // Public interface
     void test();
     int Initialize(int argc, char *argv[]);
-    // TODO: Make these non-static functions
     void static display();
     void static keyFunc(unsigned char key, int x, int y);
 

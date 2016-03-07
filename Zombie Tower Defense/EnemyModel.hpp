@@ -38,6 +38,7 @@ public:
     
     //void get_color()
     //void set_color(color);
+    void draw();
     
     int get_speed();
     void set_speed(int speed);

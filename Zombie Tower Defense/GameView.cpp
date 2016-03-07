@@ -27,7 +27,7 @@ int GameView::Initialize(int argc, char *argv[]) {
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
     
     // Set window size
-    glutInitWindowSize(512, 512);
+    glutInitWindowSize(1000, 1000);
     
     // Create WIndow
     glutCreateWindow("Tower Defense");
@@ -58,6 +58,10 @@ void GameView::display() {
     
     // Flush Buffer
     glFlush();
+    
+    // TEMP TO TEST
+    ZombieModel zombie;
+    zombie.draw();
     
     // Swap Buffers
     glutSwapBuffers();

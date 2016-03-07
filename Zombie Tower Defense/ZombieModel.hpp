@@ -17,10 +17,10 @@ public:
     ~ZombieModel();
     
     // Variables
- 
+    GLUquadricObj *quadric;
     
     // Public interface
-    
+    void draw();
    
 };
 

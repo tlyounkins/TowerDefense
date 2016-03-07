@@ -15,6 +15,8 @@
 #include "CastleModel.cpp"
 #include "EnemyModel.hpp"
 #include "EnemyModel.cpp"
+#include "ZombieModel.hpp"
+#include "ZombieModel.cpp"
 
 #include <stdio.h>
 

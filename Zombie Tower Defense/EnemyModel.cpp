@@ -50,3 +50,7 @@ int EnemyModel::get_y_location() {
 void EnemyModel::set_y_location(int y) {
     //this.y = y;
 }
+
+void EnemyModel::draw(){
+    
+}
