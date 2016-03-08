@@ -8,7 +8,6 @@
 
 // Constructor
 ZombieModel::ZombieModel() {
-  
 }
 
 // Destructor
@@ -21,10 +20,13 @@ void ZombieModel::draw(){
     gluQuadricDrawStyle(quadric, GLU_FILL);
     gluQuadricNormals(quadric, GLU_SMOOTH);
     
+    printf("%i, %i\n", this->x, this->y);
+    
     glPushAttrib(GL_CURRENT_BIT);
     glPushMatrix();
     // TEMP TRANSLATE
-    glTranslatef(0.0f, -0.5f, 0.0f);
+    //glTranslatef(0.0f, -0.5f, 0.0f);
+        glTranslatef(this->x, this->y, 0.0f);
         glColor3f(0.2f, 0.8f, 0.2f);
         glScalef(0.01, 0.01, 1);
         gluDisk(quadric, 0, 2, 100, 100);

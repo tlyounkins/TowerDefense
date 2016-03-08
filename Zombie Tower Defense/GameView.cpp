@@ -61,8 +61,11 @@ void GameView::display() {
     
     // TEMP TO TEST
     ZombieModel zombie;
+    zombie.set_x_location(0);
+    zombie.set_y_location(-0.5);
     zombie.draw();
     
+    // Draw Castle
     CastleModel castle;
     castle.draw();
     
