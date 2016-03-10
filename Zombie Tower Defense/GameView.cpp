@@ -5,6 +5,9 @@
 
 
 #include "GameView.hpp"
+ZombieModel zombie;
+// Draw Castle
+CastleModel castle;
 
 // Constructor
 GameView::GameView() {
@@ -44,6 +47,10 @@ int GameView::Initialize(int argc, char *argv[]) {
     // Set Background Color
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     
+    // TEMP TO TEST
+    zombie.set_x_location(1);
+    zombie.set_y_location(-0.8);
+    
     // Begin event loop
     glutMainLoop();
     
@@ -58,16 +65,13 @@ void GameView::display() {
     
     // Flush Buffer
     glFlush();
-    
-    // TEMP TO TEST
-    ZombieModel zombie;
-    zombie.set_x_location(0);
-    zombie.set_y_location(-0.5);
+
     zombie.draw();
+    zombie.step();
     
-    // Draw Castle
-    CastleModel castle;
     castle.draw();
+    
+    
     
     // Swap Buffers
     glutSwapBuffers();

@@ -27,7 +27,7 @@ public:
     ~GameView();
     
     // Variables
-  
+    
     
     // Public interface
     void test();

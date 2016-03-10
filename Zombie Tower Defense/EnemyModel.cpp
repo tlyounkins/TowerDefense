@@ -54,3 +54,7 @@ void EnemyModel::set_y_location(float y) {
 void EnemyModel::draw(){
     
 }
+
+void EnemyModel::step(){
+    
+}

@@ -21,7 +21,7 @@ public:
     
     // Public interface
     void draw();
-   
+    void step();
 };
 
 #endif /* ZombieModel_hpp */
