@@ -38,12 +38,12 @@ void GameController::endGame() {
 
 // Start level
 void GameController::startLevel() {
-    
+    printf("Level started\n");
 }
 
 // End level
 void GameController::endLevel() {
-    
+    printf("Level ended\n");
 }
 
 // Update total_points

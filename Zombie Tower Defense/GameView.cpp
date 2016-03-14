@@ -7,7 +7,7 @@
 #include "GameView.hpp"
 
 // Zombie object
-ZombieModel zombie;
+ZombieModel zombie(10, 1, 0.9, -0.8);
 
 // Draw Castle
 CastleModel castle;
@@ -72,7 +72,7 @@ void GameView::display() {
     // Flush Buffer
     glFlush();
 
-    zombie.draw();
+    draw_zombie();
     zombie.step();
     
     castle.draw();
@@ -90,4 +90,23 @@ void GameView::keyFunc(unsigned char key, int x, int y) {
         printf("Main needs to exit!");
         exit(0);
     }
+}
+
+// Draw zombie method
+void GameView::draw_zombie() {
+    zombie.quadric = gluNewQuadric();
+    gluQuadricDrawStyle(zombie.quadric, GLU_FILL);
+    gluQuadricNormals(zombie.quadric, GLU_SMOOTH);
+    
+    
+    glPushAttrib(GL_CURRENT_BIT);
+    glPushMatrix();
+    glTranslatef(zombie.x_coor, zombie.y_coor, 0.0f);
+    glColor3f(0.2f, 0.8f, 0.2f);
+    glScalef(0.01, 0.01, 1);
+    gluDisk(zombie.quadric, 0, 2, 100, 100);
+    glColor3f(0.0f, 0.0f, 0.0f);
+    gluDisk(zombie.quadric, 1.9, 2, 100, 100);
+    glPopMatrix();
+    glPopAttrib();
 }
