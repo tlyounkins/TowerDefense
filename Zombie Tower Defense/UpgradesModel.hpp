@@ -20,7 +20,7 @@ public:
     GLUquadricObj *tower;
     
     // Public interface
-    void draw_tower();
+    
 };
 
 #endif /* UpgradesModel_hpp */

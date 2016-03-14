@@ -71,12 +71,12 @@ void GameView::display() {
     
     // Flush Buffer
     glFlush();
-
-    draw_zombie();
+    GameView view;
+    view.draw_zombie();
     zombie.step();
     
-    castle.draw();
-    tower.draw_tower();
+    view.draw_castle();
+    view.draw_tower();
     
     // Swap Buffers
     glutSwapBuffers();
@@ -92,11 +92,16 @@ void GameView::keyFunc(unsigned char key, int x, int y) {
     }
 }
 
+void GameView::draw_grid() {
+    
+    
+}
+
 // Draw zombie method
 void GameView::draw_zombie() {
-    zombie.quadric = gluNewQuadric();
-    gluQuadricDrawStyle(zombie.quadric, GLU_FILL);
-    gluQuadricNormals(zombie.quadric, GLU_SMOOTH);
+    zombie_quadric = gluNewQuadric();
+    gluQuadricDrawStyle(zombie_quadric, GLU_FILL);
+    gluQuadricNormals(zombie_quadric, GLU_SMOOTH);
     
     
     glPushAttrib(GL_CURRENT_BIT);
@@ -104,9 +109,56 @@ void GameView::draw_zombie() {
     glTranslatef(zombie.x_coor, zombie.y_coor, 0.0f);
     glColor3f(0.2f, 0.8f, 0.2f);
     glScalef(0.01, 0.01, 1);
-    gluDisk(zombie.quadric, 0, 2, 100, 100);
+    gluDisk(zombie_quadric, 0, 2, 100, 100);
     glColor3f(0.0f, 0.0f, 0.0f);
-    gluDisk(zombie.quadric, 1.9, 2, 100, 100);
+    gluDisk(zombie_quadric, 1.9, 2, 100, 100);
+    glPopMatrix();
+    glPopAttrib();
+}
+
+void GameView::draw_castle() {
+    glPushAttrib(GL_CURRENT_BIT);
+    glPushMatrix();
+    glColor3f(0.5f, 0.5f, 0.5f);
+    glScalef(0.25, 0.25, 1.0);
+    glBegin(GL_POLYGON);
+    // Counter-ClockWise around origin
+    // Top Left
+    glVertex3f(-1.0f, 1.0f, 0.0f);
+    glVertex3f(-1.0f, -1.0f, 0.0f);
+    glVertex3f(1.0f, -1.0f, 0.0f);
+    glVertex3f(1.0f, 1.0f, 0.0f);
+    glEnd();
+    glColor3f(0.0f, 0.0f, 0.0f);
+    // Do not fill polygon
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    glBegin(GL_POLYGON);
+    // Top Left
+    glVertex3f(-1.0f, 1.0f, 0.0f);
+    glVertex3f(-1.0f, -1.0f, 0.0f);
+    glVertex3f(1.0f, -1.0f, 0.0f);
+    glVertex3f(1.0f, 1.0f, 0.0f);
+    glEnd();
+    // Revert Changes
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    glPopMatrix();
+    glPopAttrib();
+}
+
+void GameView::draw_tower() {
+    tower_quadric = gluNewQuadric();
+    gluQuadricDrawStyle(tower_quadric, GLU_FILL);
+    gluQuadricNormals(tower_quadric, GLU_SMOOTH);
+    
+    
+    glPushAttrib(GL_CURRENT_BIT);
+    glPushMatrix();
+    glTranslatef(0.25, -0.25, 0.0f);
+    glColor3f(0.75f, 0.75f, 0.75f);
+    glScalef(0.03, 0.03, 1);
+    gluDisk(tower_quadric, 0, 2, 100, 100);
+    glColor3f(0.0f, 0.0f, 0.0f);
+    gluDisk(tower_quadric, 1.9, 2, 100, 100);
     glPopMatrix();
     glPopAttrib();
 }

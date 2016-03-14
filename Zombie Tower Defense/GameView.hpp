@@ -28,14 +28,18 @@ public:
     ~GameView();
     
     // Variables
-    GLUquadricObj *quadric;
+    GLUquadricObj *zombie_quadric;
+    GLUquadricObj *tower_quadric;
     
     // Public interface
     void test();
     int Initialize(int argc, char *argv[]);
     void static display();
     void static keyFunc(unsigned char key, int x, int y);
-    void static draw_zombie();
+    void draw_grid();
+    void draw_zombie();
+    void draw_castle();
+    void draw_tower();
 
 };
 #endif /* GameView_hpp */

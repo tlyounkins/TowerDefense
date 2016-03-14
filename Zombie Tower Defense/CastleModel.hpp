@@ -22,7 +22,6 @@ public:
     // Public interface
     int get_castle_health();
     void set_castle_health(int health);
-    void draw();
     
 };
 #endif /* CastleModel_hpp */
