@@ -18,6 +18,7 @@
 #include "EnemyModel.hpp"
 #include "ZombieModel.hpp"
 #include "CastleModel.hpp"
+#include "UpgradesModel.hpp"
 
 class GameView {
     

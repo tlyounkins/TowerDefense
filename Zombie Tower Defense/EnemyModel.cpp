@@ -10,10 +10,7 @@
 
 // Constructor
 EnemyModel::EnemyModel() {
-//    this.enemy_health = new enemy_health;
-//    this.speed = new speed;
-//    this.x = new x;
-//    this.y = new y;
+
 }
 
 // Destructor
@@ -25,8 +22,8 @@ int EnemyModel::get_enemy_health() {
     return enemy_health;
 }
 
-void EnemyModel::set_enemy_health(int enemy_health) {
-    //this.enemy_health = enemy_health;
+void EnemyModel::set_enemy_health(int health) {
+    this->enemy_health = health;
 }
 
 int EnemyModel::get_speed() {
@@ -34,7 +31,7 @@ int EnemyModel::get_speed() {
 }
 
 void EnemyModel::set_speed(int speed) {
-    //this.speed = speed;
+    this->speed = speed;
 }
 
 float EnemyModel::get_x_location() {

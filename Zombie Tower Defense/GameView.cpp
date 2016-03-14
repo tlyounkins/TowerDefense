@@ -5,9 +5,15 @@
 
 
 #include "GameView.hpp"
+
+// Zombie object
 ZombieModel zombie;
+
 // Draw Castle
 CastleModel castle;
+
+// Upgrades tower object
+UpgradesModel tower;
 
 // Constructor
 GameView::GameView() {
@@ -70,8 +76,7 @@ void GameView::display() {
     zombie.step();
     
     castle.draw();
-    
-    
+    tower.draw_tower();
     
     // Swap Buffers
     glutSwapBuffers();

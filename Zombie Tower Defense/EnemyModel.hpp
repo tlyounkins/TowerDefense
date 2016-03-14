@@ -19,6 +19,7 @@ public:
     // Variables
     int enemy_health;
     int speed;
+    
     // TODO: some color variable(s) -> R, G, B?
     
     // Location Variables
@@ -26,7 +27,6 @@ public:
     float y;
     
     // Public interface
-    
     float get_x_location();
     void set_x_location(float x);
     
@@ -34,7 +34,7 @@ public:
     void set_y_location(float y);
     
     int get_enemy_health();
-    void set_enemy_health(int enemy_health);
+    void set_enemy_health(int health);
     
     //void get_color()
     //void set_color(color);

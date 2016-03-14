@@ -17,6 +17,8 @@
 #include "EnemyModel.cpp"
 #include "ZombieModel.hpp"
 #include "ZombieModel.cpp"
+#include "UpgradesModel.hpp"
+#include "UpgradesModel.cpp"
 
 #include <stdio.h>
 

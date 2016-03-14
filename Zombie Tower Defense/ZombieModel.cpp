@@ -17,6 +17,7 @@ ZombieModel::~ZombieModel() {
     
 }
 
+// Draw zombie method
 void ZombieModel::draw(){
     this->quadric = gluNewQuadric();
     gluQuadricDrawStyle(quadric, GLU_FILL);
@@ -35,6 +36,7 @@ void ZombieModel::draw(){
     glPopAttrib();
 }
 
+// Update zombie location method
 void ZombieModel::step(){
     // Head towards (0, -0.25)
     float x = this->get_x_location();

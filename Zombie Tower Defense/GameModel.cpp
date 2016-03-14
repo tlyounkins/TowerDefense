@@ -8,12 +8,15 @@
 
 // Constructor
 GameModel::GameModel() {
-    int total_points = 0;
+    total_points = 0;
+    wave_num = 0;
+    level = 0;
 }
 
 // Destructor
 GameModel::~GameModel() {
     
 }
+
 
 

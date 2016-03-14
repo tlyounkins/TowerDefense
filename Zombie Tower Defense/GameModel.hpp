@@ -8,6 +8,7 @@
 #define GameModel_hpp
 
 #include <stdio.h>
+
 class GameModel {
 
 public:
@@ -21,7 +22,6 @@ public:
     int level;
     
     // Public interface (GameModel's functions)
-    
     
     
 };
