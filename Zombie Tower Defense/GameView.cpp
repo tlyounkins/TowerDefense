@@ -6,14 +6,10 @@
 
 #include "GameView.hpp"
 
-// Zombie object
+// Zombie object(int health, int speed, float x, float y) 
 ZombieModel zombie(10, 1, 0.9, -0.8);
 
-// Draw Castle
-CastleModel castle;
 
-// Upgrades tower object
-UpgradesModel tower;
 
 // Constructor
 GameView::GameView() {
@@ -25,9 +21,6 @@ GameView::~GameView() {
     
 }
 
-void GameView::test() {
-    printf("Test works!/n");
-}
 int GameView::Initialize(int argc, char *argv[]) {
     // Initialize GLUT
     glutInit(&argc, argv);
@@ -57,6 +50,11 @@ int GameView::Initialize(int argc, char *argv[]) {
     zombie.set_x_location(1);
     zombie.set_y_location(-0.8);
     
+    // Create upgrades men
+    //glutCreateMenu(upgrades_menu);
+    //glutAddMenuEntry("Tower",ADD_TOWER);
+    //glutAttachMenu(GLUT_RIGHT_BUTTON);
+    
     // Begin event loop
     glutMainLoop();
     
@@ -72,11 +70,15 @@ void GameView::display() {
     // Flush Buffer
     glFlush();
     GameView view;
+    
+    view.draw_grid();
+    
     view.draw_zombie();
     zombie.step();
     
     view.draw_castle();
     view.draw_tower();
+    
     
     // Swap Buffers
     glutSwapBuffers();
@@ -87,13 +89,19 @@ void GameView::keyFunc(unsigned char key, int x, int y) {
     // Exit Program with ESC
     // Temp until menu works
     if (key == 27){
-        printf("Main needs to exit!");
+        printf("Main needs to exit!\n");
         exit(0);
     }
 }
 
 void GameView::draw_grid() {
+   
     
+}
+
+// Routine to process upgrades menu selection
+void upgrades_menu(int id)
+{
     
 }
 

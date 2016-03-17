@@ -30,12 +30,15 @@ public:
     // Variables
     GLUquadricObj *zombie_quadric;
     GLUquadricObj *tower_quadric;
+    CastleModel castle;
+    UpgradesModel tower;
+    int ADD_TOWER;
     
     // Public interface
-    void test();
     int Initialize(int argc, char *argv[]);
     void static display();
     void static keyFunc(unsigned char key, int x, int y);
+    void static upgrades_menu(int id);
     void draw_grid();
     void draw_zombie();
     void draw_castle();
