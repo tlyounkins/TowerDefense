@@ -10,7 +10,7 @@ OSDEF = Linux
 LIBS = -lGLEW -lglut -lSOIL -lGLU -lGL
 endif
 
-CXXFLAGS = -D$(OSDEF) -g -Wall
+CXXFLAGS = -D$(OSDEF) -g -Wall -Wno-deprecated-declarations
 
 SRC = Main.cpp
 OBJ = $(SRC:.cpp=.o)

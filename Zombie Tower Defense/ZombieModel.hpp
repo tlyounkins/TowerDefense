@@ -20,6 +20,7 @@ public:
     GLUquadricObj *quadric;
     float x_coor;
     float y_coor;
+    int count;
     // Public interface
     void step();
 };
