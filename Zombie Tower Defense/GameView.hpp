@@ -29,16 +29,20 @@ public:
     
     // Variables
     GLUquadricObj *quadric;
+    
     // Grid size
     int x_max;
     int y_max;
     
     // Public interface
+    void test();
     int Initialize(int argc, char *argv[]);
     void static display();
     void static keyFunc(unsigned char key, int x, int y);
     void static draw_zombie(ZombieModel zombie);
     void static draw_grid();
+    void static draw_castle();
+    void static draw_tower();
 
 };
 #endif /* GameView_hpp */

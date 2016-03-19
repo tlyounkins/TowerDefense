@@ -11,7 +11,7 @@ ZombieModel zombie(10, 20, 15, -19);
 // TEMP TO TEST
 ZombieModel zombie_test(0, 20, -15, -10);
 
-
+GLUquadricObj *tower_quadric;
 
 // Constructor
 GameView::GameView() {
@@ -83,8 +83,8 @@ void GameView::display() {
     zombie_test.step();
     zombie.step();
     
-    view.draw_castle();
-    view.draw_tower();
+    draw_castle();
+    draw_tower();
     
     
     // Swap Buffers
@@ -135,6 +135,13 @@ void GameView::draw_grid(){
         glPopMatrix();
     }
 }
+
+// Routine to process upgrades menu selection
+void upgrades_menu(int id)
+{
+    
+}
+
 // Draw zombie method
 void GameView::draw_zombie(ZombieModel zombie) {
     zombie.quadric = gluNewQuadric();
@@ -150,6 +157,51 @@ void GameView::draw_zombie(ZombieModel zombie) {
         gluDisk(zombie.quadric, 0, 0.5, 100, 100);
         glColor3f(0.0f, 0.0f, 0.0f);
         gluDisk(zombie.quadric, 0.47, 0.5, 100, 100);
+    glPopMatrix();
+    glPopAttrib();
+}
+
+void GameView::draw_castle() {
+    glPushAttrib(GL_CURRENT_BIT);
+    glPushMatrix();
+        glColor3f(0.5f, 0.5f, 0.5f);
+        glBegin(GL_POLYGON);
+            // Counter-ClockWise around origin
+            // Top Left
+            glVertex3f(-5.0f, 5.0f, 0.0f);
+            glVertex3f(-5.0f, -5.0f, 0.0f);
+            glVertex3f(5.0f, -5.0f, 0.0f);
+            glVertex3f(5.0f, 5.0f, 0.0f);
+        glEnd();
+        glColor3f(0.0f, 0.0f, 0.0f);
+        // Do not fill polygon
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        glBegin(GL_POLYGON);
+        // Top Left
+            glVertex3f(-5.0f, 5.0f, 0.0f);
+            glVertex3f(-5.0f, -5.0f, 0.0f);
+            glVertex3f(5.0f, -5.0f, 0.0f);
+            glVertex3f(5.0f, 5.0f, 0.0f);
+        glEnd();
+        // Revert Changes
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    glPopMatrix();
+    glPopAttrib();
+}
+
+void GameView::draw_tower() {
+    tower_quadric = gluNewQuadric();
+    gluQuadricDrawStyle(tower_quadric, GLU_FILL);
+    gluQuadricNormals(tower_quadric, GLU_SMOOTH);
+    
+    glPushAttrib(GL_CURRENT_BIT);
+    glPushMatrix();
+        glTranslatef(0.25, -0.25, 0.0f);
+        glColor3f(0.75f, 0.75f, 0.75f);
+        glScalef(0.03, 0.03, 1);
+        gluDisk(tower_quadric, 0, 2, 100, 100);
+        glColor3f(0.0f, 0.0f, 0.0f);
+        gluDisk(tower_quadric, 1.9, 2, 100, 100);
     glPopMatrix();
     glPopAttrib();
 }

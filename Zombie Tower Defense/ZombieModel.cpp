@@ -59,7 +59,7 @@ void ZombieModel::step(){
         this->y_coor = y;
     
         // Print current coordinates (for testing)
-        printf("%f %f \n", this->x_coor, this->y_coor);
+        //printf("%f %f \n", this->x_coor, this->y_coor);
         this->count = 0;
     }
     
