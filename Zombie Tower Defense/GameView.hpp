@@ -34,7 +34,6 @@ public:
     int y_max;
     
     // Public interface
-    void test();
     int Initialize(int argc, char *argv[]);
     void static display();
     void static keyFunc(unsigned char key, int x, int y);

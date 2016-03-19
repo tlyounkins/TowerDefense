@@ -11,11 +11,7 @@ ZombieModel zombie(10, 20, 15, -19);
 // TEMP TO TEST
 ZombieModel zombie_test(0, 20, -15, -10);
 
-// Draw Castle
-CastleModel castle;
 
-// Upgrades tower object
-UpgradesModel tower;
 
 // Constructor
 GameView::GameView() {
@@ -27,9 +23,6 @@ GameView::~GameView() {
     
 }
 
-void GameView::test() {
-    printf("Test works!/n");
-}
 int GameView::Initialize(int argc, char *argv[]) {
     // Initialize GLUT
     glutInit(&argc, argv);
@@ -55,6 +48,11 @@ int GameView::Initialize(int argc, char *argv[]) {
     // Set Background Color
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     
+    
+    // Create upgrades men
+    //glutCreateMenu(upgrades_menu);
+    //glutAddMenuEntry("Tower",ADD_TOWER);
+    //glutAttachMenu(GLUT_RIGHT_BUTTON);
     
     // Begin event loop
     glutMainLoop();
@@ -85,8 +83,9 @@ void GameView::display() {
     zombie_test.step();
     zombie.step();
     
-    castle.draw();
-    tower.draw_tower();
+    view.draw_castle();
+    view.draw_tower();
+    
     
     // Swap Buffers
     glutSwapBuffers();

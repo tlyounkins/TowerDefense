@@ -48,10 +48,6 @@ void EnemyModel::set_y_location(float y) {
     this->y = y;
 }
 
-void EnemyModel::draw(){
-    
-}
-
 void EnemyModel::step(){
     
 }

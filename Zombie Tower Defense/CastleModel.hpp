@@ -18,11 +18,16 @@ public:
     
     // Variables
     int castle_health;
+    int castle_width;
+    int castle_length;
     
     // Public interface
     int get_castle_health();
     void set_castle_health(int health);
-    void draw();
+    int get_castle_width();
+    void set_castle_width(int width);
+    int get_castle_length();
+    void set_castle_length(int length);
     
 };
 #endif /* CastleModel_hpp */

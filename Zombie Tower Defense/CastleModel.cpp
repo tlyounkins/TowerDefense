@@ -53,3 +53,14 @@ void CastleModel::draw(){
     glPopAttrib();
 }
 
+void CastleModel::set_castle_width(int castle_length) {
+    this->castle_length = castle_length;
+}
+
+int CastleModel::get_castle_length() {
+    return castle_length;
+}
+
+void CastleModel::set_castle_length(int castle_length) {
+    this->castle_length = castle_length;
+}
