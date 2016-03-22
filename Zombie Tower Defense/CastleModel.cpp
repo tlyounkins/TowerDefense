@@ -21,7 +21,7 @@ int CastleModel::get_castle_health() {
 }
 
 void CastleModel::set_castle_health(int health) {
-    this->castle_health = castle_health;
+    this->castle_health = health;
 }
 
 int CastleModel::get_castle_width() {

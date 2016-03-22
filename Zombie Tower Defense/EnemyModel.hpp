@@ -19,6 +19,7 @@ public:
     // Variables
     int enemy_health;
     int speed;
+    GLUquadricObj *quadric;
     
     // TODO: some color variable(s) -> R, G, B?
     

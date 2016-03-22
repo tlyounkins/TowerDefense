@@ -25,6 +25,8 @@
 		D2B2064D1C69A13200AA4BAE /* GameView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameView.cpp; sourceTree = "<group>"; };
 		D2B2064E1C69A13200AA4BAE /* GameView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GameView.hpp; sourceTree = "<group>"; };
 		D2DF64821C6BF85D00C880F5 /* Makefile */ = {isa = PBXFileReference; explicitFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; usesTabs = 1; };
+		D2DF64831CA0D22E00C880F5 /* LevelModel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LevelModel.cpp; sourceTree = "<group>"; };
+		D2DF64841CA0D22E00C880F5 /* LevelModel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LevelModel.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -54,6 +56,8 @@
 				2F85887B1C7F6D7B00FB3727 /* ZombieModel.hpp */,
 				2F85887C1C7F6D9A00FB3727 /* UpgradesModel.cpp */,
 				2F85887D1C7F6D9A00FB3727 /* UpgradesModel.hpp */,
+				D2DF64831CA0D22E00C880F5 /* LevelModel.cpp */,
+				D2DF64841CA0D22E00C880F5 /* LevelModel.hpp */,
 			);
 			name = Model;
 			sourceTree = "<group>";

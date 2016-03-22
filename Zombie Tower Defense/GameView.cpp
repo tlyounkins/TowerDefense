@@ -77,11 +77,11 @@ void GameView::display() {
     
     draw_grid();
 
-    draw_zombie(zombie_test);
-    draw_zombie(zombie);
+    //draw_zombie(zombie_test);
+    //draw_zombie(zombie);
     
-    zombie_test.step();
-    zombie.step();
+    //zombie_test.step();
+    //zombie.step();
     
     draw_castle();
     draw_tower();
@@ -143,15 +143,14 @@ void upgrades_menu(int id)
 }
 
 // Draw zombie method
-void GameView::draw_zombie(ZombieModel zombie) {
+void GameView::draw_zombie(EnemyModel zombie) {
     zombie.quadric = gluNewQuadric();
     gluQuadricDrawStyle(zombie.quadric, GLU_FILL);
     gluQuadricNormals(zombie.quadric, GLU_SMOOTH);
     
-    
     glPushAttrib(GL_CURRENT_BIT);
     glPushMatrix();
-        glTranslatef(zombie.x_coor, zombie.y_coor, 0.0f);
+        glTranslatef(zombie.x, zombie.y, 0.0f);
         glColor3f(0.2f, 0.8f, 0.2f);
         //glScalef(0.01, 0.01, 1);
         gluDisk(zombie.quadric, 0, 0.5, 100, 100);
@@ -196,12 +195,12 @@ void GameView::draw_tower() {
     
     glPushAttrib(GL_CURRENT_BIT);
     glPushMatrix();
-        glTranslatef(0.25, -0.25, 0.0f);
+        glTranslatef(4, -4, 0.0f);
         glColor3f(0.75f, 0.75f, 0.75f);
-        glScalef(0.03, 0.03, 1);
-        gluDisk(tower_quadric, 0, 2, 100, 100);
+        //glScalef(0.03, 0.03, 1);
+        gluDisk(tower_quadric, 0, 1.5, 100, 100);
         glColor3f(0.0f, 0.0f, 0.0f);
-        gluDisk(tower_quadric, 1.9, 2, 100, 100);
+        gluDisk(tower_quadric, 1.4, 1.5, 100, 100);
     glPopMatrix();
     glPopAttrib();
 }

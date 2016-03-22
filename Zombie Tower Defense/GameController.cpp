@@ -18,17 +18,17 @@ GameController::~GameController() {
 
 // Start Game
 void GameController::startGame(int argc, char *argv[]) {
-    GameView view;
     view.Initialize(argc, argv);
     //view.test();
     printf("Game Started\n");
+    startLevel();
 }
 
 // End Game
 void GameController::endGame() {
     printf("GAME OVER\n");
     GameModel model;
-    int level = model.level;
+    int level = model.current_level;
     int wave = model.wave_num;
     int total_points = model.total_points;
     printf("Total points: %i\n",total_points);
@@ -39,6 +39,7 @@ void GameController::endGame() {
 // Start level
 void GameController::startLevel() {
     printf("Level started\n");
+    start_wave(0, 0);
 }
 
 // End level
@@ -46,8 +47,20 @@ void GameController::endLevel() {
     printf("Level ended\n");
 }
 
+// Start Wave
+void GameController::start_wave(int wave_num, int level){
+    printf("Wave %i starting\n", wave_num);
+    for(int i = 0; i < 5; i++){
+        view.draw_zombie(game.levels.wave_enemies[0][i]);
+    }
+    for(int i = 0; i < 5; i++){
+        game.levels.wave_enemies[0][i].step();
+    }
+    
+}
+
 // Update total_points
-int GameController::update_total_points() {
+void GameController::update_total_points() {
     GameModel model;
     model.total_points++;
 }

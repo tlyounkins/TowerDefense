@@ -13,13 +13,11 @@ class ZombieModel: public EnemyModel {
     
 public:
     // Constructor, destructor
-    ZombieModel(int health, int speed, float x, float y);
+    ZombieModel(int health, int speed, int x, int y);
     ~ZombieModel();
     
     // Variables
     GLUquadricObj *quadric;
-    float x_coor;
-    float y_coor;
     int count;
     // Public interface
     void step();

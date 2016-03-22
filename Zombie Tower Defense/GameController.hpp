@@ -19,6 +19,7 @@
 #include "ZombieModel.cpp"
 #include "UpgradesModel.hpp"
 #include "UpgradesModel.cpp"
+#include "LevelModel.hpp"
 
 #include <stdio.h>
 
@@ -30,6 +31,8 @@ public:
     ~GameController();
     
     // Variables
+    GameModel game;
+    GameView view;
     
     // Public interface
     void startGame(int argc, char *argv[]);
@@ -37,8 +40,9 @@ public:
     void startLevel();
     void endLevel();
     void pause_game();
-    int update_total_points();
+    void update_total_points();
     void damageCastle(int damage);
+    void start_wave(int wave_num, int level);
     void spawn_enemy(int wave_num, int level);
 };
 
