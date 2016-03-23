@@ -6,12 +6,16 @@
 
 #include "GameView.hpp"
 
-// Zombie object
-ZombieModel zombie(10, 20, 15, -19);
-// TEMP TO TEST
-ZombieModel zombie_test(0, 20, -15, -10);
+GameController game;
 
 GLUquadricObj *tower_quadric;
+
+int max = 5;
+int wave = 0;
+
+ZombieModel current_enemies[5];
+
+
 
 // Constructor
 GameView::GameView() {
@@ -44,10 +48,18 @@ int GameView::Initialize(int argc, char *argv[]) {
     // Define Callbacks
     glutDisplayFunc(display);
     glutKeyboardFunc(keyFunc);
+    glutIdleFunc(idleFunc);
     
     // Set Background Color
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     
+    // Create Game Controller
+    game.startGame();
+    
+    //Temp
+    for(int i = 0; i < max; i++){
+        current_enemies[i] = game.game_model.levels.wave_enemies[0][i];
+    }
     
     // Create upgrades men
     //glutCreateMenu(upgrades_menu);
@@ -58,6 +70,38 @@ int GameView::Initialize(int argc, char *argv[]) {
     glutMainLoop();
     
     return 0;
+}
+
+// Glorious Idle Function
+void GameView::idleFunc(){
+    int count = 0;
+    // Move Zombies
+    for(int i = 0; i < max; i++){
+        // Check zombie location
+        if((current_enemies[i].x == 0) && (current_enemies[i].y == -5)){
+            // Zombie made it to castle
+            current_enemies[i].x = 0;
+            current_enemies[i].y = 0;
+            // Damage Castle
+            
+        } else {
+            if((current_enemies[i].x == 0)&&(current_enemies[i].y == 0)){
+                count++;
+            } else {
+                current_enemies[i].step();
+            }
+        }
+    }
+    
+    // Next Wave
+    if(count == max){
+        printf("Next Wave!\n");
+        wave++;
+        for(int i = 0; i < max; i++){
+            current_enemies[i] = game.game_model.levels.wave_enemies[wave][i];
+        }
+    }
+    glutPostRedisplay();
 }
 
 // Display Callback
@@ -76,12 +120,8 @@ void GameView::display() {
     glFlush();
     
     draw_grid();
-
-    //draw_zombie(zombie_test);
-    //draw_zombie(zombie);
     
-    //zombie_test.step();
-    //zombie.step();
+    draw_current_enemies();
     
     draw_castle();
     draw_tower();
@@ -100,6 +140,14 @@ void GameView::keyFunc(unsigned char key, int x, int y) {
         exit(0);
     }
 }
+                 
+// Draw Current Enemies
+void GameView::draw_current_enemies(){
+    for(int i = 0; i < max; i++){
+        draw_zombie(current_enemies[i]);
+    }
+}
+
 // Draw Grid
 void GameView::draw_grid(){
     for(int i = -20; i <= 20; i++){
@@ -148,11 +196,12 @@ void GameView::draw_zombie(EnemyModel zombie) {
     gluQuadricDrawStyle(zombie.quadric, GLU_FILL);
     gluQuadricNormals(zombie.quadric, GLU_SMOOTH);
     
+    //printf("Drawing at (%i, %i)\n", zombie.x, zombie.y);
+    
     glPushAttrib(GL_CURRENT_BIT);
     glPushMatrix();
         glTranslatef(zombie.x, zombie.y, 0.0f);
         glColor3f(0.2f, 0.8f, 0.2f);
-        //glScalef(0.01, 0.01, 1);
         gluDisk(zombie.quadric, 0, 0.5, 100, 100);
         glColor3f(0.0f, 0.0f, 0.0f);
         gluDisk(zombie.quadric, 0.47, 0.5, 100, 100);
@@ -203,4 +252,16 @@ void GameView::draw_tower() {
         gluDisk(tower_quadric, 1.4, 1.5, 100, 100);
     glPopMatrix();
     glPopAttrib();
+}
+
+// Start Wave
+void GameView::draw_wave(int wave_num, int level){
+    printf("Wave %i starting\n", wave_num);
+    for(int i = 0; i < max; i++){
+        draw_zombie(game.game_model.levels.wave_enemies[wave_num][i]);
+    }
+    for(int i = 0; i < max; i++){
+        //game.game_model.levels.wave_enemies[wave_num][i].step();
+    }
+    
 }

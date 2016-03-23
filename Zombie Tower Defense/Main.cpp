@@ -6,6 +6,8 @@
 
 #include "GameController.hpp"
 #include "GameController.cpp"
+#include "GameView.hpp"
+#include "GameView.cpp"
 
 #ifdef OSX
     #include <GLUT/glut.h>
@@ -22,8 +24,8 @@ void keyFunc(unsigned char key, int x, int y);
 int main(int argc, char *argv[]) {
     
     // Start Game
-    GameController game;
-    game.startGame(argc, argv);
+    GameView game;
+    game.Initialize(argc, argv);
 
     return 0;
 }

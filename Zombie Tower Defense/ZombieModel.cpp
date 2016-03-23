@@ -7,11 +7,7 @@
 #include "ZombieModel.hpp"
 
 // Constructor
-ZombieModel::ZombieModel(int health, int speed, int x, int y) {
-    this->x = x;
-    this->y = y;
-    this->speed = speed;
-    count = 0;
+ZombieModel::ZombieModel() {
 }
 
 // Destructor
@@ -24,7 +20,6 @@ void ZombieModel::step(){
     // Head towards (0, -5)
     this->count += 1;
     if(count == this->speed){
-        
         int ran = rand() % 10;
         if(ran < 5){
             if(x > 0){
@@ -55,9 +50,7 @@ void ZombieModel::step(){
         }
     
         // Print current coordinates (for testing)
-        //printf("%f %f \n", this->x_coor, this->y_coor);
+        //printf("%i %i \n", this->x, this->y);
         this->count = 0;
     }
-    
-    glutPostRedisplay();
 }

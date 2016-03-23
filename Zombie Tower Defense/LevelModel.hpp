@@ -10,6 +10,7 @@
 #define LevelModel_hpp
 
 #include <stdio.h>
+#include <stdlib.h> 
 #include "EnemyModel.hpp"
 #include "ZombieModel.hpp"
 
@@ -23,7 +24,7 @@ public:
     // Variables
     int id;
     int waves;
-    EnemyModel wave_enemies[10][5];
+    ZombieModel wave_enemies[10][5];
     
     
     // Public interface

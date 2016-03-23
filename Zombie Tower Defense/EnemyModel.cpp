@@ -34,20 +34,20 @@ void EnemyModel::set_speed(int speed) {
     this->speed = speed;
 }
 
-float EnemyModel::get_x_location() {
+int EnemyModel::get_x_location() {
     return x;
 }
-void EnemyModel::set_x_location(float x) {
+void EnemyModel::set_x_location(int x) {
     this->x = x;
 }
 
-float EnemyModel::get_y_location() {
+int EnemyModel::get_y_location() {
     return y;
 }
-void EnemyModel::set_y_location(float y) {
+void EnemyModel::set_y_location(int y) {
     this->y = y;
 }
 
 void EnemyModel::step(){
-    
+
 }

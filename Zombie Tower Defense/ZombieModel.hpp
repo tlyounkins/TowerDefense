@@ -8,19 +8,27 @@
 #define ZombieModel_hpp
 
 #include <stdio.h>
+#ifdef OSX
+    #include <GLUT/glut.h>
+#else
+    #include <GL/glew.h>
+    #include <GL/glut.h>
+#endif
 
 class ZombieModel: public EnemyModel {
     
 public:
     // Constructor, destructor
-    ZombieModel(int health, int speed, int x, int y);
+    ZombieModel();
     ~ZombieModel();
     
     // Variables
     GLUquadricObj *quadric;
     int count;
+    int health;
+    int speed;
     // Public interface
-    void step();
+    virtual void step();
 };
 
 #endif /* ZombieModel_hpp */

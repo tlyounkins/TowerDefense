@@ -8,6 +8,12 @@
 #define EnemyModel_hpp
 
 #include <stdio.h>
+#ifdef OSX
+    #include <GLUT/glut.h>
+#else
+    #include <GL/glew.h>
+    #include <GL/glut.h>
+#endif
 
 class EnemyModel {
     
@@ -24,15 +30,15 @@ public:
     // TODO: some color variable(s) -> R, G, B?
     
     // Location Variables
-    float x;
-    float y;
+    int x;
+    int y;
     
     // Public interface
-    float get_x_location();
-    void set_x_location(float x);
+    int get_x_location();
+    void set_x_location(int x);
     
-    float get_y_location();
-    void set_y_location(float y);
+    int get_y_location();
+    void set_y_location(int y);
     
     int get_enemy_health();
     void set_enemy_health(int health);
@@ -40,7 +46,7 @@ public:
     //void get_color()
     //void set_color(color);
     void draw();
-    void step();
+    virtual void step();
     
     int get_speed();
     void set_speed(int speed);

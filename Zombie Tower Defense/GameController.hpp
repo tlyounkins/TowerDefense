@@ -7,8 +7,8 @@
 #ifndef GameController_hpp
 #define GameController_hpp
 
-#include "GameView.hpp"
-#include "GameView.cpp"
+//#include "GameView.hpp"
+//#include "GameView.cpp"
 #include "GameModel.hpp"
 #include "GameModel.cpp"
 #include "CastleModel.hpp"
@@ -31,18 +31,16 @@ public:
     ~GameController();
     
     // Variables
-    GameModel game;
-    GameView view;
+    GameModel game_model;
     
     // Public interface
-    void startGame(int argc, char *argv[]);
+    void startGame();
     void endGame();
     void startLevel();
     void endLevel();
     void pause_game();
     void update_total_points();
     void damageCastle(int damage);
-    void start_wave(int wave_num, int level);
     void spawn_enemy(int wave_num, int level);
 };
 
