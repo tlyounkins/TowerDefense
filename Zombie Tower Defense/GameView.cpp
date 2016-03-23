@@ -14,7 +14,7 @@ int max = 5;
 int wave = 0;
 
 ZombieModel current_enemies[5];
-
+CastleModel castle;
 
 
 // Constructor
@@ -83,7 +83,16 @@ void GameView::idleFunc(){
             current_enemies[i].x = 0;
             current_enemies[i].y = 0;
             // Damage Castle
-            
+            int health = castle.get_castle_health();
+            health--;
+            printf("Your castle takes damage!\n");
+            castle.set_castle_health(health);
+            printf("Castle health is now %i\n",health);
+            if (health <= 0) {
+                printf("\n\n");
+                game.endGame();
+                exit(0);
+            }
         } else {
             if((current_enemies[i].x == 0)&&(current_enemies[i].y == 0)){
                 count++;
