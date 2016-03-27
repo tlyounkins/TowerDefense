@@ -8,6 +8,7 @@
 
 // Constructor
 ZombieModel::ZombieModel() {
+    this->count = 0;
 }
 
 // Destructor

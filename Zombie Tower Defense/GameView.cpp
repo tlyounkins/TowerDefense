@@ -56,7 +56,7 @@ int GameView::Initialize(int argc, char *argv[]) {
     // Create Game Controller
     game.startGame();
     
-    //Temp
+    //Temp?
     for(int i = 0; i < max; i++){
         current_enemies[i] = game.game_model.levels.wave_enemies[0][i];
     }
