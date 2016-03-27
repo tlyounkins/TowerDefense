@@ -32,7 +32,7 @@ public:
     
     // Variables
     GameModel game_model;
-    
+
     // Public interface
     void startGame();
     void endGame();

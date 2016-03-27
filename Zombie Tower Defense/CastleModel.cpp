@@ -8,7 +8,7 @@
 
 // Constructor
 CastleModel::CastleModel() {
-     castle_health = 100;
+     castle_health = 3;
 }
 
 // Destructor
