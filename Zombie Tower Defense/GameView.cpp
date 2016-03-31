@@ -11,10 +11,9 @@ GameController game;
 GLUquadricObj *tower_quadric;
 
 int max = 5;
-int wave = 1;
 bool Tower_flag1 = false;
 ZombieModel current_enemies[5];
-CastleModel castle;
+
 
 
 // Constructor
@@ -105,8 +104,9 @@ void GameView::idleFunc(){
     // Next Wave
     if(count == max){
         printf("Next Wave!\n");
+
+        int wave = game.game_model.get_wave_num();
         wave++;
-        printf("Wave++ = %i\n",wave);
         game.game_model.set_wave_num(wave);
         printf("game_model.get_wave_num() = %i\n",game.game_model.get_wave_num());
         for(int i = 0; i < max; i++){
