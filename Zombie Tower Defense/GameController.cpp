@@ -27,7 +27,7 @@ void GameController::startGame() {
 void GameController::endGame() {
     printf("GAME OVER\n");
     int level = game_model.current_level;
-    int wave = game_model.wave_num;
+    int wave = game_model.get_wave_num();
     int total_points = game_model.total_points;
     printf("Total points: %i\n",total_points);
     printf("Game ended on level: %i\n",level);
@@ -50,7 +50,6 @@ void GameController::update_total_points() {
 }
 
 void GameController::damageCastle(int damage) {
-    CastleModel castle;
     int health = castle.get_castle_health();
     health = health - damage;
     if (health <= 0) {

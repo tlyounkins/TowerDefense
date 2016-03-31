@@ -11,8 +11,8 @@ GameController game;
 GLUquadricObj *tower_quadric;
 
 int max = 5;
-int wave = 0;
-
+int wave = 1;
+bool Tower_flag1 = false;
 ZombieModel current_enemies[5];
 CastleModel castle;
 
@@ -62,9 +62,9 @@ int GameView::Initialize(int argc, char *argv[]) {
     }
     
     // Create upgrades men
-    //glutCreateMenu(upgrades_menu);
-    //glutAddMenuEntry("Tower",ADD_TOWER);
-    //glutAttachMenu(GLUT_RIGHT_BUTTON);
+    glutCreateMenu(upgrades_menu);
+    glutAddMenuEntry("Add Tower",ADD_TOWER);
+    glutAttachMenu(GLUT_RIGHT_BUTTON);
     
     // Begin event loop
     glutMainLoop();
@@ -83,10 +83,10 @@ void GameView::idleFunc(){
             current_enemies[i].x = 0;
             current_enemies[i].y = 0;
             // Damage Castle
-            int health = castle.get_castle_health();
+            int health = game.castle.get_castle_health();
             health--;
             printf("Your castle takes damage!\n");
-            castle.set_castle_health(health);
+            game.castle.set_castle_health(health);
             printf("Castle health is now %i\n",health);
             if (health <= 0) {
                 printf("\n\n");
@@ -106,6 +106,9 @@ void GameView::idleFunc(){
     if(count == max){
         printf("Next Wave!\n");
         wave++;
+        printf("Wave++ = %i\n",wave);
+        game.game_model.set_wave_num(wave);
+        printf("game_model.get_wave_num() = %i\n",game.game_model.get_wave_num());
         for(int i = 0; i < max; i++){
             current_enemies[i] = game.game_model.levels.wave_enemies[wave][i];
         }
@@ -133,8 +136,11 @@ void GameView::display() {
     draw_current_enemies();
     
     draw_castle();
-    draw_tower();
-    
+   
+    if (Tower_flag1 == true) {
+        draw_tower();
+        
+    }
     
     // Swap Buffers
     glutSwapBuffers();
@@ -194,9 +200,8 @@ void GameView::draw_grid(){
 }
 
 // Routine to process upgrades menu selection
-void upgrades_menu(int id)
-{
-    
+void GameView::upgrades_menu(int id) {
+    Tower_flag1 = true;
 }
 
 // Draw zombie method
@@ -259,8 +264,10 @@ void GameView::draw_tower() {
         gluDisk(tower_quadric, 0, 1.5, 100, 100);
         glColor3f(0.0f, 0.0f, 0.0f);
         gluDisk(tower_quadric, 1.4, 1.5, 100, 100);
+        // Firing Range
+        glColor3f(1.0f, 0.0f, 0.0f);
+        gluDisk(tower_quadric, 2.4, 2.5, 100, 100);
     glPopMatrix();
-    glPopAttrib();
 }
 
 // Start Wave

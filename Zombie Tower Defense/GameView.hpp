@@ -32,6 +32,7 @@ public:
     
     // Variables
     GLUquadricObj *quadric;
+    int ADD_TOWER;
     
     // Grid size
     int x_max;
@@ -49,6 +50,7 @@ public:
     void static draw_castle();
     void static draw_tower();
     void draw_wave(int wave_num, int level);
+    void static upgrades_menu(int id);
 
 };
 #endif /* GameView_hpp */
