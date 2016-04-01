@@ -15,6 +15,7 @@
 #endif
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "EnemyModel.hpp"
 #include "ZombieModel.hpp"
 #include "CastleModel.hpp"
@@ -51,6 +52,7 @@ public:
     void static draw_tower();
     void draw_wave(int wave_num, int level);
     void static upgrades_menu(int id);
+    void static draw_text();
 
 };
 #endif /* GameView_hpp */

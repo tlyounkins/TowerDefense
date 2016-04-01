@@ -29,6 +29,8 @@ public:
     // Public interface (GameModel's functions)
     int get_wave_num();
     void set_wave_num(int wave);
+    int get_level();
+    void set_level(int level);
     
 };
 #endif /* GameModel_hpp */

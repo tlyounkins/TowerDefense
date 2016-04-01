@@ -13,8 +13,9 @@ GLUquadricObj *tower_quadric;
 int max = 5;
 bool Tower_flag1 = false;
 ZombieModel current_enemies[5];
-
-
+char healthStr[32];
+char waveStr[32];
+char levelStr[32];
 
 // Constructor
 GameView::GameView() {
@@ -131,6 +132,7 @@ void GameView::display() {
     // Flush Buffer
     glFlush();
     
+    draw_text();
     draw_grid();
     
     draw_current_enemies();
@@ -204,6 +206,37 @@ void GameView::upgrades_menu(int id) {
     Tower_flag1 = true;
 }
 
+// Routine to draw text on screen
+void GameView::draw_text() {
+    glPushMatrix();
+    glLoadIdentity();
+    
+    // Create strings
+    sprintf(healthStr,"Castle Health:  %d",game.castle.get_castle_health());
+    sprintf(levelStr,"Level:  %d",game.game_model.get_level()+1);
+    sprintf(waveStr,"Wave:  %d",game.game_model.get_wave_num()+1);
+    glColor3f(1.0f,0.0f,0.0f);
+    // Set the text to the top left corner
+    glRasterPos2f(-18.0f,17.0f);
+    for (unsigned int i = 0; i<strlen(healthStr); i++)
+    {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, healthStr[i]);
+    }
+    glRasterPos2f(-18.0f,16.0f);
+    for (unsigned int i = 0; i<strlen(levelStr); i++)
+    {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, levelStr[i]);
+    }
+    glRasterPos2f(-18.0f,15.0f);
+    for (unsigned int i = 0; i<strlen(waveStr); i++)
+    {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, waveStr[i]);
+    }
+    
+    glPopMatrix();
+    
+}
+    
 // Draw zombie method
 void GameView::draw_zombie(EnemyModel zombie) {
     zombie.quadric = gluNewQuadric();
