@@ -41,7 +41,6 @@ public:
     void pause_game();
     void update_total_points();
     void damageCastle(int damage);
-    void spawn_enemy(int wave_num, int level);
 };
 
 #endif /* GameController_hpp */

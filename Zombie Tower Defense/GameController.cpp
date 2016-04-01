@@ -51,14 +51,11 @@ void GameController::update_total_points() {
 
 void GameController::damageCastle(int damage) {
     int health = castle.get_castle_health();
-    health = health - damage;
+    health--;
     if (health <= 0) {
         endGame();
     } else {
         castle.set_castle_health(health);
     }
-}
-
-void GameController::spawn_enemy(int wave_num, int level) {
-   // EnemyModel enemy = new EnemyModel();
+    
 }

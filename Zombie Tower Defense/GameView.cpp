@@ -16,6 +16,13 @@ ZombieModel current_enemies[5];
 char healthStr[32];
 char waveStr[32];
 char levelStr[32];
+GLint start_x = 0;
+GLint start_y = 0;
+GLfloat tower_x = 0.0f;
+GLfloat tower_y = 0.0f;
+
+// Conversion from screen to world coordinates
+GLfloat dt = 0.05f;
 
 // Constructor
 GameView::GameView() {
@@ -49,6 +56,8 @@ int GameView::Initialize(int argc, char *argv[]) {
     glutDisplayFunc(display);
     glutKeyboardFunc(keyFunc);
     glutIdleFunc(idleFunc);
+    glutMouseFunc(mousefunc);
+    glutMotionFunc(movefunc);
     
     // Set Background Color
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -103,7 +112,7 @@ void GameView::idleFunc(){
     }
     
     // Next Wave
-    if(count == max){
+    if (count == max){
         printf("Next Wave!\n");
 
         int wave = game.game_model.get_wave_num();
@@ -152,12 +161,61 @@ void GameView::display() {
 void GameView::keyFunc(unsigned char key, int x, int y) {
     // Exit Program with ESC
     // Temp until menu works
-    if (key == 27){
+    if (key == 27) {
         printf("Main needs to exit!\n");
         exit(0);
     }
 }
-                 
+
+// Mouse click callback
+void GameView::mousefunc(int button, int state, int x, int y)
+{
+    // Store cursor position when left button is clicked
+    if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+    {
+        start_x = x;
+        start_y = y;
+    }
+}
+
+// Mouse move callback
+void GameView::movefunc(int x, int y)
+{
+    GLint dx, dy;
+    
+    // Compute change in cursor position (inverted y)
+    dx = x - start_x;
+    dy = start_y - y;
+    
+    // Update Tower (bounded) position
+    tower_x += dx*dt;
+    if (tower_x < -19.0f)
+    {
+        tower_x = -19.0f;
+    }
+    else if (tower_x > 19.0f)
+    {
+        tower_x = 19.0f;
+    }
+    
+    tower_y += dy*dt;
+    if (tower_y < -19.0f)
+    {
+        tower_y = -19.0f;
+    }
+    else if (tower_y > 19.0f)
+    {
+        tower_y = 19.0f;
+    }
+    
+    // TODO: Reset start position
+    start_x = x;
+    start_y = y;
+    
+    // Redraw screen
+    glutPostRedisplay();
+}
+
 // Draw Current Enemies
 void GameView::draw_current_enemies(){
     for(int i = 0; i < max; i++){
@@ -291,7 +349,8 @@ void GameView::draw_tower() {
     
     glPushAttrib(GL_CURRENT_BIT);
     glPushMatrix();
-        glTranslatef(4, -4, 0.0f);
+        //glTranslatef(4, -4, 0.0f);
+        glTranslatef(tower_x,tower_y, 0.0f);
         glColor3f(0.75f, 0.75f, 0.75f);
         //glScalef(0.03, 0.03, 1);
         gluDisk(tower_quadric, 0, 1.5, 100, 100);
