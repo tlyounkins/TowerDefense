@@ -38,7 +38,6 @@ public:
     // Grid size
     int x_max;
     int y_max;
- 
    
     // Public interface
     void test();

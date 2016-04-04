@@ -18,7 +18,6 @@ GameController::~GameController() {
 
 // Start Game
 void GameController::startGame() {
-    //view.test();
     printf("Game Started\n");
     startLevel();
 }
@@ -37,6 +36,7 @@ void GameController::endGame() {
 // Start level
 void GameController::startLevel() {
     printf("Level started\n");
+    game_model.set_wave_num(0);
 }
 
 // End level

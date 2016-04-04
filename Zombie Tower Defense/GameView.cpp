@@ -13,6 +13,7 @@ GLUquadricObj *tower_quadric;
 int max = 5;
 bool Tower_flag1 = false;
 ZombieModel current_enemies[5];
+
 char healthStr[32];
 char waveStr[32];
 char levelStr[32];
@@ -20,6 +21,11 @@ GLint start_x = 0;
 GLint start_y = 0;
 GLfloat tower_x = 0.0f;
 GLfloat tower_y = 0.0f;
+
+// Global animation variables
+GLint fps = 30;
+GLint time = 0;
+GLint lasttime = 0;
 
 // Conversion from screen to world coordinates
 GLfloat dt = 0.05f;
@@ -83,47 +89,69 @@ int GameView::Initialize(int argc, char *argv[]) {
 
 // Glorious Idle Function
 void GameView::idleFunc(){
-    int count = 0;
-    // Move Zombies
-    for(int i = 0; i < max; i++){
-        // Check zombie location
-        if((current_enemies[i].x == 0) && (current_enemies[i].y == -5)){
-            // Zombie made it to castle
-            current_enemies[i].x = 0;
-            current_enemies[i].y = 0;
-            // Damage Castle
-            int health = game.castle.get_castle_health();
-            health--;
-            printf("Your castle takes damage!\n");
-            game.castle.set_castle_health(health);
-            printf("Castle health is now %i\n",health);
-            if (health <= 0) {
-                printf("\n\n");
-                game.endGame();
-                exit(0);
-            }
-        } else {
-            if((current_enemies[i].x == 0)&&(current_enemies[i].y == 0)){
-                count++;
-            } else {
-                current_enemies[i].step();
-            }
-        }
-    }
     
-    // Next Wave
-    if (count == max){
-        printf("Next Wave!\n");
-
-        int wave = game.game_model.get_wave_num();
-        wave++;
-        game.game_model.set_wave_num(wave);
-        printf("game_model.get_wave_num() = %i\n",game.game_model.get_wave_num());
+    // Time-based Animations
+    time = glutGet(GLUT_ELAPSED_TIME);
+    
+    // Update if past desired interval
+    if (time - lasttime > 1000.0f/fps)
+    {
+        
+        int count = 0;
+        // Move Zombies
         for(int i = 0; i < max; i++){
-            current_enemies[i] = game.game_model.levels.wave_enemies[wave][i];
+            // Check zombie location
+            if((current_enemies[i].x == 0) && (current_enemies[i].y == -5)){
+                // Zombie made it to castle
+                current_enemies[i].x = 0;
+                current_enemies[i].y = 0;
+                // Damage Castle
+                int health = game.castle.get_castle_health();
+                health--;
+                printf("Your castle takes damage!\n");
+                game.castle.set_castle_health(health);
+                printf("Castle health is now %i\n",health);
+                if (health <= 0) {
+                    printf("\n\n");
+                    game.endGame();
+                    exit(0);
+                }
+            } else {
+                if((current_enemies[i].x == 0)&&(current_enemies[i].y == 0)){
+                    count++;
+                } else {
+                current_enemies[i].step();
+                }
+            }
         }
+
+        // Next Wave
+        if (count == max){
+            printf("Next Wave!\n");
+          
+
+            int wave = game.game_model.get_wave_num();
+            if (wave == 2) {
+                int level = game.game_model.get_level();
+                level++;
+                game.game_model.set_level(level);
+                game.startLevel();
+                game.castle.set_castle_health(20);
+            } else {
+                wave++;
+                game.game_model.set_wave_num(wave);
+            }
+            printf("game_model.get_wave_num() = %i\n",game.game_model.get_wave_num());
+            for(int i = 0; i < max; i++){
+                current_enemies[i] = game.game_model.levels.wave_enemies[wave][i];
+            }
+        }
+    
+        // Update lasttime (reset time)
+        lasttime = time;
+    
+        glutPostRedisplay();
     }
-    glutPostRedisplay();
 }
 
 // Display Callback
@@ -208,7 +236,7 @@ void GameView::movefunc(int x, int y)
         tower_y = 19.0f;
     }
     
-    // TODO: Reset start position
+    // Reset start position
     start_x = x;
     start_y = y;
     

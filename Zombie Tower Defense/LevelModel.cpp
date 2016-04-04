@@ -89,7 +89,7 @@ void LevelModel::create_level(int waves){
             
             ZombieModel zombie;
             zombie.health = 10;
-            zombie.speed = 20;
+            zombie.speed = 5;
             zombie.x = x_pos;
             zombie.y = y_pos;
             wave_enemies[i][j] = zombie;
