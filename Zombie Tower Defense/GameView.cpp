@@ -210,10 +210,12 @@ void GameView::keyFunc(unsigned char key, int x, int y) {
     }
     
     if (game->endgame == true && (key == 'n' || key == 'N')) {
+        delete game;
         exit(0);
     }
     if (game->endgame == true && (key == 'y' || key == 'Y')) {
         // Start new game
+        delete game;
         game = new GameController;
         for(int i = 0; i < max; i++){
             current_enemies[i] = game->game_model.levels.wave_enemies[0][i];
