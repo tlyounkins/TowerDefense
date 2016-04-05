@@ -6,12 +6,17 @@
 
 #include "GameView.hpp"
 
-GameController game;
+#define add_tower 0
+#define castle_health_increase 1
+#define add_moat 2
 
+GameController *game;
+UpgradesModel upgrades;
 GLUquadricObj *tower_quadric;
 
 int max = 5;
 bool Tower_flag1 = false;
+bool Moat_flag = false;
 ZombieModel current_enemies[5];
 
 char healthStr[32];
@@ -74,16 +79,19 @@ int GameView::Initialize(int argc, char *argv[]) {
     glClearColor(0.0f, 0.75f, 0.0f, 1.0f);
     
     // Create Game Controller
-    game.startGame();
+    game = new GameController();
+    game->startGame();
     
     //Temp?
     for(int i = 0; i < max; i++){
-        current_enemies[i] = game.game_model.levels.wave_enemies[0][i];
+        current_enemies[i] = game->game_model.levels.wave_enemies[0][i];
     }
     
     // Create upgrades men
     glutCreateMenu(upgrades_menu);
-    glutAddMenuEntry("Add Tower",ADD_TOWER);
+    glutAddMenuEntry("Add Tower: 500 resources",add_tower);
+    glutAddMenuEntry("Increase Castle Health by 5: 500 resources",castle_health_increase);
+    glutAddMenuEntry("Add Moat: 1000 resources",add_moat);
     glutAttachMenu(GLUT_RIGHT_BUTTON);
     
     // Begin event loop
@@ -111,19 +119,19 @@ void GameView::idleFunc(){
                 current_enemies[i].x = 0;
                 current_enemies[i].y = 0;
                 // Damage Castle
-                int health = game.castle.get_castle_health();
+                int health = game->castle.get_castle_health();
                 health--;
                 printf("Your castle takes damage!\n");
-                game.castle.set_castle_health(health);
+                game->castle.set_castle_health(health);
                 printf("Castle health is now %i\n",health);
                 if (health <= 0) {
                     printf("\n\n");
-                    game.endGame();
+                    game->endGame();
                 }
             } else {
                 if((current_enemies[i].x == 0)&&(current_enemies[i].y == 0)){
                     count++;
-                } else if (game.endgame == false) {
+                } else if (game->endgame == false) {
                     current_enemies[i].step();
                 }
             }
@@ -132,20 +140,20 @@ void GameView::idleFunc(){
         // Next Wave
         if (count == max){
             printf("Next Wave!\n");
-            int wave = game.game_model.get_wave_num();
+            int wave = game->game_model.get_wave_num();
             if (wave == 2) {
-                int level = game.game_model.get_level();
+                int level = game->game_model.get_level();
                 level++;
-                game.game_model.set_level(level);
-                game.startLevel();
-                game.castle.set_castle_health(20);
+                game->game_model.set_level(level);
+                game->startLevel();
+                game->castle.set_castle_health(20);
             } else {
                 wave++;
-                game.game_model.set_wave_num(wave);
+                game->game_model.set_wave_num(wave);
             }
-            printf("game_model.get_wave_num() = %i\n",game.game_model.get_wave_num());
+            printf("game_model.get_wave_num() = %i\n",game->game_model.get_wave_num());
             for(int i = 0; i < max; i++){
-                current_enemies[i] = game.game_model.levels.wave_enemies[wave][i];
+                current_enemies[i] = game->game_model.levels.wave_enemies[wave][i];
             }
         }
     
@@ -176,12 +184,17 @@ void GameView::display() {
     
     draw_current_enemies();
     
+    if (Moat_flag == true) {
+        draw_moat();
+    }
+    
     draw_castle();
    
     if (Tower_flag1 == true) {
         draw_tower();
         
     }
+
     draw_text();
     // Swap Buffers
     glutSwapBuffers();
@@ -196,12 +209,15 @@ void GameView::keyFunc(unsigned char key, int x, int y) {
         exit(0);
     }
     
-    if (game.endgame == true && (key == 'n' || key == 'N')) {
+    if (game->endgame == true && (key == 'n' || key == 'N')) {
         exit(0);
     }
-    if (game.endgame == true && (key == 'y' || key == 'Y')) {
+    if (game->endgame == true && (key == 'y' || key == 'Y')) {
         // Start new game
-        //Initialize();
+        game = new GameController;
+        for(int i = 0; i < max; i++){
+            current_enemies[i] = game->game_model.levels.wave_enemies[0][i];
+        }
     }
 }
 
@@ -299,7 +315,29 @@ void GameView::draw_grid(){
 
 // Routine to process upgrades menu selection
 void GameView::upgrades_menu(int id) {
-    Tower_flag1 = true;
+    int resources = game->game_model.get_num_resources();
+    if (id == add_tower) {
+        if (resources >= upgrades.tower_cost) {
+            Tower_flag1 = true;
+            resources = resources - upgrades.tower_cost;
+            game->game_model.set_num_resources(resources);
+        }
+    } else if (id == castle_health_increase) {
+        if (resources >= upgrades.castle_health_upgrade_cost) {
+            int health = game->castle.get_castle_health();
+            health = health + upgrades.castle_health_upgrade;
+            game->castle.set_castle_health(health);
+            resources = resources - upgrades.castle_health_upgrade_cost;
+            game->game_model.set_num_resources(resources);
+        }
+       
+    } else if (id == add_moat) {
+        if (resources >= upgrades.moat_upgrade_cost) {
+            Moat_flag = true;
+            resources = resources - upgrades.moat_upgrade_cost;
+            game->game_model.set_num_resources(resources);
+        }
+    }
 }
 
 // Routine to draw text on screen
@@ -308,12 +346,12 @@ void GameView::draw_text() {
     glLoadIdentity();
     
     // Create strings
-    sprintf(healthStr,"Castle Health:  %d",game.castle.get_castle_health());
-    sprintf(resourcesStr,"Resources:  %d",game.game_model.get_num_resources());
-    sprintf(pointsStr,"Total Points:  %d",game.game_model.get_total_points());
-    sprintf(levelStr,"Level:  %d",game.game_model.get_level()+1);
-    sprintf(waveStr,"Wave:  %d",game.game_model.get_wave_num()+1);
-    sprintf(waveStr,"Wave:  %d",game.game_model.get_wave_num()+1);
+    sprintf(healthStr,"Castle Health:  %d",game->castle.get_castle_health());
+    sprintf(resourcesStr,"Resources:  %d",game->game_model.get_num_resources());
+    sprintf(pointsStr,"Total Points:  %d",game->game_model.get_total_points());
+    sprintf(levelStr,"Level:  %d",game->game_model.get_level()+1);
+    sprintf(waveStr,"Wave:  %d",game->game_model.get_wave_num()+1);
+    sprintf(waveStr,"Wave:  %d",game->game_model.get_wave_num()+1);
     glColor3f(0.0f,0.0f,1.0f);
     // Set the text to the top left corner
     glRasterPos2f(-18.0f,17.0f);
@@ -338,7 +376,7 @@ void GameView::draw_text() {
     }
     
     
-    if (game.endgame == true) {
+    if (game->endgame == true) {
         glColor3f(1.0f,0.0f,0.0f);
         sprintf(gameoverStr,"GAME OVER");
         glRasterPos2f(-3.0f,2.0f);
@@ -425,15 +463,71 @@ void GameView::draw_tower() {
         gluDisk(tower_quadric, 1.4, 1.5, 100, 100);
         // Firing Range
         glColor3f(1.0f, 0.0f, 0.0f);
-        gluDisk(tower_quadric, 2.4, 2.5, 100, 100);
+        gluDisk(tower_quadric, 4.95, 5.0, 100, 100);
     glPopMatrix();
 }
 
+// Draw castle method
+void GameView::draw_moat() {
+    glPushAttrib(GL_CURRENT_BIT);
+    glPushMatrix();
+    glColor3f(0.0f, 0.0f, 0.75f);
+    glBegin(GL_POLYGON);
+        // Counter-ClockWise around origin
+        // Top Left
+        glVertex3f(-6.0f, 6.0f, 0.0f);
+        glVertex3f(-6.0f, -6.0f, 0.0f);
+        glVertex3f(6.0f, -6.0f, 0.0f);
+        glVertex3f(6.0f, 6.0f, 0.0f);
+    glEnd();
+    glColor3f(0.0f, 0.0f, 0.0f);
+    // Do not fill polygon
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    glBegin(GL_POLYGON);
+        // Top Left
+        glVertex3f(-6.0f, 6.0f, 0.0f);
+        glVertex3f(-6.0f, -6.0f, 0.0f);
+        glVertex3f(-6.0f, -6.0f, 0.0f);
+        glVertex3f(-6.0f, 6.0f, 0.0f);
+    glEnd();
+    
+    // Revert Changes
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    glPopMatrix();
+    glPopAttrib();
+    
+    glPushAttrib(GL_CURRENT_BIT);
+    glPushMatrix();
+    glColor3f(0.5f,0.5f,0.25f);
+    glBegin(GL_POLYGON);
+    // Counter-ClockWise around origin
+    // Top Left
+    glVertex3f(-1.0f, -5.0f, 0.0f);
+    glVertex3f(-1.0f, -7.0f, 0.0f);
+    glVertex3f(1.0f, -7.0f, 0.0f);
+    glVertex3f(1.0f, -5.0f, 0.0f);
+    glEnd();
+    glColor3f(0.0f, 0.0f, 0.0f);
+    // Do not fill polygon
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    glBegin(GL_POLYGON);
+    // Top Left
+    glVertex3f(-1.0f, -5.0f, 0.0f);
+    glVertex3f(-1.0f, -7.0f, 0.0f);
+    glVertex3f(1.0f, -7.0f, 0.0f);
+    glVertex3f(1.0f, -5.0f, 0.0f);
+    glEnd();
+   
+    // Revert Changes
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    glPopMatrix();
+    glPopAttrib();
+}
 // Start Wave
 void GameView::draw_wave(int wave_num, int level){
     printf("Wave %i starting\n", wave_num);
     for(int i = 0; i < max; i++){
-        draw_zombie(game.game_model.levels.wave_enemies[wave_num][i]);
+        draw_zombie(game->game_model.levels.wave_enemies[wave_num][i]);
     }
     for(int i = 0; i < max; i++){
         //game.game_model.levels.wave_enemies[wave_num][i].step();

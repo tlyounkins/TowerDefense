@@ -12,7 +12,7 @@ GameModel::GameModel()
     total_points = 0;
     wave_num = 0;
     current_level = 0;
-    num_resources = 0;
+    num_resources = 500;
     //levels[0] = new LevelModel(0, 2);
     levels.create_level(5);
 }

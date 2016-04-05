@@ -38,6 +38,9 @@ void GameController::endGame() {
 void GameController::startLevel() {
     printf("Level started\n");
     game_model.set_wave_num(0);
+    int level = game_model.get_level();
+    // Update starting resources for level
+    game_model.set_num_resources((level + 1) * 500);
 }
 
 // End level
