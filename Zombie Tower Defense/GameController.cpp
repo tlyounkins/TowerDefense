@@ -49,14 +49,3 @@ void GameController::endLevel() {
 void GameController::update_total_points() {
     game_model.total_points++;
 }
-
-void GameController::damageCastle(int damage) {
-    int health = castle.get_castle_health();
-    health--;
-    if (health <= 0) {
-        endGame();
-    } else {
-        castle.set_castle_health(health);
-    }
-    
-}

@@ -119,7 +119,6 @@ void GameView::idleFunc(){
                 if (health <= 0) {
                     printf("\n\n");
                     game.endGame();
-                  //  exit(0);
                 }
             } else {
                 if((current_enemies[i].x == 0)&&(current_enemies[i].y == 0)){
@@ -199,6 +198,10 @@ void GameView::keyFunc(unsigned char key, int x, int y) {
     
     if (game.endgame == true && (key == 'n' || key == 'N')) {
         exit(0);
+    }
+    if (game.endgame == true && (key == 'y' || key == 'Y')) {
+        // Start new game
+        //Initialize();
     }
 }
 

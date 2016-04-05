@@ -34,6 +34,7 @@ public:
     bool endgame;
     GameModel game_model;
     CastleModel castle;
+    
     // Public interface
     void startGame();
     void endGame();
@@ -41,7 +42,6 @@ public:
     void endLevel();
     void pause_game();
     void update_total_points();
-    void damageCastle(int damage);
 };
 
 #endif /* GameController_hpp */
