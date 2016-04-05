@@ -15,8 +15,13 @@ bool Tower_flag1 = false;
 ZombieModel current_enemies[5];
 
 char healthStr[32];
+char resourcesStr[32];
+char pointsStr[32];
 char waveStr[32];
 char levelStr[32];
+char gameoverStr[32];
+char continueStr[32];
+char yesnoStr[32];
 GLint start_x = 0;
 GLint start_y = 0;
 GLfloat tower_x = 0.0f;
@@ -66,7 +71,7 @@ int GameView::Initialize(int argc, char *argv[]) {
     glutMotionFunc(movefunc);
     
     // Set Background Color
-    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    glClearColor(0.0f, 0.75f, 0.0f, 1.0f);
     
     // Create Game Controller
     game.startGame();
@@ -114,13 +119,13 @@ void GameView::idleFunc(){
                 if (health <= 0) {
                     printf("\n\n");
                     game.endGame();
-                    exit(0);
+                  //  exit(0);
                 }
             } else {
                 if((current_enemies[i].x == 0)&&(current_enemies[i].y == 0)){
                     count++;
-                } else {
-                current_enemies[i].step();
+                } else if (game.endgame == false) {
+                    current_enemies[i].step();
                 }
             }
         }
@@ -128,8 +133,6 @@ void GameView::idleFunc(){
         // Next Wave
         if (count == max){
             printf("Next Wave!\n");
-          
-
             int wave = game.game_model.get_wave_num();
             if (wave == 2) {
                 int level = game.game_model.get_level();
@@ -169,7 +172,7 @@ void GameView::display() {
     // Flush Buffer
     glFlush();
     
-    draw_text();
+   
     draw_grid();
     
     draw_current_enemies();
@@ -180,7 +183,7 @@ void GameView::display() {
         draw_tower();
         
     }
-    
+    draw_text();
     // Swap Buffers
     glutSwapBuffers();
 }
@@ -191,6 +194,10 @@ void GameView::keyFunc(unsigned char key, int x, int y) {
     // Temp until menu works
     if (key == 27) {
         printf("Main needs to exit!\n");
+        exit(0);
+    }
+    
+    if (game.endgame == true && (key == 'n' || key == 'N')) {
         exit(0);
     }
 }
@@ -299,30 +306,57 @@ void GameView::draw_text() {
     
     // Create strings
     sprintf(healthStr,"Castle Health:  %d",game.castle.get_castle_health());
+    sprintf(resourcesStr,"Resources:  %d",game.game_model.get_num_resources());
+    sprintf(pointsStr,"Total Points:  %d",game.game_model.get_total_points());
     sprintf(levelStr,"Level:  %d",game.game_model.get_level()+1);
     sprintf(waveStr,"Wave:  %d",game.game_model.get_wave_num()+1);
-    glColor3f(1.0f,0.0f,0.0f);
+    sprintf(waveStr,"Wave:  %d",game.game_model.get_wave_num()+1);
+    glColor3f(0.0f,0.0f,1.0f);
     // Set the text to the top left corner
     glRasterPos2f(-18.0f,17.0f);
-    for (unsigned int i = 0; i<strlen(healthStr); i++)
-    {
+    for (unsigned int i = 0; i<strlen(healthStr); i++) {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, healthStr[i]);
     }
     glRasterPos2f(-18.0f,16.0f);
-    for (unsigned int i = 0; i<strlen(levelStr); i++)
-    {
-        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, levelStr[i]);
+    for (unsigned int i = 0; i<strlen(resourcesStr); i++) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, resourcesStr[i]);
     }
     glRasterPos2f(-18.0f,15.0f);
-    for (unsigned int i = 0; i<strlen(waveStr); i++)
-    {
+    for (unsigned int i = 0; i<strlen(pointsStr); i++) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, pointsStr[i]);
+    }
+    glRasterPos2f(15.0f,17.0f);
+    for (unsigned int i = 0; i<strlen(levelStr); i++) {
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, levelStr[i]);
+    }
+    glRasterPos2f(15.0f,16.0f);
+    for (unsigned int i = 0; i<strlen(waveStr); i++) {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, waveStr[i]);
     }
     
+    
+    if (game.endgame == true) {
+        glColor3f(1.0f,0.0f,0.0f);
+        sprintf(gameoverStr,"GAME OVER");
+        glRasterPos2f(-3.0f,2.0f);
+        for (unsigned int i = 0; i<strlen(gameoverStr); i++) {
+            glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, gameoverStr[i]);
+        }
+        sprintf(continueStr,"CONTINUE?");
+        glRasterPos2f(-3.0f,-1.0f);
+        for (unsigned int i = 0; i<strlen(continueStr); i++) {
+            glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, continueStr[i]);
+        }
+        sprintf(yesnoStr,"     Y         N");
+        glRasterPos2f(-3.0f,-3.0f);
+        for (unsigned int i = 0; i<strlen(yesnoStr); i++) {
+            glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, yesnoStr[i]);
+        }
+    }
     glPopMatrix();
     
 }
-    
+
 // Draw zombie method
 void GameView::draw_zombie(EnemyModel zombie) {
     zombie.quadric = gluNewQuadric();
@@ -342,6 +376,7 @@ void GameView::draw_zombie(EnemyModel zombie) {
     glPopAttrib();
 }
 
+// Draw castle method
 void GameView::draw_castle() {
     glPushAttrib(GL_CURRENT_BIT);
     glPushMatrix();
@@ -370,6 +405,7 @@ void GameView::draw_castle() {
     glPopAttrib();
 }
 
+// Draw tower method
 void GameView::draw_tower() {
     tower_quadric = gluNewQuadric();
     gluQuadricDrawStyle(tower_quadric, GLU_FILL);

@@ -8,7 +8,7 @@
 
 // Constructor
 GameController::GameController() {
-   
+    endgame = false;
 }
 
 // Destructor
@@ -24,6 +24,7 @@ void GameController::startGame() {
 
 // End Game
 void GameController::endGame() {
+    endgame = true;
     printf("GAME OVER\n");
     int level = game_model.current_level;
     int wave = game_model.get_wave_num();

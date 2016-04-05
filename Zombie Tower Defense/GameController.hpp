@@ -31,6 +31,7 @@ public:
     ~GameController();
     
     // Variables
+    bool endgame;
     GameModel game_model;
     CastleModel castle;
     // Public interface
