@@ -14,6 +14,8 @@
     #include <GL/glew.h>
     #include <GL/glut.h>
 #endif
+#include "stlastar.h"
+#include "findpath.cpp"
 
 class ZombieModel: public EnemyModel {
     
@@ -27,8 +29,15 @@ public:
     int count;
     int health;
     int speed;
+    int path_length;
+    int path_location;
+    bool left, right, down, up;
+    AStarSearch<MapSearchNode> astarsearch;
+    MapSearchNode *path[];
+
     // Public interface
     virtual void step();
+    void create_path(int i, int j, int game_map[]);
 };
 
 #endif /* ZombieModel_hpp */

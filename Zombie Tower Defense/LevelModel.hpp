@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include <stdlib.h> 
+#include <ctime>
 #include "EnemyModel.hpp"
 #include "ZombieModel.hpp"
 
@@ -28,7 +29,9 @@ public:
     
     
     // Public interface
-    void create_level(int waves);
+    void create_level(int waves, int game_map[]);
+    void create_wave(int wave_number, int game_map[]);
+    void create_wave_enemy(int wave_number, int wave_position, int game_map[]);
 };
 
 #endif /* LevelModel_hpp */

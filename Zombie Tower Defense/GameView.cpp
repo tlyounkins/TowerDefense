@@ -10,9 +10,54 @@ GameController game;
 
 GLUquadricObj *tower_quadric;
 
-int max = 5;
+int enemy_max = 5;
 bool Tower_flag1 = false;
 ZombieModel current_enemies[5];
+// 0 empty, 9 impassable
+int grid_location[40*40] = {
+    9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,
+    9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,
+    9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,
+    9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,
+    9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,
+    9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,
+    9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,
+    9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,
+    9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,
+    9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,
+    9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,
+    9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,
+    9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,
+    9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,
+    9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,
+    9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,
+    9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,
+    9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,
+    9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,
+    9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,
+    9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,
+    9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,
+    9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,
+    9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,
+    9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,
+    9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,
+    9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,
+    9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,
+    9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,
+    9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,
+    9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,
+    9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,
+    9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,
+    9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,
+    9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,
+    9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,
+    9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,
+    9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,
+    9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,
+    9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9
+    
+};
+// GRID FORMULA -> ((y*40)+x)
 
 
 
@@ -39,6 +84,36 @@ int GameView::Initialize(int argc, char *argv[]) {
     // Create WIndow
     glutCreateWindow("Tower Defense");
     
+    // Initlize location grid
+    for(int i = 0; i < 40; i++){
+        for(int j = 0; j < 40; j++){
+            grid_location[(j * 40) + i] = 1;
+        }
+    }
+    
+    // Castle area taken
+    // Left Side
+    for(int y = 25; y > 14; y--){
+        grid_location[(y*40) + 15] = 9;
+    }
+    // Top
+    for(int x = 15; x < 26; x++){
+        grid_location[(25*40) + x] = 9;
+    }
+    // Right
+    for(int y = 25; y > 14; y--){
+        grid_location[(y*40) + 25] = 9;
+    }
+    // Bottom
+    for(int x = 15; x < 26; x++){
+        grid_location[(15 * 40) + x] = 9;
+    }
+
+    // Door free
+    grid_location[(15*40) + 20] = 1;
+    
+    game.game_setup(grid_location);
+    
 #ifndef OSX
     // Initialize GLEW
     glewInit();
@@ -56,7 +131,7 @@ int GameView::Initialize(int argc, char *argv[]) {
     game.startGame();
     
     //Temp?
-    for(int i = 0; i < max; i++){
+    for(int i = 0; i < enemy_max; i++){
         current_enemies[i] = game.game_model.levels.wave_enemies[0][i];
     }
     
@@ -73,14 +148,16 @@ int GameView::Initialize(int argc, char *argv[]) {
 
 // Glorious Idle Function
 void GameView::idleFunc(){
+    printf("idle\n");
     int count = 0;
     // Move Zombies
-    for(int i = 0; i < max; i++){
+    for(int i = 0; i < enemy_max; i++){
+        printf("%i\n", i);
         // Check zombie location
-        if((current_enemies[i].x == 0) && (current_enemies[i].y == -5)){
+        if((current_enemies[i].x == 20) && (current_enemies[i].y == 15)){
             // Zombie made it to castle
-            current_enemies[i].x = 0;
-            current_enemies[i].y = 0;
+            current_enemies[i].x = 20;
+            current_enemies[i].y = 20;
             // Damage Castle
             int health = game.castle.get_castle_health();
             health--;
@@ -93,32 +170,39 @@ void GameView::idleFunc(){
                 exit(0);
             }
         } else {
-            if((current_enemies[i].x == 0)&&(current_enemies[i].y == 0)){
+            if((current_enemies[i].x == 20)&&(current_enemies[i].y == 20)){
                 count++;
             } else {
+                grid_location[((current_enemies[i].y) * 40) + current_enemies[i].x] = 0;
+                printf("step!\n");
                 current_enemies[i].step();
+                printf("done step\n");
+                grid_location[((current_enemies[i].y) * 40) + current_enemies[i].x] = 9;
             }
         }
     }
     
+    //print_array();
+    
     // Next Wave
-    if(count == max){
+    if(count == enemy_max){
         printf("Next Wave!\n");
 
         int wave = game.game_model.get_wave_num();
         wave++;
         game.game_model.set_wave_num(wave);
         printf("game_model.get_wave_num() = %i\n",game.game_model.get_wave_num());
-        for(int i = 0; i < max; i++){
+        for(int i = 0; i < enemy_max; i++){
             current_enemies[i] = game.game_model.levels.wave_enemies[wave][i];
         }
     }
+    printf("idle exit\n");
     glutPostRedisplay();
 }
 
 // Display Callback
 void GameView::display() {
-    
+    printf("enter\n");
     // Reset background
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
@@ -142,6 +226,7 @@ void GameView::display() {
         
     }
     
+    printf("exit\n");
     // Swap Buffers
     glutSwapBuffers();
 }
@@ -158,7 +243,7 @@ void GameView::keyFunc(unsigned char key, int x, int y) {
                  
 // Draw Current Enemies
 void GameView::draw_current_enemies(){
-    for(int i = 0; i < max; i++){
+    for(int i = 0; i < enemy_max; i++){
         draw_zombie(current_enemies[i]);
     }
 }
@@ -214,7 +299,7 @@ void GameView::draw_zombie(EnemyModel zombie) {
     
     glPushAttrib(GL_CURRENT_BIT);
     glPushMatrix();
-        glTranslatef(zombie.x, zombie.y, 0.0f);
+        glTranslatef(zombie.x-20, zombie.y-20, 0.0f);
         glColor3f(0.2f, 0.8f, 0.2f);
         gluDisk(zombie.quadric, 0, 0.5, 100, 100);
         glColor3f(0.0f, 0.0f, 0.0f);
@@ -273,11 +358,26 @@ void GameView::draw_tower() {
 // Start Wave
 void GameView::draw_wave(int wave_num, int level){
     printf("Wave %i starting\n", wave_num);
-    for(int i = 0; i < max; i++){
+    for(int i = 0; i < enemy_max; i++){
         draw_zombie(game.game_model.levels.wave_enemies[wave_num][i]);
     }
-    for(int i = 0; i < max; i++){
+    for(int i = 0; i < enemy_max; i++){
         //game.game_model.levels.wave_enemies[wave_num][i].step();
     }
     
+}
+
+// Print Out arrary
+void GameView::print_array(){
+    for(int i = 0; i < 40; i++){
+        for(int j = 0; j < 40; j++){
+            if(grid_location[(j*40)+i] == 9){
+                printf(" |");
+            } else{
+                printf(" _");
+            }
+        }
+        printf("\n");
+    }
+    printf("\n");
 }

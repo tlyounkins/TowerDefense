@@ -28,6 +28,7 @@ public:
     
     // Public interface (GameModel's functions)
     int get_wave_num();
+    void create_levels(int game_map[]);
     void set_wave_num(int wave);
     
 };

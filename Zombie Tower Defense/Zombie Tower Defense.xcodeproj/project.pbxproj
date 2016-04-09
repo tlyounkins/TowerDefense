@@ -22,6 +22,9 @@
 		2FDE96FB1C690E1500F44DFF /* EnemyModel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EnemyModel.hpp; sourceTree = "<group>"; };
 		2FDE96FC1C690E3500F44DFF /* PowerUpModel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PowerUpModel.cpp; sourceTree = "<group>"; };
 		2FDE96FD1C690E3500F44DFF /* PowerUpModel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PowerUpModel.hpp; sourceTree = "<group>"; };
+		D2A2A4931CB32FE800524261 /* stlastar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stlastar.h; sourceTree = "<group>"; };
+		D2A2A4941CB3302600524261 /* findpath.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = findpath.cpp; sourceTree = "<group>"; };
+		D2A2A4951CB3310E00524261 /* fsa.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fsa.h; sourceTree = "<group>"; };
 		D2B2064D1C69A13200AA4BAE /* GameView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameView.cpp; sourceTree = "<group>"; };
 		D2B2064E1C69A13200AA4BAE /* GameView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GameView.hpp; sourceTree = "<group>"; };
 		D2DF64821C6BF85D00C880F5 /* Makefile */ = {isa = PBXFileReference; explicitFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; usesTabs = 1; };
@@ -58,6 +61,9 @@
 				2F85887D1C7F6D9A00FB3727 /* UpgradesModel.hpp */,
 				D2DF64831CA0D22E00C880F5 /* LevelModel.cpp */,
 				D2DF64841CA0D22E00C880F5 /* LevelModel.hpp */,
+				D2A2A4931CB32FE800524261 /* stlastar.h */,
+				D2A2A4951CB3310E00524261 /* fsa.h */,
+				D2A2A4941CB3302600524261 /* findpath.cpp */,
 			);
 			name = Model;
 			sourceTree = "<group>";

@@ -46,10 +46,12 @@ public:
     //void get_color()
     //void set_color(color);
     void draw();
-    virtual void step();
+    virtual void step(int array[]);
     
     int get_speed();
     void set_speed(int speed);
+    
+    void create_path();
 };
 
 #endif /* EnemyModel_hpp */

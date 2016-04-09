@@ -16,6 +16,11 @@ GameController::~GameController() {
     
 }
 
+//Set Up Game
+void GameController::game_setup(int game_map[]){
+    game_model.create_levels(game_map);
+}
+
 // Start Game
 void GameController::startGame() {
     //view.test();

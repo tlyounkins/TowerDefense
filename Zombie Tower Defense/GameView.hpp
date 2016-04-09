@@ -51,6 +51,7 @@ public:
     void static draw_tower();
     void draw_wave(int wave_num, int level);
     void static upgrades_menu(int id);
+    void static print_array();
 
 };
 #endif /* GameView_hpp */
