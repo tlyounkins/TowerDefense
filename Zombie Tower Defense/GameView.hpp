@@ -15,6 +15,7 @@
 #endif
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "EnemyModel.hpp"
 #include "ZombieModel.hpp"
 #include "CastleModel.hpp"
@@ -32,12 +33,11 @@ public:
     
     // Variables
     GLUquadricObj *quadric;
-    int ADD_TOWER;
-    
+   
     // Grid size
     int x_max;
     int y_max;
-    
+   
     // Public interface
     void test();
     int Initialize(int argc, char *argv[]);
@@ -49,6 +49,7 @@ public:
     void static draw_grid();
     void static draw_castle();
     void static draw_tower();
+    void static draw_moat();
     void draw_wave(int wave_num, int level);
     void static upgrades_menu(int id);
     void static print_array();

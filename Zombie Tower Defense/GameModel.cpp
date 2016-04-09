@@ -33,3 +33,18 @@ void GameModel::set_wave_num(int wave_num) {
     this->wave_num = wave_num;
 }
 
+int GameModel::get_level() {
+    return current_level;
+}
+
+void GameModel::set_level(int level) {
+    this->current_level = level;
+}
+
+int GameModel::get_num_resources() {
+    return num_resources;
+}
+
+void GameModel::set_num_resources(int num_resources) {
+    this->num_resources = num_resources;
+}
