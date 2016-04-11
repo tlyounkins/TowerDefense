@@ -18,7 +18,10 @@ public:
     
     // Variables
     GLUquadricObj *tower;
-    
+    int tower_cost;
+    int castle_health_upgrade_cost;
+    int castle_health_upgrade;
+    int moat_upgrade_cost;
     // Public interface
     
 };

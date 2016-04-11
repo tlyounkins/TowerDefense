@@ -51,3 +51,7 @@ void EnemyModel::set_y_location(int y) {
 void EnemyModel::step(){
 
 }
+
+void EnemyModel::create_path(){
+    
+}

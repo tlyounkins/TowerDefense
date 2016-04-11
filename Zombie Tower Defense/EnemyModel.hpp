@@ -50,6 +50,8 @@ public:
     
     int get_speed();
     void set_speed(int speed);
+    
+    void create_path();
 };
 
 #endif /* EnemyModel_hpp */

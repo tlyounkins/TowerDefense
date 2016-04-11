@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include <stdlib.h> 
+#include <ctime>
 #include "EnemyModel.hpp"
 #include "ZombieModel.hpp"
 
@@ -22,8 +23,8 @@ public:
     ~LevelModel();
     
     // Variables
-    int id;
-    int waves;
+    int id = 0;
+    int wave_amount = 0;
     ZombieModel wave_enemies[10][5];
     
     

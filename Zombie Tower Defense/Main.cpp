@@ -22,7 +22,6 @@
 void keyFunc(unsigned char key, int x, int y);
 
 int main(int argc, char *argv[]) {
-    
     // Start Game
     GameView game;
     game.Initialize(argc, argv);

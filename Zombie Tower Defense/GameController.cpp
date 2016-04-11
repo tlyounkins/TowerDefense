@@ -7,13 +7,19 @@
 #include "GameController.hpp"
 
 // Constructor
-GameController::GameController() {
-   
+GameController::GameController() : game_model(){
+    endgame = false;
 }
 
 // Destructor
 GameController::~GameController() {
     
+}
+
+//Set Up Game
+void GameController::game_setup(){
+    printf("Creating game\n");
+    game_model.create_levels();
 }
 
 // Start Game
@@ -24,6 +30,7 @@ void GameController::startGame() {
 
 // End Game
 void GameController::endGame() {
+    endgame = true;
     printf("GAME OVER\n");
     int level = game_model.current_level;
     int wave = game_model.get_wave_num();
@@ -37,6 +44,9 @@ void GameController::endGame() {
 void GameController::startLevel() {
     printf("Level started\n");
     game_model.set_wave_num(0);
+    int level = game_model.get_level();
+    // Update starting resources for level
+    game_model.set_num_resources((level + 1) * 500);
 }
 
 // End level
@@ -47,15 +57,4 @@ void GameController::endLevel() {
 // Update total_points
 void GameController::update_total_points() {
     game_model.total_points++;
-}
-
-void GameController::damageCastle(int damage) {
-    int health = castle.get_castle_health();
-    health--;
-    if (health <= 0) {
-        endGame();
-    } else {
-        castle.set_castle_health(health);
-    }
-    
 }
