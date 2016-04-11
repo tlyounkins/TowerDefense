@@ -132,7 +132,7 @@ ZombieModel::~ZombieModel() {
 
 // Update zombie location method
 void ZombieModel::step(){
-    // Head towards (0, -5)
+    // Head towards (20, 25)
     this->count += 1;
     if(count == this->speed){
         // For testing
@@ -155,16 +155,16 @@ void ZombieModel::step(){
                 x += 1;
             } else {
                 // Can only move y
-                if(y > 15){
+                if(y > 25){
                     y -= 1;
-                } else if(y < 15){
+                } else if(y < 25){
                     y += 1;
                 }
             }
         } else{
-            if(y > 15){
+            if(y > 25){
                 y -= 1;
-            } else if(y < 15){
+            } else if(y < 25){
                 y += 1;
             } else {
                 // Can only move x
