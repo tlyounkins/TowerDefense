@@ -55,6 +55,8 @@ public:
     void static draw_text();
     void static mousefunc(int button, int state, int x, int y);
     void static movefunc(int x, int y);
+    void static draw_objects(GLenum mode);
+    void static processHits(GLint hits, GLuint buffer[]);
     
 };
 #endif /* GameView_hpp */

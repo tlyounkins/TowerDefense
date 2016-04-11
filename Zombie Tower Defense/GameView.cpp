@@ -5,6 +5,8 @@
 
 
 #include "GameView.hpp"
+#define SIZE 500
+#define N 3
 
 GameController game;
 
@@ -162,31 +164,29 @@ void GameView::display() {
     
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho(-20.0f, 20.0f, -20.0f, 20.0f, 0.0f, 1.0f);
+    gluOrtho2D(-20.0f, 20.0f, -20.0f, 20.0f);
     
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     // Flush Buffer
     glFlush();
     
-    draw_text();
-    draw_grid();
+    //draw objects
+    draw_objects(GL_RENDER);
     
-    draw_current_enemies();
-    
-    draw_castle();
-   
-    if (Tower_flag1 == true) {
+    if (Tower_flag1 == true)
+    {
         draw_tower();
-        
     }
+
     
     // Swap Buffers
     glutSwapBuffers();
 }
 
 // Keyboard Callback
-void GameView::keyFunc(unsigned char key, int x, int y) {
+void GameView::keyFunc(unsigned char key, int x, int y)
+{
     // Exit Program with ESC
     // Temp until menu works
     if (key == 27) {
@@ -198,12 +198,59 @@ void GameView::keyFunc(unsigned char key, int x, int y) {
 // Mouse click callback
 void GameView::mousefunc(int button, int state, int x, int y)
 {
+    GLuint nameBuffer[SIZE];
+    GLint hits;
+    GLint viewport[4];
+    
     // Store cursor position when left button is clicked
-    if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+    if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
     {
         start_x = x;
         start_y = y;
     }
+    
+    // Store cursor position when left button is clicked
+    if(button == GLUT_MIDDLE_BUTTON && state == GLUT_DOWN)
+    {
+        start_x = x;
+        start_y = y;
+        //initialize the name stack
+        glInitNames();
+        glPushName(0);
+        glSelectBuffer(SIZE,nameBuffer);
+        
+        //view for selection mode
+        glGetIntegerv(GL_VIEWPORT,viewport);
+        glMatrixMode(GL_PROJECTION);
+        
+        //Save original viewing matrix
+        glPushMatrix();
+            glLoadIdentity();
+        
+            //NxN pick area
+            //Invert y to get in world coord
+            gluPickMatrix((GLdouble) x ,(GLdouble)(viewport[3] - y) ,N ,N, viewport);
+        
+            gluOrtho2D(-20.0f, 20.0f, -20.0f, 20.0f);
+        
+            glRenderMode(GL_SELECT);
+            draw_objects(GL_SELECT);
+            glMatrixMode(GL_PROJECTION);
+        
+        //restore viewing matrix
+        glPopMatrix();
+        
+        //return to normal rendering
+        hits = glRenderMode(GL_RENDER);
+        
+        //process hits from selection mode
+        processHits(hits,nameBuffer);
+         printf("Hits processed!!\n");
+        
+        //normal render
+        glutPostRedisplay();
+    }
+    
 }
 
 // Mouse move callback
@@ -214,6 +261,11 @@ void GameView::movefunc(int x, int y)
     // Compute change in cursor position (inverted y)
     dx = x - start_x;
     dy = start_y - y;
+    
+    /*
+     TODO: add changes here to make the picking work
+    */
+    
     
     // Update Tower (bounded) position
     tower_x += dx*dt;
@@ -342,7 +394,8 @@ void GameView::draw_zombie(EnemyModel zombie) {
     glPopAttrib();
 }
 
-void GameView::draw_castle() {
+void GameView::draw_castle()
+{
     glPushAttrib(GL_CURRENT_BIT);
     glPushMatrix();
         glColor3f(0.5f, 0.5f, 0.5f);
@@ -370,7 +423,8 @@ void GameView::draw_castle() {
     glPopAttrib();
 }
 
-void GameView::draw_tower() {
+void GameView::draw_tower()
+{
     tower_quadric = gluNewQuadric();
     gluQuadricDrawStyle(tower_quadric, GLU_FILL);
     gluQuadricNormals(tower_quadric, GLU_SMOOTH);
@@ -390,8 +444,68 @@ void GameView::draw_tower() {
     glPopMatrix();
 }
 
+void GameView::draw_objects(GLenum mode)
+{
+    //draw selections
+    if(mode == GL_RENDER){ glLoadName(1);
+        draw_text();
+    }
+    //printf("Hey it drew text!\n");
+    if(mode == GL_RENDER){ glLoadName(2);
+        draw_grid();
+    }
+     //printf("Hey it drew grid!\n");
+    if(mode == GL_RENDER){ glLoadName(3);
+        draw_current_enemies();
+    }
+     //printf("Hey it drew enemy!\n");
+    if(mode == GL_RENDER){ glLoadName(4);
+        draw_castle();
+    }
+    if(mode == GL_SELECT){ glLoadName(5);
+        if (Tower_flag1 == true) {
+           // mode = GL_SELECT;
+            draw_tower();
+            printf("Draw plz\n");
+        }
+    }
+     //printf("Hey it drew castle!\n");
+    
+}
+void GameView::processHits(GLint hits, GLuint buffer[]){
+    
+    unsigned int i, j;
+    GLuint names, *ptr;
+    
+    printf("hits = %d\n",hits);
+    
+    ptr = (GLuint *) buffer;
+    
+    //loops over hits
+    for(i = 0; i < hits; i++)
+    {
+        names = *ptr;
+        
+        //skip over number of names and depths
+        ptr += 3;
+        
+        //check each name
+        
+        for(j = 0;  j < names; j++)
+        {
+            if(*ptr == 1) printf("zombies, castles, and lines\n");
+            else printf("other\n");
+            
+            //next hit
+            ptr++;
+        }
+    }
+}
+
+
 // Start Wave
-void GameView::draw_wave(int wave_num, int level){
+void GameView::draw_wave(int wave_num, int level)
+{
     printf("Wave %i starting\n", wave_num);
     for(int i = 0; i < max; i++){
         draw_zombie(game.game_model.levels.wave_enemies[wave_num][i]);
