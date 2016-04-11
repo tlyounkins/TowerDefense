@@ -7,7 +7,7 @@
 #include "GameController.hpp"
 
 // Constructor
-GameController::GameController() {
+GameController::GameController() : game_model(){
     endgame = false;
 }
 
@@ -17,8 +17,9 @@ GameController::~GameController() {
 }
 
 //Set Up Game
-void GameController::game_setup(int game_map[]){
-    game_model.create_levels(game_map);
+void GameController::game_setup(){
+    printf("Creating game\n");
+    game_model.create_levels();
 }
 
 // Start Game

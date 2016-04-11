@@ -23,7 +23,8 @@ ZombieModel::~ZombieModel() {
 }
 
 // Create path to follow
-void ZombieModel::create_path(int i, int j, int game_map[]){
+// Commented out until it works
+/**void ZombieModel::create_path(int i, int j, int game_map[]){
 
     printf("%i, %i\n", this->x, this->y);
     // TEMP
@@ -126,22 +127,54 @@ void ZombieModel::create_path(int i, int j, int game_map[]){
     }
     
     printf("%i, %i\n", i, j);
-}
+}**/
 
 // Update zombie location method
 void ZombieModel::step(){
     // Head towards (0, -5)
     this->count += 1;
     if(count == this->speed){
-        printf("location: %i, length: %i\n", this->path_location, this->path_length);
-        if(this->path_location < this->path_length){
+        // For testing
+        //printf("location: %i, length: %i\n", this->path_location, this->path_length);
+        
+        // For Astar algorithm
+        /**if(this->path_location < this->path_length){
             this->path[path_location]->x = this->x;
             this->path[path_location]->y = this->y;
             this->path_location++;
-        }
+        }**/
     
         // Print current coordinates (for testing)
         //printf("%i %i \n", this->x, this->y);
+        int ran = rand() % 10;
+        if(ran < 5){
+            if(x > 20){
+                x -= 1;
+            } else if(x < 20){
+                x += 1;
+            } else {
+                // Can only move y
+                if(y > 15){
+                    y -= 1;
+                } else if(y < 15){
+                    y += 1;
+                }
+            }
+        } else{
+            if(y > 15){
+                y -= 1;
+            } else if(y < 15){
+                y += 1;
+            } else {
+                // Can only move x
+                if(x > 20){
+                    x -= 1;
+                } else if(x < 20){
+                    x += 1;
+                }
+            }
+        }
+        
         this->count = 0;
     }
 }

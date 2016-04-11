@@ -32,12 +32,12 @@ public:
     int path_length;
     int path_location;
     bool left, right, down, up;
-    AStarSearch<MapSearchNode> astarsearch;
-    MapSearchNode *path[];
+    //AStarSearch<MapSearchNode> astarsearch;
+    //MapSearchNode *path[];
 
     // Public interface
     virtual void step();
-    void create_path(int i, int j, int game_map[]);
+    //void create_path(int i, int j, int game_map[]);
 };
 
 #endif /* ZombieModel_hpp */

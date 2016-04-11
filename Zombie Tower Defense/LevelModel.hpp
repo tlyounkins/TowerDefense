@@ -23,15 +23,13 @@ public:
     ~LevelModel();
     
     // Variables
-    int id;
-    int waves;
+    int id = 0;
+    int wave_amount = 0;
     ZombieModel wave_enemies[10][5];
     
     
     // Public interface
-    void create_level(int waves, int game_map[]);
-    void create_wave(int wave_number, int game_map[]);
-    void create_wave_enemy(int wave_number, int wave_position, int game_map[]);
+    void create_level(int waves);
 };
 
 #endif /* LevelModel_hpp */

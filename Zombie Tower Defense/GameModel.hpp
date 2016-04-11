@@ -31,7 +31,7 @@ public:
     int get_total_points();
     void set_total_points(int points);
     int get_wave_num();
-    void create_levels(int game_map[]);
+    void create_levels();
     void set_wave_num(int wave);
     int get_level();
     void set_level(int level);

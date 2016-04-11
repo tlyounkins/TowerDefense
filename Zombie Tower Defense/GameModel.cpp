@@ -7,13 +7,13 @@
 #include "GameModel.hpp"
 
 // Constructor
-GameModel::GameModel()
+GameModel::GameModel() :levels()
 {
     total_points = 0;
     wave_num = 0;
     current_level = 0;
+    num_resources = 500;
     
-    //levels[0] = new LevelModel(0, 2);
 }
 
 // Destructor
@@ -21,8 +21,18 @@ GameModel::~GameModel() {
     
 }
 
-void GameModel::create_levels(int game_map[]){
-    levels.create_level(1, game_map);
+void GameModel::create_levels(){
+    printf("Model creating level\n");
+    levels.create_level(5);
+}
+
+
+int GameModel::get_total_points() {
+    return total_points;
+}
+
+void GameModel::set_total_points(int points) {
+    this->total_points = points;
 }
 
 int GameModel::get_wave_num() {

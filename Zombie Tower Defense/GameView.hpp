@@ -53,6 +53,10 @@ public:
     void draw_wave(int wave_num, int level);
     void static upgrades_menu(int id);
     void static print_array();
+    void static draw_text();
+    void static mousefunc(int button, int state, int x, int y);
+    void static movefunc(int x, int y);
+    
 
 };
 #endif /* GameView_hpp */
