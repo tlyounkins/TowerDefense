@@ -10,7 +10,6 @@
 // Constructor
 LevelModel::LevelModel() {
     this->wave_amount = 0;
-    printf("Level constructor done\n");
 }
 
 // Destructor
@@ -20,14 +19,12 @@ LevelModel::~LevelModel() {
 
 // Create Level
 void LevelModel::create_level(int waves){
-    printf("Level Mode creating level, %i\n", waves);
     this->wave_amount = waves;
 
     srand(time(NULL));
     for(int i = 0; i < waves; i++) {
         for(int j = 0; j < 5; j++){
             int x_pos, y_pos = 0;
-            printf("Creating enemies\n");
             // Switches
             int location =  rand() % 8;
             
@@ -97,7 +94,6 @@ void LevelModel::create_level(int waves){
             //zombie.create_path(wave_number, wave_position, game_map);
             //printf("placing %i, %i\n", wave_number, wave_position);
             this->wave_enemies[i][j] = zombie;
-            printf("done %i\n", j);
         }
     }
 }

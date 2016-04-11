@@ -24,6 +24,8 @@
 		2FDE96FD1C690E3500F44DFF /* PowerUpModel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PowerUpModel.hpp; sourceTree = "<group>"; };
 		D2B2064D1C69A13200AA4BAE /* GameView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameView.cpp; sourceTree = "<group>"; };
 		D2B2064E1C69A13200AA4BAE /* GameView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GameView.hpp; sourceTree = "<group>"; };
+		D2C276671CBB3C9B00119903 /* TowerModel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TowerModel.cpp; sourceTree = "<group>"; };
+		D2C276681CBB3C9B00119903 /* TowerModel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TowerModel.hpp; sourceTree = "<group>"; };
 		D2DF64821C6BF85D00C880F5 /* Makefile */ = {isa = PBXFileReference; explicitFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; usesTabs = 1; };
 		D2DF64831CA0D22E00C880F5 /* LevelModel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LevelModel.cpp; sourceTree = "<group>"; };
 		D2DF64841CA0D22E00C880F5 /* LevelModel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LevelModel.hpp; sourceTree = "<group>"; };
@@ -46,6 +48,8 @@
 			children = (
 				2FDE96F61C690DFC00F44DFF /* CastleModel.cpp */,
 				2FDE96F71C690DFC00F44DFF /* CastleModel.hpp */,
+				D2C276671CBB3C9B00119903 /* TowerModel.cpp */,
+				D2C276681CBB3C9B00119903 /* TowerModel.hpp */,
 				2FDE96F81C690E0400F44DFF /* GameModel.cpp */,
 				2FDE96F91C690E0400F44DFF /* GameModel.hpp */,
 				2FDE96FA1C690E1500F44DFF /* EnemyModel.cpp */,

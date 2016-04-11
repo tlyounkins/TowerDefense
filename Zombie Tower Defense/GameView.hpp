@@ -21,6 +21,7 @@
 #include "CastleModel.hpp"
 #include "UpgradesModel.hpp"
 #include "GameController.hpp"
+#include "TowerModel.cpp"
 
 
 
@@ -48,7 +49,7 @@ public:
     void static draw_zombie(EnemyModel zombie);
     void static draw_grid();
     void static draw_castle();
-    void static draw_tower();
+    void static draw_tower(TowerModel tower);
     void static draw_moat();
     void draw_wave(int wave_num, int level);
     void static upgrades_menu(int id);
@@ -56,7 +57,7 @@ public:
     void static draw_text();
     void static mousefunc(int button, int state, int x, int y);
     void static movefunc(int x, int y);
-    
+    void static check_tower_proximity();
 
 };
 #endif /* GameView_hpp */

@@ -15,9 +15,12 @@ UpgradesModel upgrades;
 GLUquadricObj *tower_quadric;
 
 int enemy_max = 5;
+int tower_max = 5;
+int current_towers = 0;
 bool Tower_flag1 = false;
 bool Moat_flag = false;
 ZombieModel current_enemies[5];
+TowerModel active_towers[5];
 // 0 empty, 9 impassable
 int grid_location[40*40] = {
     9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,
@@ -261,9 +264,9 @@ void GameView::display() {
     
     draw_castle();
    
-    if (Tower_flag1 == true) {
-        draw_tower();
-        
+    // Draw towers
+    for(int i = 0; i < current_towers; i++){
+        draw_tower(active_towers[i]);
     }
 
     draw_text();
@@ -302,6 +305,7 @@ void GameView::mousefunc(int button, int state, int x, int y)
     {
         start_x = x;
         start_y = y;
+        printf("Mouse func x, y: %i, %i\n", start_x, start_y);
     }
 }
 
@@ -334,10 +338,6 @@ void GameView::movefunc(int x, int y)
     {
         tower_y = 19.0f;
     }
-    
-    // Reset start position
-    start_x = x;
-    start_y = y;
     
     // Redraw screen
     glutPostRedisplay();
@@ -389,12 +389,23 @@ void GameView::draw_grid(){
 // Routine to process upgrades menu selection
 void GameView::upgrades_menu(int id) {
     int resources = game->game_model.get_num_resources();
-    if (id == add_tower) {
+    // Tower Selected
+    if ((id == add_tower) && (current_towers <= tower_max)) {
         if (resources >= upgrades.tower_cost) {
-            Tower_flag1 = true;
+            // Create new tower
+            TowerModel new_tower;
+            printf("Tower x y: %i, %i\n", start_x, start_y);
+            new_tower.x = start_x;
+            new_tower.y = start_y;
+            // Add new tower to array
+            active_towers[current_towers] = new_tower;
+            // increment current number of towers
+            current_towers++;
+            // decrease resources
             resources = resources - upgrades.tower_cost;
             game->game_model.set_num_resources(resources);
         }
+    // Health increased
     } else if (id == castle_health_increase) {
         if (resources >= upgrades.castle_health_upgrade_cost) {
             int health = game->castle.get_castle_health();
@@ -403,7 +414,7 @@ void GameView::upgrades_menu(int id) {
             resources = resources - upgrades.castle_health_upgrade_cost;
             game->game_model.set_num_resources(resources);
         }
-       
+    // Moat built
     } else if (id == add_moat) {
         if (resources >= upgrades.moat_upgrade_cost) {
             Moat_flag = true;
@@ -520,7 +531,7 @@ void GameView::draw_castle() {
 }
 
 // Draw tower method
-void GameView::draw_tower() {
+void GameView::draw_tower(TowerModel tower) {
     tower_quadric = gluNewQuadric();
     gluQuadricDrawStyle(tower_quadric, GLU_FILL);
     gluQuadricNormals(tower_quadric, GLU_SMOOTH);
@@ -528,7 +539,7 @@ void GameView::draw_tower() {
     glPushAttrib(GL_CURRENT_BIT);
     glPushMatrix();
         //glTranslatef(4, -4, 0.0f);
-        glTranslatef(tower_x,tower_y, 0.0f);
+        glTranslatef(tower.x,tower.y, 0.0f);
         glColor3f(0.75f, 0.75f, 0.75f);
         //glScalef(0.03, 0.03, 1);
         gluDisk(tower_quadric, 0, 1.5, 100, 100);
@@ -621,4 +632,15 @@ void GameView::print_array(){
         printf("\n");
     }
     printf("\n");
+}
+
+// Check area around towers for zombies
+void GameView::check_tower_proximity(){
+    // Get tower location
+    
+    // go through grid around tower area
+    
+    // if yes go to other function
+    
+    // if no cry
 }

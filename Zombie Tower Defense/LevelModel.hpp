@@ -23,8 +23,8 @@ public:
     ~LevelModel();
     
     // Variables
-    int id = 0;
-    int wave_amount = 0;
+    int id;
+    int wave_amount;
     ZombieModel wave_enemies[10][5];
     
     

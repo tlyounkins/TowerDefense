@@ -22,7 +22,6 @@ GameModel::~GameModel() {
 }
 
 void GameModel::create_levels(){
-    printf("Model creating level\n");
     levels.create_level(5);
 }
 
