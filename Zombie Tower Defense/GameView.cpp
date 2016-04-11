@@ -658,7 +658,6 @@ void GameView::draw_wave(int wave_num, int level)
     }
     
 }
-
 // Print Out arrary
 void GameView::print_array(){
     for(int i = 0; i < 40; i++){
