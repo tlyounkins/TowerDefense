@@ -88,7 +88,7 @@ GLint current_time = 0;
 GLint lasttime = 0;
 
 // Conversion from screen to world coordinates
-GLfloat dt = 0.001f;
+GLfloat dt = 0.04f;
 
 // Constructor
 GameView::GameView(){
@@ -592,7 +592,7 @@ void GameView::draw_tower(TowerModel tower) {
     glPushAttrib(GL_CURRENT_BIT);
     glPushMatrix();
         //glTranslatef(4, -4, 0.0f);
-        glTranslatef(tower.x,tower.y, 0.0f);
+        glTranslatef(tower.x-20,-(tower.y-20), 0.0f);
         glColor3f(0.75f, 0.75f, 0.75f);
         //glScalef(0.03, 0.03, 1);
         gluDisk(tower_quadric, 0, 1.5, 100, 100);
@@ -692,9 +692,7 @@ void GameView::print_array(){
 void GameView::check_tower_proximity(){
     for(int i = 0; i < current_towers; i++){
         // Get tower location
-        
         // go through zombies
-    
         // if yes go to other function
     
         // if no cry
