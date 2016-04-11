@@ -133,6 +133,8 @@ ZombieModel::~ZombieModel() {
 // Update zombie location method
 void ZombieModel::step(){
     // Head towards (20, 25)
+    int current_x = this->x;
+    int current_y = this->y;
     this->count += 1;
     if(count == this->speed){
         // For testing
@@ -149,29 +151,29 @@ void ZombieModel::step(){
         //printf("%i %i \n", this->x, this->y);
         int ran = rand() % 10;
         if(ran < 5){
-            if(x > 20){
-                x -= 1;
-            } else if(x < 20){
-                x += 1;
+            if(current_x > 20){
+                this->x -= 1;
+            } else if(current_x < 20){
+                this->x += 1;
             } else {
                 // Can only move y
-                if(y > 25){
-                    y -= 1;
-                } else if(y < 25){
-                    y += 1;
+                if(current_y > 15){
+                    this->y -= 1;
+                } else if(current_y < 15){
+                    this->y += 1;
                 }
             }
         } else{
-            if(y > 25){
-                y -= 1;
-            } else if(y < 25){
-                y += 1;
+            if(current_y > 15){
+                this->y -= 1;
+            } else if(current_y < 15){
+                this->y += 1;
             } else {
                 // Can only move x
-                if(x > 20){
-                    x -= 1;
-                } else if(x < 20){
-                    x += 1;
+                if(current_x > 20){
+                    this->x -= 1;
+                } else if(current_x < 20){
+                    this->x += 1;
                 }
             }
         }

@@ -68,6 +68,7 @@ int grid_location[40][40] = {
     {9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9}//39
     
 };
+
 // GRID FORMULA -> ((y*40)+x)
 
 char healthStr[32];
@@ -114,8 +115,9 @@ int GameView::Initialize(int argc, char *argv[]) {
     
     // Create WIndow
     glutCreateWindow("Tower Defense");
-    
+
     print_array();
+    
     
     // Create Game Controller
     game = new GameController();
@@ -174,7 +176,7 @@ void GameView::idleFunc(){
         // Move Zombies
         for(int i = 0; i < enemy_max; i++){
             // Check zombie location
-            if((current_enemies[i].x == 20) && (current_enemies[i].y == 25)){
+            if((current_enemies[i].x == 20) && (current_enemies[i].y == 15)){
                 // Zombie made it to castle
                 current_enemies[i].x = 0;
                 current_enemies[i].y = 0;
@@ -219,7 +221,7 @@ void GameView::idleFunc(){
             }
         }
     
-    print_array();
+    //print_array();
         // Update lasttime (reset time)
         lasttime = current_time;
     
@@ -248,7 +250,7 @@ void GameView::display() {
     draw_current_enemies();
     
     if (Moat_flag == true) {
-        //draw_moat();
+        draw_moat();
     }
     
     draw_castle();
@@ -672,6 +674,8 @@ void GameView::print_array(){
                 printf(" |");
             } else if(grid_location[i][j] == 8){
                 printf("O");
+            }else if(grid_location[i][j] == 7){
+                printf("X");
             }else{
                 printf(" _");
             }
@@ -680,6 +684,62 @@ void GameView::print_array(){
     }
     printf("\n");
 }
+
+void GameView::draw_moat() {
+        glPushAttrib(GL_CURRENT_BIT);
+        glPushMatrix();
+        glColor3f(0.0f, 0.0f, 0.75f);
+        glBegin(GL_POLYGON);
+            // Counter-ClockWise around origin
+            // Top Left
+            glVertex3f(-6.0f, 6.0f, 0.0f);
+            glVertex3f(-6.0f, -6.0f, 0.0f);
+            glVertex3f(6.0f, -6.0f, 0.0f);
+            glVertex3f(6.0f, 6.0f, 0.0f);
+        glEnd();
+        glColor3f(0.0f, 0.0f, 0.0f);
+        // Do not fill polygon
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        glBegin(GL_POLYGON);
+            // Top Left
+            glVertex3f(-6.0f, 6.0f, 0.0f);
+            glVertex3f(-6.0f, -6.0f, 0.0f);
+            glVertex3f(-6.0f, -6.0f, 0.0f);
+            glVertex3f(-6.0f, 6.0f, 0.0f);
+        glEnd();
+    
+        // Revert Changes
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        glPopMatrix();
+        glPopAttrib();
+    
+        glPushAttrib(GL_CURRENT_BIT);
+        glPushMatrix();
+        glColor3f(0.5f,0.5f,0.25f);
+        glBegin(GL_POLYGON);
+        // Counter-ClockWise around origin
+        // Top Left
+        glVertex3f(-1.0f, -5.0f, 0.0f);
+        glVertex3f(-1.0f, -7.0f, 0.0f);
+        glVertex3f(1.0f, -7.0f, 0.0f);
+        glVertex3f(1.0f, -5.0f, 0.0f);
+        glEnd();
+        glColor3f(0.0f, 0.0f, 0.0f);
+        // Do not fill polygon
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        glBegin(GL_POLYGON);
+        // Top Left
+        glVertex3f(-1.0f, -5.0f, 0.0f);
+        glVertex3f(-1.0f, -7.0f, 0.0f);
+        glVertex3f(1.0f, -7.0f, 0.0f);
+        glVertex3f(1.0f, -5.0f, 0.0f);
+        glEnd();
+    
+        // Revert Changes
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        glPopMatrix();
+        glPopAttrib();
+    }
 
 // Check area around towers for zombies
 void GameView::check_tower_proximity(){
@@ -690,6 +750,8 @@ void GameView::check_tower_proximity(){
             if((abs(current_enemies[i].x - active_towers[i].x) <= active_towers[i].range) && (abs(current_enemies[i].y - active_towers[i].y) <= active_towers[i].range)){
                 // Shoot the zombie
                 printf("Zombie in range! Zombie: %i, %i Tower: %i, %i\n", current_enemies[i].x, current_enemies[i].y, active_towers[i].x, active_towers[i].y);
+                grid_location[current_enemies[i].x][current_enemies[i].y] = 7;
+                print_array();
                 if(current_enemies[i].health > 0){
                     current_enemies[i].health = current_enemies[i].health - 1;
                 }
