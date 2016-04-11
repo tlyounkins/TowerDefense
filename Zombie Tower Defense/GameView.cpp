@@ -77,8 +77,8 @@ char levelStr[32];
 char gameoverStr[32];
 char continueStr[32];
 char yesnoStr[32];
-GLint start_x = 0;
-GLint start_y = 0;
+GLfloat start_x = 0.0f;
+GLfloat start_y = 0.0f;
 GLfloat tower_x = 0.0f;
 GLfloat tower_y = 0.0f;
 
@@ -88,7 +88,7 @@ GLint current_time = 0;
 GLint lasttime = 0;
 
 // Conversion from screen to world coordinates
-GLfloat dt = 0.05f;
+GLfloat dt = 0.001f;
 
 // Constructor
 GameView::GameView(){
@@ -261,16 +261,14 @@ void GameView::display() {
     draw_current_enemies();
     
     if (Moat_flag == true) {
-        draw_moat();
+        //draw_moat();
     }
     
     draw_castle();
    
-    // Draw towers
     for(int i = 0; i < current_towers; i++){
         draw_tower(active_towers[i]);
     }
-
     
     // Swap Buffers
     glutSwapBuffers();
@@ -312,7 +310,7 @@ void GameView::mousefunc(int button, int state, int x, int y)
     {
         start_x = x;
         start_y = y;
-        printf("Mouse func x, y: %i, %i\n", start_x, start_y);
+        printf("Mouse func x, y: %f, %f\n", start_x*dt, start_y*dt);
     }
     
     // Store cursor position when left button is clicked
@@ -449,9 +447,9 @@ void GameView::upgrades_menu(int id) {
         if (resources >= upgrades.tower_cost) {
             // Create new tower
             TowerModel new_tower;
-            printf("Tower x y: %i, %i\n", start_x, start_y);
-            new_tower.x = start_x;
-            new_tower.y = start_y;
+            printf("Tower x y: %f, %f\n", start_x*dt, start_y*dt);
+            new_tower.x = start_x*dt;
+            new_tower.y = start_y*dt;
             // Add new tower to array
             active_towers[current_towers] = new_tower;
             // increment current number of towers
@@ -625,10 +623,8 @@ void GameView::draw_objects(GLenum mode)
         draw_castle();
     }
     if(mode == GL_SELECT){ glLoadName(5);
-        if (Tower_flag1 == true) {
-           // mode = GL_SELECT;
-            draw_tower();
-            printf("Draw plz\n");
+        for(int i = 0; i < current_towers; i++){
+            draw_tower(active_towers[i]);
         }
     }
      //printf("Hey it drew castle!\n");
@@ -694,11 +690,13 @@ void GameView::print_array(){
 
 // Check area around towers for zombies
 void GameView::check_tower_proximity(){
-    // Get tower location
+    for(int i = 0; i < current_towers; i++){
+        // Get tower location
+        
+        // go through zombies
     
-    // go through grid around tower area
+        // if yes go to other function
     
-    // if yes go to other function
-    
-    // if no cry
+        // if no cry
+    }
 }
