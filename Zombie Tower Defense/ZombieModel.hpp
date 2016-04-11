@@ -32,6 +32,7 @@ public:
     int path_length;
     int path_location;
     bool left, right, down, up;
+    bool visible;
     //AStarSearch<MapSearchNode> astarsearch;
     //MapSearchNode *path[];
 
