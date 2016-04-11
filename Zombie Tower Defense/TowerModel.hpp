@@ -18,10 +18,8 @@ public:
     ~TowerModel();
     
     // Variables
-    float x;
-    float y;
-    int game_x;
-    int game_y;
+    int x;
+    int y;
     int range;
     
     // Public interface

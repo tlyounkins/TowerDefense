@@ -135,6 +135,8 @@ int GameView::Initialize(int argc, char *argv[]) {
     // Door free
     grid_location[(15*40) + 20] = 1;
     
+    print_array();
+    
     // Create Game Controller
     game = new GameController();
     game->startGame();
@@ -186,6 +188,9 @@ void GameView::idleFunc(){
     {
         
         int count = 0;
+        // Pew Pew
+        check_tower_proximity();
+        
         // Move Zombies
         for(int i = 0; i < enemy_max; i++){
             // Check zombie location
@@ -204,14 +209,16 @@ void GameView::idleFunc(){
                     game->endGame();
                 }
             } else {
-                if((current_enemies[i].x == 0)&&(current_enemies[i].y == 0)){
+                if(((current_enemies[i].x == 0)&&(current_enemies[i].y == 0))||(!current_enemies[i].visible)){
                     count++;
                 } else if (game->endgame == false) {
+                    grid_location[((current_enemies[i].y * 40) + current_enemies[i].x)] = 0;
                     current_enemies[i].step();
+                    grid_location[((current_enemies[i].y * 40) + current_enemies[i].x)] = 9;
                 }
             }
         }
-
+       
         // Next Wave
         if (count == enemy_max){
             printf("Next Wave!\n");
@@ -232,7 +239,7 @@ void GameView::idleFunc(){
             }
         }
     
-    //print_array();
+    print_array();
         // Update lasttime (reset time)
         lasttime = current_time;
     
@@ -399,7 +406,9 @@ void GameView::movefunc(int x, int y)
 // Draw Current Enemies
 void GameView::draw_current_enemies(){
     for(int i = 0; i < enemy_max; i++){
-        draw_zombie(current_enemies[i]);
+        if(current_enemies[i].visible){
+            draw_zombie(current_enemies[i]);
+        }
     }
 }
 
@@ -454,6 +463,8 @@ void GameView::upgrades_menu(int id) {
             active_towers[current_towers] = new_tower;
             // increment current number of towers
             current_towers++;
+            grid_location[((new_tower.y*40)+new_tower.x)] = 9;
+            
             // decrease resources
             resources = resources - upgrades.tower_cost;
             game->game_model.set_num_resources(resources);
@@ -693,8 +704,19 @@ void GameView::check_tower_proximity(){
     for(int i = 0; i < current_towers; i++){
         // Get tower location
         // go through zombies
-        // if yes go to other function
-    
-        // if no cry
+        for(int j = 0; j < enemy_max; j++){
+            if((abs(current_enemies[i].x - active_towers[i].x) <= active_towers[i].range) && (abs(current_enemies[i].y - active_towers[i].y) <= active_towers[i].range)){
+                // Shoot the zombie
+                printf("Zombie in range! Zombie: %i, %i Tower: %i, %i\n", current_enemies[i].x, current_enemies[i].y, active_towers[i].x, active_towers[i].y);
+                if(current_enemies[i].health > 0){
+                    current_enemies[i].health = current_enemies[i].health - 1;
+                }
+                if(current_enemies[i].health <= 0){
+                    current_enemies[i].visible = false;
+                    current_enemies[i].x = 2000;
+                }
+            }
+        }
+
     }
 }

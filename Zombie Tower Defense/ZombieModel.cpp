@@ -14,7 +14,8 @@ ZombieModel::ZombieModel() {
     this->up=true;
     this->path_location = 0;
     this->down=true;
-    
+    this->visible = true;
+    this->health = 1;
 }
 
 // Destructor
