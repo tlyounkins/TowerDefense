@@ -756,6 +756,8 @@ void GameView::check_tower_proximity(){
                 printf("Zombie in range! Zombie: %i, %i Tower: %i, %i\n", current_enemies[j].x, current_enemies[j].y, active_towers[i].x, active_towers[i].y);
                 grid_location[current_enemies[j].y][current_enemies[j].x] = 7;
                 print_array();
+                //TODO: Draw Shovel-Arrow
+                //start at tower, end at zombie position
                 if(current_enemies[j].health > 0){
                     current_enemies[j].health = current_enemies[j].health - 1;
                 }
