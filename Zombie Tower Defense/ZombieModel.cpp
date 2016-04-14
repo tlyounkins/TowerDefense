@@ -157,16 +157,16 @@ void ZombieModel::step(){
                 this->x += 1;
             } else {
                 // Can only move y
-                if(current_y > 15){
+                if(current_y > 25){
                     this->y -= 1;
-                } else if(current_y < 15){
+                } else if(current_y < 25){
                     this->y += 1;
                 }
             }
         } else{
-            if(current_y > 15){
+            if(current_y > 25){
                 this->y -= 1;
-            } else if(current_y < 15){
+            } else if(current_y < 25){
                 this->y += 1;
             } else {
                 // Can only move x

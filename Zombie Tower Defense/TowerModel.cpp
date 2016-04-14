@@ -10,7 +10,7 @@
 
 // Constructor
 TowerModel::TowerModel() {
-    range = 20;
+    range = 2;
 }
 
 // Destructor

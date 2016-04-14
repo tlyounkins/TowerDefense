@@ -24,6 +24,7 @@ bool Moat_flag = false;
 ZombieModel current_enemies[5];
 TowerModel active_towers[5];
 // 0 empty, 9 impassable
+// SWAP Y AND X'S FOR THE LOVE OF THOR
 int grid_location[40][40] = {
 //   0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9
     {9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9},//0
@@ -176,7 +177,7 @@ void GameView::idleFunc(){
         // Move Zombies
         for(int i = 0; i < enemy_max; i++){
             // Check zombie location
-            if((current_enemies[i].x == 20) && (current_enemies[i].y == 15)){
+            if((current_enemies[i].x == 20) && (current_enemies[i].y == 25)){
                 // Zombie made it to castle
                 current_enemies[i].x = 0;
                 current_enemies[i].y = 0;
@@ -194,9 +195,9 @@ void GameView::idleFunc(){
                 if(((current_enemies[i].x == 0)&&(current_enemies[i].y == 0))||(!current_enemies[i].visible)){
                     count++;
                 } else if (game->endgame == false) {
-                    grid_location[current_enemies[i].x][current_enemies[i].y] = 0;
+                    grid_location[current_enemies[i].y][current_enemies[i].x] = 0;
                     current_enemies[i].step();
-                    grid_location[current_enemies[i].x][current_enemies[i].y] = 9;
+                    grid_location[current_enemies[i].y][current_enemies[i].x] = 9;
                 }
             }
         }
@@ -244,10 +245,11 @@ void GameView::display() {
     // Flush Buffer
     glFlush();
     
+    glRotatef(180.0f, 0.0f, 0.0f, 1.0f);
     //draw objects
-    draw_objects(GL_RENDER);
+    draw_text();
     
-    draw_current_enemies();
+    draw_grid();
     
     if (Moat_flag == true) {
         draw_moat();
@@ -258,6 +260,8 @@ void GameView::display() {
     for(int i = 0; i < current_towers; i++){
         draw_tower(active_towers[i]);
     }
+    glRotatef(180.0f, 0.0f, 1.0f, 0.0f);
+    draw_current_enemies();
     
     // Swap Buffers
     glutSwapBuffers();
@@ -445,7 +449,7 @@ void GameView::upgrades_menu(int id) {
             active_towers[current_towers] = new_tower;
             // increment current number of towers
             current_towers++;
-            grid_location[new_tower.x][new_tower.y] = 8;
+            grid_location[new_tower.y][new_tower.x] = 8;
             
             // decrease resources
             resources = resources - upgrades.tower_cost;
@@ -539,7 +543,7 @@ void GameView::draw_zombie(EnemyModel zombie) {
     glPushAttrib(GL_CURRENT_BIT);
     glPushMatrix();
         glTranslatef(zombie.x-20, zombie.y-20, 0.0f);
-        glColor3f(0.2f, 0.8f, 0.2f);
+        glColor3f(0.8f, 0.2f, 0.2f);
         gluDisk(zombie.quadric, 0, 0.5, 100, 100);
         glColor3f(0.0f, 0.0f, 0.0f);
         gluDisk(zombie.quadric, 0.47, 0.5, 100, 100);
@@ -585,7 +589,7 @@ void GameView::draw_tower(TowerModel tower) {
     glPushAttrib(GL_CURRENT_BIT);
     glPushMatrix();
         //glTranslatef(4, -4, 0.0f);
-        glTranslatef(tower.x-20,-(tower.y-20), 0.0f);
+        glTranslatef(-(tower.x-20),tower.y-20, 0.0f);
         glColor3f(0.75f, 0.75f, 0.75f);
         //glScalef(0.03, 0.03, 1);
         gluDisk(tower_quadric, 0, 1.5, 100, 100);
@@ -747,17 +751,19 @@ void GameView::check_tower_proximity(){
         // Get tower location
         // go through zombies
         for(int j = 0; j < enemy_max; j++){
-            if((abs(current_enemies[i].x - active_towers[i].x) <= active_towers[i].range) && (abs(current_enemies[i].y - active_towers[i].y) <= active_towers[i].range)){
+            if((abs(current_enemies[j].x - active_towers[i].x) <= active_towers[i].range) && (abs(current_enemies[j].y - active_towers[i].y) <= active_towers[i].range)){
                 // Shoot the zombie
-                printf("Zombie in range! Zombie: %i, %i Tower: %i, %i\n", current_enemies[i].x, current_enemies[i].y, active_towers[i].x, active_towers[i].y);
-                grid_location[current_enemies[i].x][current_enemies[i].y] = 7;
+                printf("Zombie in range! Zombie: %i, %i Tower: %i, %i\n", current_enemies[j].x, current_enemies[j].y, active_towers[i].x, active_towers[i].y);
+                grid_location[current_enemies[j].y][current_enemies[j].x] = 7;
                 print_array();
-                if(current_enemies[i].health > 0){
-                    current_enemies[i].health = current_enemies[i].health - 1;
+                //TODO: Draw Shovel-Arrow
+                //start at tower, end at zombie position
+                if(current_enemies[j].health > 0){
+                    current_enemies[j].health = current_enemies[j].health - 1;
                 }
-                if(current_enemies[i].health <= 0){
-                    current_enemies[i].visible = false;
-                    current_enemies[i].x = 2000;
+                if(current_enemies[j].health <= 0){
+                    current_enemies[j].visible = false;
+                    current_enemies[j].x = 2000;
                 }
             }
         }
