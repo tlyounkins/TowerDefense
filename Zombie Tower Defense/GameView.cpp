@@ -71,15 +71,15 @@ int grid_location[40][40] = {
     {9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9},//13
     {9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9},//14
     {9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,9,9,9,9,9,9,9,9,9,9,0,0,0,0,0,0,0,0,0,0,0,0,0,9},//15
-    {9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,0,0,0,0,0,0,0,0,0,9,0,0,0,0,0,0,0,0,0,0,0,0,0,9},//16
-    {9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,0,0,0,0,0,0,0,0,0,9,0,0,0,0,0,0,0,0,0,0,0,0,0,9},//17
-    {9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,0,0,0,0,0,0,0,0,0,9,0,0,0,0,0,0,0,0,0,0,0,0,0,9},//18
-    {9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,0,0,0,0,0,0,0,0,0,9,0,0,0,0,0,0,0,0,0,0,0,0,0,9},//19
-    {9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,0,0,0,0,0,0,0,0,0,9,0,0,0,0,0,0,0,0,0,0,0,0,0,9},//20
-    {9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,0,0,0,0,0,0,0,0,0,9,0,0,0,0,0,0,0,0,0,0,0,0,0,9},//21
-    {9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,0,0,0,0,0,0,0,0,0,9,0,0,0,0,0,0,0,0,0,0,0,0,0,9},//22
-    {9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,0,0,0,0,0,0,0,0,0,9,0,0,0,0,0,0,0,0,0,0,0,0,0,9},//23
-    {9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,0,0,0,0,0,0,0,0,0,9,0,0,0,0,0,0,0,0,0,0,0,0,0,9},//24
+    {9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,9,9,9,9,9,9,9,9,9,9,0,0,0,0,0,0,0,0,0,0,0,0,0,9},//16
+    {9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,9,9,9,9,9,9,9,9,9,9,0,0,0,0,0,0,0,0,0,0,0,0,0,9},//17
+    {9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,9,9,9,9,9,9,9,9,9,9,0,0,0,0,0,0,0,0,0,0,0,0,0,9},//18
+    {9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,9,9,9,9,9,9,9,9,9,9,0,0,0,0,0,0,0,0,0,0,0,0,0,9},//19
+    {9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,9,9,9,9,9,9,9,9,9,9,0,0,0,0,0,0,0,0,0,0,0,0,0,9},//20
+    {9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,9,9,9,9,9,9,9,9,9,9,0,0,0,0,0,0,0,0,0,0,0,0,0,9},//21
+    {9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,9,9,9,9,9,9,9,9,9,9,0,0,0,0,0,0,0,0,0,0,0,0,0,9},//22
+    {9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,9,9,9,9,9,9,9,9,9,9,0,0,0,0,0,0,0,0,0,0,0,0,0,9},//23
+    {9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,9,9,9,9,9,9,9,9,9,9,0,0,0,0,0,0,0,0,0,0,0,0,0,9},//24
     {9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,9,9,9,9,0,9,9,9,9,9,0,0,0,0,0,0,0,0,0,0,0,0,0,9},//25
     {9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9},//26
     {9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9},//27
@@ -171,8 +171,6 @@ void GameView::idleFunc(){
     // Update if past desired interval
     if (current_time - lasttime > 1000.0f/fps) {
         int count = 0;
-        // Pew Pew
-        check_tower_proximity();
         
         // Move Zombies
         for(int i = 0; i < game->num_enemies; i++) {
@@ -181,12 +179,16 @@ void GameView::idleFunc(){
                 // Zombie made it to castle
                 current_enemies[i].x = 0;
                 current_enemies[i].y = 0;
+                current_enemies[i].visible = false;
+                
                 // Damage Castle
                 int health = game->castle.get_castle_health();
                 health--;
                 printf("Your castle takes damage!\n");
                 game->castle.set_castle_health(health);
                 printf("Castle health is now %i\n",health);
+                
+                // End game if health is 0
                 if (health <= 0) {
                     printf("\n\n");
                     game->endGame();
@@ -194,10 +196,10 @@ void GameView::idleFunc(){
             } else {
                 if(((current_enemies[i].x == 0)&&(current_enemies[i].y == 0))||(!current_enemies[i].visible)) {
                     count++;
-                } else if (game->endgame == false) {
-                    grid_location[current_enemies[i].y][current_enemies[i].x] = 0;
-                    current_enemies[i].step();
-                    grid_location[current_enemies[i].y][current_enemies[i].x] = 9;
+                }
+                // Remaining enemies take a step
+                else if (game->endgame == false) {
+                    current_enemies[i].step(grid_location);
                 }
             }
         }
@@ -206,13 +208,16 @@ void GameView::idleFunc(){
         if (count == game->num_enemies) {
             printf("Next Wave!\n");
             int wave = game->game_model.get_wave_num();
+            // Increase level if last wave
             if (wave == 2) {
                 int level = game->game_model.get_level();
                 level++;
                 game->game_model.set_level(level);
                 game->startLevel();
                 game->castle.set_castle_health(20);
-            } else {
+            }
+            // Go to next wave instead
+            else {
                 wave++;
                 game->game_model.set_wave_num(wave);
             }
@@ -221,6 +226,9 @@ void GameView::idleFunc(){
                 current_enemies[i] = game->game_model.levels.wave_enemies[wave][i];
             }
         }
+        
+        // Pew Pew
+        check_tower_proximity();
     
         //print_array();
         // Update lasttime (reset time)
@@ -253,10 +261,17 @@ void GameView::display() {
     }
     draw_castle();
     
+    // Draw active towers
     for(int i = 0; i < current_towers; i++){
         draw_tower(active_towers[i]);
     }
-    draw_hit(hit);
+    
+    // Draw shots per tower
+    for(int i = 0; i < current_towers; i++){
+        if(active_towers[i].hit){
+            active_towers[i].draw_hit();
+        }
+    }
     
     glRotatef(180.0f, 0.0f, 1.0f, 0.0f);
     draw_current_enemies();
@@ -479,6 +494,13 @@ void GameView::draw_castle() {
             glVertex3f(5.0f, 5.0f, 0.0f);
         glEnd();
         glColor3f(0.0f, 0.0f, 0.0f);
+        // Door
+        glBegin(GL_POLYGON);
+            glVertex3f(-1.0f, 5.0f, 0.0f);
+            glVertex3f(-1.0f, 4.0f, 0.0f);
+            glVertex3f(1.0f, 4.0f, 0.0f);
+            glVertex3f(1.0f, 5.0f, 0.0f);
+        glEnd();
         // Do not fill polygon
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glBegin(GL_POLYGON);
@@ -544,54 +566,54 @@ void GameView::print_array() {
 
 // Draw moat function
 void GameView::draw_moat() {
-        glPushAttrib(GL_CURRENT_BIT);
-        glPushMatrix();
-        glColor3f(0.0f, 0.0f, 0.75f);
-        glBegin(GL_POLYGON);
-            // Counter-ClockWise around origin
-            // Top Left
-            glVertex3f(-6.0f, 6.0f, 0.0f);
-            glVertex3f(-6.0f, -6.0f, 0.0f);
-            glVertex3f(6.0f, -6.0f, 0.0f);
-            glVertex3f(6.0f, 6.0f, 0.0f);
-        glEnd();
-        glColor3f(0.0f, 0.0f, 0.0f);
-        // Do not fill polygon
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        glBegin(GL_POLYGON);
-            // Top Left
-            glVertex3f(-6.0f, 6.0f, 0.0f);
-            glVertex3f(-6.0f, -6.0f, 0.0f);
-            glVertex3f(-6.0f, -6.0f, 0.0f);
-            glVertex3f(-6.0f, 6.0f, 0.0f);
-        glEnd();
+    glPushAttrib(GL_CURRENT_BIT);
+    glPushMatrix();
+    glColor3f(0.0f, 0.0f, 0.75f);
+    glBegin(GL_POLYGON);
+        // Counter-ClockWise around origin
+        // Top Left
+        glVertex3f(-6.0f, 6.0f, 0.0f);
+        glVertex3f(-6.0f, -6.0f, 0.0f);
+        glVertex3f(6.0f, -6.0f, 0.0f);
+        glVertex3f(6.0f, 6.0f, 0.0f);
+    glEnd();
+    glColor3f(0.0f, 0.0f, 0.0f);
+    // Do not fill polygon
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    glBegin(GL_POLYGON);
+        // Top Left
+        glVertex3f(-6.0f, 6.0f, 0.0f);
+        glVertex3f(-6.0f, -6.0f, 0.0f);
+        glVertex3f(-6.0f, -6.0f, 0.0f);
+        glVertex3f(-6.0f, 6.0f, 0.0f);
+    glEnd();
+
+    // Revert Changes
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    glPopMatrix();
+    glPopAttrib();
     
-        // Revert Changes
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-        glPopMatrix();
-        glPopAttrib();
-    
-        glPushAttrib(GL_CURRENT_BIT);
-        glPushMatrix();
-        glColor3f(0.5f,0.5f,0.25f);
-        glBegin(GL_POLYGON);
+    glPushAttrib(GL_CURRENT_BIT);
+    glPushMatrix();
+    glColor3f(0.5f,0.5f,0.25f);
+    glBegin(GL_POLYGON);
         // Counter-ClockWise around origin
         // Top Left
         glVertex3f(-1.0f, 5.0f, 0.0f);
         glVertex3f(-1.0f, 7.0f, 0.0f);
         glVertex3f(1.0f, 7.0f, 0.0f);
         glVertex3f(1.0f, 5.0f, 0.0f);
-        glEnd();
-        glColor3f(0.0f, 0.0f, 0.0f);
-        // Do not fill polygon
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        glBegin(GL_POLYGON);
+    glEnd();
+    glColor3f(0.0f, 0.0f, 0.0f);
+    // Do not fill polygon
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    glBegin(GL_POLYGON);
         // Top Left
         glVertex3f(-1.0f, 5.0f, 0.0f);
         glVertex3f(-1.0f, 7.0f, 0.0f);
         glVertex3f(1.0f, 7.0f, 0.0f);
         glVertex3f(1.0f, 5.0f, 0.0f);
-        glEnd();
+    glEnd();
     
         // Revert Changes
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -606,11 +628,10 @@ void GameView::check_tower_proximity() {
         // go through zombies
         for(int j = 0; j < game->num_enemies; j++) {
             
+            // Check where zombie is on map
             if((abs(current_enemies[j].x - active_towers[i].x) <= active_towers[i].range) && (abs(current_enemies[j].y - active_towers[i].y) <= active_towers[i].range)){
-                // Shoot the zombie
-                
+                // For Testing
                 //printf("Zombie in range! Zombie: %i, %i Tower: %i, %i\n", current_enemies[j].x, current_enemies[j].y, active_towers[i].x, active_towers[i].y);
-                grid_location[current_enemies[j].y][current_enemies[j].x] = 7;
                 //print_array();
                 
                 // Draw Arrow

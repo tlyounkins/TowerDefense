@@ -24,7 +24,18 @@ public:
     int game_y;
     int range;
     
+    // Save hit location
+    int enemy_x;
+    int enemy_y;
+    bool hit;
+    
+    // Tower can only fire so often
+    // Higher the speed, slower the fire rate
+    int speed;
+    int cooldown;
+    
     // Public interface
+    void draw_hit();
 };
 
 #endif /* TowerModel_hpp */

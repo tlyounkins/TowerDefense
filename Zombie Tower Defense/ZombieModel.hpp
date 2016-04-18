@@ -37,7 +37,7 @@ public:
     //MapSearchNode *path[];
 
     // Public interface
-    virtual void step();
+    virtual void step(int map[][40]);
     //void create_path(int i, int j, int game_map[]);
 };
 
