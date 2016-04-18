@@ -53,14 +53,12 @@ public:
     void static draw_moat();
     void draw_wave(int wave_num, int level);
     void static draw_objects(GLenum mode);
-    void static draw_hit(bool hit);
     void static upgrades_menu(int id);
     void static print_array();
     void static draw_text();
     void static mousefunc(int button, int state, int x, int y);
     void static movefunc(int x, int y);
     void static check_tower_proximity();
-    void static processHits(GLint hits, GLuint buffer[]);
     
 
 };
