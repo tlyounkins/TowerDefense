@@ -249,22 +249,22 @@ void GameView::display() {
     //draw objects
     
     draw_grid();
-    
-    draw_castle();
 
-    draw_hit(hit);
-    
     if (Moat_flag == true) {
         draw_moat();
     }
+    draw_castle();
     
     for(int i = 0; i < current_towers; i++){
         draw_tower(active_towers[i]);
     }
+    draw_hit(hit);
+    
     glRotatef(180.0f, 0.0f, 1.0f, 0.0f);
     draw_current_enemies();
     
     draw_text();
+    
     // Swap Buffers
     glutSwapBuffers();
 }
@@ -726,20 +726,20 @@ void GameView::draw_moat() {
         glBegin(GL_POLYGON);
         // Counter-ClockWise around origin
         // Top Left
-        glVertex3f(-1.0f, -5.0f, 0.0f);
-        glVertex3f(-1.0f, -7.0f, 0.0f);
-        glVertex3f(1.0f, -7.0f, 0.0f);
-        glVertex3f(1.0f, -5.0f, 0.0f);
+        glVertex3f(-1.0f, 5.0f, 0.0f);
+        glVertex3f(-1.0f, 7.0f, 0.0f);
+        glVertex3f(1.0f, 7.0f, 0.0f);
+        glVertex3f(1.0f, 5.0f, 0.0f);
         glEnd();
         glColor3f(0.0f, 0.0f, 0.0f);
         // Do not fill polygon
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glBegin(GL_POLYGON);
         // Top Left
-        glVertex3f(-1.0f, -5.0f, 0.0f);
-        glVertex3f(-1.0f, -7.0f, 0.0f);
-        glVertex3f(1.0f, -7.0f, 0.0f);
-        glVertex3f(1.0f, -5.0f, 0.0f);
+        glVertex3f(-1.0f, 5.0f, 0.0f);
+        glVertex3f(-1.0f, 7.0f, 0.0f);
+        glVertex3f(1.0f, 7.0f, 0.0f);
+        glVertex3f(1.0f, 5.0f, 0.0f);
         glEnd();
     
         // Revert Changes
