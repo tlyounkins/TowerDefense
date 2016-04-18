@@ -16,12 +16,12 @@ GameController *game;
 UpgradesModel upgrades;
 GLUquadricObj *tower_quadric;
 
-int enemy_max = 5;
+int enemy_max;
 int tower_max = 5;
 int current_towers = 0;
 bool Tower_flag1 = false;
 bool Moat_flag = false;
-ZombieModel current_enemies[5];
+ZombieModel current_enemies[500];
 TowerModel active_towers[5];
 // 0 empty, 9 impassable
 // SWAP Y AND X'S FOR THE LOVE OF THOR
@@ -87,8 +87,8 @@ GLfloat tower_y = 0.0f;
 
 // Global animation variables
 GLint fps = 90;
-GLint current_time = 0;
-GLint lasttime = 0;
+GLint current_time;
+GLint lasttime;
 
 // Conversion from screen to world coordinates
 GLfloat dt = 0.04f;
@@ -117,15 +117,13 @@ int GameView::Initialize(int argc, char *argv[]) {
     // Create WIndow
     glutCreateWindow("Tower Defense");
 
-    print_array();
+    //print_array();
     
     
     // Create Game Controller
     game = new GameController();
-    game->startGame();
     
     game->game_setup();
-    
 #ifndef OSX
     // Initialize GLEW
     glewInit();
@@ -143,7 +141,7 @@ int GameView::Initialize(int argc, char *argv[]) {
 
     
     //Temp?
-    for(int i = 0; i < enemy_max; i++){
+    for(int i = 0; i < game->num_enemies; i++){
         current_enemies[i] = game->game_model.levels.wave_enemies[0][i];
     }
     
@@ -169,13 +167,13 @@ void GameView::idleFunc(){
     // Update if past desired interval
     if (current_time - lasttime > 1000.0f/fps)
     {
-        
+        //enemy_max = game->num_enemies;
         int count = 0;
         // Pew Pew
         check_tower_proximity();
         
         // Move Zombies
-        for(int i = 0; i < enemy_max; i++){
+        for(int i = 0; i < game->num_enemies; i++){
             // Check zombie location
             if((current_enemies[i].x == 20) && (current_enemies[i].y == 25)){
                 // Zombie made it to castle
@@ -203,7 +201,7 @@ void GameView::idleFunc(){
         }
        
         // Next Wave
-        if (count == enemy_max){
+        if (count == game->num_enemies){
             printf("Next Wave!\n");
             int wave = game->game_model.get_wave_num();
             if (wave == 2) {
@@ -216,8 +214,8 @@ void GameView::idleFunc(){
                 wave++;
                 game->game_model.set_wave_num(wave);
             }
-            printf("game_model.get_wave_num() = %i\n",game->game_model.get_wave_num());
-            for(int i = 0; i < enemy_max; i++){
+            //printf("game_model.get_wave_num() = %i\n",game->game_model.get_wave_num());
+            for(int i = 0; i < game->num_enemies; i++){
                 current_enemies[i] = game->game_model.levels.wave_enemies[wave][i];
             }
         }
@@ -225,8 +223,6 @@ void GameView::idleFunc(){
     //print_array();
         // Update lasttime (reset time)
         lasttime = current_time;
-    
-        glutPostRedisplay();
     }
     glutPostRedisplay();
 }
@@ -247,7 +243,7 @@ void GameView::display() {
     
     glRotatef(180.0f, 0.0f, 0.0f, 1.0f);
     //draw objects
-    draw_text();
+    
     
     draw_grid();
     
@@ -263,6 +259,7 @@ void GameView::display() {
     glRotatef(180.0f, 0.0f, 1.0f, 0.0f);
     draw_current_enemies();
     
+    draw_text();
     // Swap Buffers
     glutSwapBuffers();
 }
@@ -285,7 +282,8 @@ void GameView::keyFunc(unsigned char key, int x, int y)
         // Start new game
         delete game;
         game = new GameController;
-        for(int i = 0; i < enemy_max; i++){
+        game->game_setup();
+        for(int i = 0; i < game->num_enemies; i++){
             current_enemies[i] = game->game_model.levels.wave_enemies[0][i];
         }
     }
@@ -391,7 +389,7 @@ void GameView::movefunc(int x, int y)
 
 // Draw Current Enemies
 void GameView::draw_current_enemies(){
-    for(int i = 0; i < enemy_max; i++){
+    for(int i = 0; i < game->num_enemies; i++){
         if(current_enemies[i].visible){
             draw_zombie(current_enemies[i]);
         }
@@ -511,7 +509,7 @@ void GameView::draw_text() {
     
     
     if (game->endgame == true) {
-        glColor3f(1.0f,0.0f,0.0f);
+        glColor3f(0.0f,1.0f,0.0f);
         sprintf(gameoverStr,"GAME OVER");
         glRasterPos2f(-3.0f,2.0f);
         for (unsigned int i = 0; i<strlen(gameoverStr); i++) {
@@ -662,10 +660,10 @@ void GameView::processHits(GLint hits, GLuint buffer[]){
 void GameView::draw_wave(int wave_num, int level)
 {
     printf("Wave %i starting\n", wave_num);
-    for(int i = 0; i < enemy_max; i++){
+    for(int i = 0; i < game->num_enemies; i++){
         draw_zombie(game->game_model.levels.wave_enemies[wave_num][i]);
     }
-    for(int i = 0; i < enemy_max; i++){
+    for(int i = 0; i < game->num_enemies; i++){
         //game.game_model.levels.wave_enemies[wave_num][i].step();
     }
     
@@ -750,12 +748,14 @@ void GameView::check_tower_proximity(){
     for(int i = 0; i < current_towers; i++){
         // Get tower location
         // go through zombies
-        for(int j = 0; j < enemy_max; j++){
+        for(int j = 0; j < game->num_enemies; j++){
+            
             if((abs(current_enemies[j].x - active_towers[i].x) <= active_towers[i].range) && (abs(current_enemies[j].y - active_towers[i].y) <= active_towers[i].range)){
                 // Shoot the zombie
-                printf("Zombie in range! Zombie: %i, %i Tower: %i, %i\n", current_enemies[j].x, current_enemies[j].y, active_towers[i].x, active_towers[i].y);
+                
+                //printf("Zombie in range! Zombie: %i, %i Tower: %i, %i\n", current_enemies[j].x, current_enemies[j].y, active_towers[i].x, active_towers[i].y);
                 grid_location[current_enemies[j].y][current_enemies[j].x] = 7;
-                print_array();
+                //print_array();
                 //TODO: Draw Shovel-Arrow
                 //start at tower, end at zombie position
                 if(current_enemies[j].health > 0){
@@ -764,6 +764,8 @@ void GameView::check_tower_proximity(){
                 if(current_enemies[j].health <= 0){
                     current_enemies[j].visible = false;
                     current_enemies[j].x = 2000;
+                    game->update_total_points();
+                    
                 }
             }
         }

@@ -19,13 +19,10 @@ GameController::~GameController() {
 //Set Up Game
 void GameController::game_setup(){
     printf("Creating game\n");
-    game_model.create_levels();
-}
-
-// Start Game
-void GameController::startGame() {
-    printf("Game Started\n");
+    //num_enemies = 5;
+    //game_model.create_levels(num_enemies);
     startLevel();
+    game_model.set_total_points(0);
 }
 
 // End Game
@@ -45,6 +42,9 @@ void GameController::startLevel() {
     printf("Level started\n");
     game_model.set_wave_num(0);
     int level = game_model.get_level();
+    num_enemies = (level+1) * 5;
+    game_model.create_levels(num_enemies);
+    printf("Level: %i, Number of enemies: %i\n", level+1, num_enemies);
     // Update starting resources for level
     game_model.set_num_resources((level + 1) * 500);
 }
@@ -56,5 +56,7 @@ void GameController::endLevel() {
 
 // Update total_points
 void GameController::update_total_points() {
-    game_model.total_points++;
+    int points = game_model.get_total_points();
+    points++;
+    game_model.set_total_points(points);
 }

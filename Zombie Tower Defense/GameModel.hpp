@@ -23,7 +23,7 @@ public:
     int wave_num;
     int current_level;
     int num_resources;
-    //LevelModel levels[8];
+    //LevelModel levels[10]; // TODO:
     LevelModel levels;
    
     
@@ -31,7 +31,7 @@ public:
     int get_total_points();
     void set_total_points(int points);
     int get_wave_num();
-    void create_levels();
+    void create_levels(int num_enemies);
     void set_wave_num(int wave);
     int get_level();
     void set_level(int level);

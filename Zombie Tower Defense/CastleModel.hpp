@@ -24,10 +24,5 @@ public:
     // Public interface
     int get_castle_health();
     void set_castle_health(int health);
-    int get_castle_width();
-    void set_castle_width(int width);
-    int get_castle_length();
-    void set_castle_length(int length);
-    
 };
 #endif /* CastleModel_hpp */
