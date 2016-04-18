@@ -3,7 +3,6 @@
 //  Zombie Tower Defense
 //
 
-
 #include "GameView.hpp"
 #define SIZE 500
 #define N 3
@@ -24,6 +23,34 @@ bool Moat_flag = false;
 bool hit = false;
 ZombieModel current_enemies[500];
 TowerModel active_towers[5];
+
+
+char healthStr[32];
+char resourcesStr[32];
+char pointsStr[32];
+char waveStr[32];
+char levelStr[32];
+char gameoverStr[32];
+char continueStr[32];
+char yesnoStr[32];
+
+GLfloat start_x = 0.0f;
+GLfloat start_y = 0.0f;
+GLfloat tower_x = 0.0f;
+GLfloat tower_y = 0.0f;
+int start_hit_x = 0.0;
+int start_hit_y = 0.0;
+int end_hit_x = 0.0;
+int end_hit_y = 0.0;
+
+// Global animation variables
+GLint fps = 90;
+GLint current_time;
+GLint lasttime;
+
+// Conversion from screen to world coordinates
+GLfloat dt = 0.04f;
+
 // 0 empty, 9 impassable
 // SWAP Y AND X'S FOR THE LOVE OF THOR
 int grid_location[40][40] = {
@@ -71,32 +98,6 @@ int grid_location[40][40] = {
     
 };
 
-// GRID FORMULA -> ((y*40)+x)
-
-char healthStr[32];
-char resourcesStr[32];
-char pointsStr[32];
-char waveStr[32];
-char levelStr[32];
-char gameoverStr[32];
-char continueStr[32];
-char yesnoStr[32];
-GLfloat start_x = 0.0f;
-GLfloat start_y = 0.0f;
-GLfloat tower_x = 0.0f;
-GLfloat tower_y = 0.0f;
-int start_hit_x = 0.0;
-int start_hit_y = 0.0;
-int end_hit_x = 0.0;
-int end_hit_y = 0.0;
-// Global animation variables
-GLint fps = 90;
-GLint current_time;
-GLint lasttime;
-
-// Conversion from screen to world coordinates
-GLfloat dt = 0.04f;
-
 // Constructor
 GameView::GameView(){
     
@@ -123,7 +124,6 @@ int GameView::Initialize(int argc, char *argv[]) {
 
     //print_array();
     
-    
     // Create Game Controller
     game = new GameController();
     
@@ -145,7 +145,7 @@ int GameView::Initialize(int argc, char *argv[]) {
 
     
     //Temp?
-    for(int i = 0; i < game->num_enemies; i++){
+    for(int i = 0; i < game->num_enemies; i++) {
         current_enemies[i] = game->game_model.levels.wave_enemies[0][i];
     }
     
@@ -169,17 +169,15 @@ void GameView::idleFunc(){
     current_time = glutGet(GLUT_ELAPSED_TIME);
     
     // Update if past desired interval
-    if (current_time - lasttime > 1000.0f/fps)
-    {
-        //enemy_max = game->num_enemies;
+    if (current_time - lasttime > 1000.0f/fps) {
         int count = 0;
         // Pew Pew
         check_tower_proximity();
         
         // Move Zombies
-        for(int i = 0; i < game->num_enemies; i++){
+        for(int i = 0; i < game->num_enemies; i++) {
             // Check zombie location
-            if((current_enemies[i].x == 20) && (current_enemies[i].y == 25)){
+            if((current_enemies[i].x == 20) && (current_enemies[i].y == 25)) {
                 // Zombie made it to castle
                 current_enemies[i].x = 0;
                 current_enemies[i].y = 0;
@@ -194,7 +192,7 @@ void GameView::idleFunc(){
                     game->endGame();
                 }
             } else {
-                if(((current_enemies[i].x == 0)&&(current_enemies[i].y == 0))||(!current_enemies[i].visible)){
+                if(((current_enemies[i].x == 0)&&(current_enemies[i].y == 0))||(!current_enemies[i].visible)) {
                     count++;
                 } else if (game->endgame == false) {
                     grid_location[current_enemies[i].y][current_enemies[i].x] = 0;
@@ -205,7 +203,7 @@ void GameView::idleFunc(){
         }
        
         // Next Wave
-        if (count == game->num_enemies){
+        if (count == game->num_enemies) {
             printf("Next Wave!\n");
             int wave = game->game_model.get_wave_num();
             if (wave == 2) {
@@ -219,12 +217,12 @@ void GameView::idleFunc(){
                 game->game_model.set_wave_num(wave);
             }
             //printf("game_model.get_wave_num() = %i\n",game->game_model.get_wave_num());
-            for(int i = 0; i < game->num_enemies; i++){
+            for(int i = 0; i < game->num_enemies; i++) {
                 current_enemies[i] = game->game_model.levels.wave_enemies[wave][i];
             }
         }
     
-    //print_array();
+        //print_array();
         // Update lasttime (reset time)
         lasttime = current_time;
     }
@@ -242,11 +240,11 @@ void GameView::display() {
     
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+    
     // Flush Buffer
     glFlush();
     
     glRotatef(180.0f, 0.0f, 0.0f, 1.0f);
-    //draw objects
     
     draw_grid();
 
@@ -288,18 +286,14 @@ void GameView::keyFunc(unsigned char key, int x, int y)
         delete game;
         game = new GameController;
         game->game_setup();
-        for(int i = 0; i < game->num_enemies; i++){
+        for(int i = 0; i < game->num_enemies; i++) {
             current_enemies[i] = game->game_model.levels.wave_enemies[0][i];
         }
     }
 }
 
 // Mouse click callback
-void GameView::mousefunc(int button, int state, int x, int y)
-{
-    GLuint nameBuffer[SIZE];
-    GLint hits;
-    GLint viewport[4];
+void GameView::mousefunc(int button, int state, int x, int y) {
     
     // Store cursor position when left button is clicked
     if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
@@ -308,106 +302,25 @@ void GameView::mousefunc(int button, int state, int x, int y)
         start_y = y;
         printf("Mouse func x, y: %f, %f\n", start_x*dt, start_y*dt);
     }
-    
-    // Store cursor position when left button is clicked
-    if(button == GLUT_MIDDLE_BUTTON && state == GLUT_DOWN)
-    {
-        start_x = x;
-        start_y = y;
-        //initialize the name stack
-        glInitNames();
-        glPushName(0);
-        glSelectBuffer(SIZE,nameBuffer);
-        
-        //view for selection mode
-        glGetIntegerv(GL_VIEWPORT,viewport);
-        glMatrixMode(GL_PROJECTION);
-        
-        //Save original viewing matrix
-        glPushMatrix();
-            glLoadIdentity();
-        
-            //NxN pick area
-            //Invert y to get in world coord
-            gluPickMatrix((GLdouble) x ,(GLdouble)(viewport[3] - y) ,N ,N, viewport);
-        
-            gluOrtho2D(-20.0f, 20.0f, -20.0f, 20.0f);
-        
-            glRenderMode(GL_SELECT);
-            draw_objects(GL_SELECT);
-            glMatrixMode(GL_PROJECTION);
-        
-        //restore viewing matrix
-        glPopMatrix();
-        
-        //return to normal rendering
-        hits = glRenderMode(GL_RENDER);
-        
-        //process hits from selection mode
-        processHits(hits,nameBuffer);
-         printf("Hits processed!!\n");
-        
-        //normal render
-        glutPostRedisplay();
-    }
-    
-}
-
-// Mouse move callback
-void GameView::movefunc(int x, int y)
-{
-    GLint dx, dy;
-    
-    // Compute change in cursor position (inverted y)
-    dx = x - start_x;
-    dy = start_y - y;
-    
-    /*
-     TODO: add changes here to make the picking work
-    */
-    
-    
-    // Update Tower (bounded) position
-    tower_x += dx*dt;
-    if (tower_x < -19.0f)
-    {
-        tower_x = -19.0f;
-    }
-    else if (tower_x > 19.0f)
-    {
-        tower_x = 19.0f;
-    }
-    
-    tower_y += dy*dt;
-    if (tower_y < -19.0f)
-    {
-        tower_y = -19.0f;
-    }
-    else if (tower_y > 19.0f)
-    {
-        tower_y = 19.0f;
-    }
-    
-    // Redraw screen
     glutPostRedisplay();
 }
 
 // Draw Current Enemies
-void GameView::draw_current_enemies(){
-    for(int i = 0; i < game->num_enemies; i++){
-        if(current_enemies[i].visible){
+void GameView::draw_current_enemies() {
+    for(int i = 0; i < game->num_enemies; i++) {
+        if(current_enemies[i].visible) {
             draw_zombie(current_enemies[i]);
         }
     }
 }
 
 // Draw Grid
-void GameView::draw_grid(){
+void GameView::draw_grid() {
     for(int i = -20; i <= 20; i++){
         // Draw Vertical Lines
         glPushAttrib(GL_CURRENT_BIT);
         glPushMatrix();
-            if(i == 0){
+            if(i == 0) {
                 glColor3f(1.0f,0.0f, 0.0f);
             } else {
                 glColor3f(0.0f, 0.0f, 0.0f);
@@ -423,7 +336,7 @@ void GameView::draw_grid(){
         // Draw Horizontal Lines
         glPushAttrib(GL_CURRENT_BIT);
         glPushMatrix();
-            if(j == 0){
+            if(j == 0) {
                 glColor3f(0.0f, 1.0f, 0.0f);
             } else {
                 glColor3f(0.0f, 0.0f, 0.2f);
@@ -512,7 +425,6 @@ void GameView::draw_text() {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, waveStr[i]);
     }
     
-    
     if (game->endgame == true) {
         glColor3f(1.0f,1.0f,1.0f);
         sprintf(gameoverStr,"GAME OVER");
@@ -532,7 +444,6 @@ void GameView::draw_text() {
         }
     }
     glPopMatrix();
-    
 }
 
 // Draw zombie method
@@ -554,8 +465,8 @@ void GameView::draw_zombie(EnemyModel zombie) {
     glPopAttrib();
 }
 
-void GameView::draw_castle()
-{
+// Draw castle function
+void GameView::draw_castle() {
     glPushAttrib(GL_CURRENT_BIT);
     glPushMatrix();
         glColor3f(0.5f, 0.5f, 0.5f);
@@ -604,86 +515,25 @@ void GameView::draw_tower(TowerModel tower) {
     glPopMatrix();
 }
 
-void GameView::draw_objects(GLenum mode)
-{
-    //draw selections
-    if(mode == GL_RENDER){ glLoadName(1);
-        draw_text();
-    }
-    //printf("Hey it drew text!\n");
-    if(mode == GL_RENDER){ glLoadName(2);
-        draw_grid();
-    }
-     //printf("Hey it drew grid!\n");
-    if(mode == GL_RENDER){ glLoadName(3);
-        draw_current_enemies();
-    }
-     //printf("Hey it drew enemy!\n");
-    if(mode == GL_RENDER){ glLoadName(4);
-        draw_castle();
-    }
-    if(mode == GL_SELECT){ glLoadName(5);
-        for(int i = 0; i < current_towers; i++){
-            draw_tower(active_towers[i]);
-        }
-    }
-     //printf("Hey it drew castle!\n");
-    
-}
-void GameView::processHits(GLint hits, GLuint buffer[]){
-    
-    unsigned int i, j;
-    GLuint names, *ptr;
-    
-    printf("hits = %d\n",hits);
-    
-    ptr = (GLuint *) buffer;
-    
-    //loops over hits
-    for(i = 0; i < hits; i++)
-    {
-        names = *ptr;
-        
-        //skip over number of names and depths
-        ptr += 3;
-        
-        //check each name
-        
-        for(j = 0;  j < names; j++)
-        {
-            if(*ptr == 1) printf("zombies, castles, and lines\n");
-            else printf("other\n");
-            
-            //next hit
-            ptr++;
-        }
-    }
-}
-
-
 // Start Wave
-void GameView::draw_wave(int wave_num, int level)
-{
+void GameView::draw_wave(int wave_num, int level) {
     printf("Wave %i starting\n", wave_num);
-    for(int i = 0; i < game->num_enemies; i++){
+    for(int i = 0; i < game->num_enemies; i++) {
         draw_zombie(game->game_model.levels.wave_enemies[wave_num][i]);
     }
-    for(int i = 0; i < game->num_enemies; i++){
-        //game.game_model.levels.wave_enemies[wave_num][i].step();
-    }
-    
 }
+
 // Print Out arrary
-void GameView::print_array(){
-    for(int i = 0; i < 40; i++){
+void GameView::print_array() {
+    for(int i = 0; i < 40; i++) {
         for(int j = 0; j < 40; j++){
-            if(grid_location[i][j] == 9){
+            if(grid_location[i][j] == 9) {
                 printf(" |");
-            } else if(grid_location[i][j] == 8){
+            } else if(grid_location[i][j] == 8) {
                 printf("O");
-            }else if(grid_location[i][j] == 7){
+            } else if(grid_location[i][j] == 7) {
                 printf("X");
-            }else{
+            } else {
                 printf(" _");
             }
         }
@@ -692,6 +542,7 @@ void GameView::print_array(){
     printf("\n");
 }
 
+// Draw moat function
 void GameView::draw_moat() {
         glPushAttrib(GL_CURRENT_BIT);
         glPushMatrix();
@@ -746,14 +597,14 @@ void GameView::draw_moat() {
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         glPopMatrix();
         glPopAttrib();
-    }
+}
 
 // Check area around towers for zombies
-void GameView::check_tower_proximity(){
-    for(int i = 0; i < current_towers; i++){
+void GameView::check_tower_proximity() {
+    for(int i = 0; i < current_towers; i++) {
         // Get tower location
         // go through zombies
-        for(int j = 0; j < game->num_enemies; j++){
+        for(int j = 0; j < game->num_enemies; j++) {
             
             if((abs(current_enemies[j].x - active_towers[i].x) <= active_towers[i].range) && (abs(current_enemies[j].y - active_towers[i].y) <= active_towers[i].range)){
                 // Shoot the zombie
@@ -761,14 +612,15 @@ void GameView::check_tower_proximity(){
                 //printf("Zombie in range! Zombie: %i, %i Tower: %i, %i\n", current_enemies[j].x, current_enemies[j].y, active_towers[i].x, active_towers[i].y);
                 grid_location[current_enemies[j].y][current_enemies[j].x] = 7;
                 //print_array();
-                //TODO: Draw Shovel-Arrow
-                //start at tower, end at zombie position
+                
+                // Draw Arrow
+                // start at tower, end at zombie position
                 if(current_enemies[j].health > 0){
                     current_enemies[j].health = current_enemies[j].health - 1;
                  
                 }
     
-                if(current_enemies[j].health <= 0){
+                if(current_enemies[j].health <= 0) {
                     start_hit_x = active_towers[i].x;
                     start_hit_y = active_towers[i].y;
                     end_hit_x = current_enemies[j].x;
@@ -778,17 +630,15 @@ void GameView::check_tower_proximity(){
                     current_enemies[j].x = 2000;
                     game->update_total_points();
                     
-                    
                 }
-                //hit = false;
             }
         }
-
     }
 }
-void GameView::draw_hit(bool hit){
+
+void GameView::draw_hit(bool hit) {
     //drawing shot
-    if(hit == true){
+    if(hit == true) {
         glPushAttrib(GL_CURRENT_BIT);
             glPushMatrix();
                 //glLineWidth(2.5);
@@ -802,9 +652,6 @@ void GameView::draw_hit(bool hit){
         
         printf("start hit in x: %i y: %i\n",start_hit_x, start_hit_y);
         printf("end hit in x: %i y: %i\n",end_hit_x, end_hit_y);
-    }else{
-        return;
     }
     return;
-    
 }
