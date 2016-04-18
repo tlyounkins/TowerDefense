@@ -84,7 +84,10 @@ GLfloat start_x = 0.0f;
 GLfloat start_y = 0.0f;
 GLfloat tower_x = 0.0f;
 GLfloat tower_y = 0.0f;
-
+int start_hit_x = 0.0;
+int start_hit_y = 0.0;
+int end_hit_x = 0.0;
+int end_hit_y = 0.0;
 // Global animation variables
 GLint fps = 90;
 GLint current_time;
@@ -245,14 +248,16 @@ void GameView::display() {
     //draw objects
     
     
-    draw_grid();
+    //draw_grid();
+    
+    draw_castle();
+
+    draw_hit(hit);
     
     if (Moat_flag == true) {
         draw_moat();
     }
     
-    draw_castle();
-   
     for(int i = 0; i < current_towers; i++){
         draw_tower(active_towers[i]);
     }
@@ -760,15 +765,44 @@ void GameView::check_tower_proximity(){
                 //start at tower, end at zombie position
                 if(current_enemies[j].health > 0){
                     current_enemies[j].health = current_enemies[j].health - 1;
+                    start_hit_x = active_towers[i].x;
+                    start_hit_y = active_towers[i].y;
+                    end_hit_x = current_enemies[j].x;
+                    end_hit_y = current_enemies[j].y;
+                    hit = true;
                 }
+    
                 if(current_enemies[j].health <= 0){
                     current_enemies[j].visible = false;
                     current_enemies[j].x = 2000;
                     game->update_total_points();
                     
                 }
+                //hit = false;
             }
         }
 
     }
+}
+void GameView::draw_hit(bool hit){
+    //drawing shot
+    if(hit == true){
+        glPushAttrib(GL_CURRENT_BIT);
+            glPushMatrix();
+                glLineWidth(2.5);
+                glColor3f(1.0, 0.0, 0.0);
+                glBegin(GL_LINES);
+                    glVertex2f(-(start_hit_x - 20), start_hit_y - 20);
+                    glVertex2f(-(end_hit_x - 20),end_hit_y - 20);
+                glEnd();
+            glPopMatrix();
+        glPopAttrib();
+        
+        printf("start hit in x: %i y: %i\n",start_hit_x, start_hit_y);
+        printf("end hit in x: %i y: %i\n",end_hit_x, end_hit_y);
+    }else{
+        return;
+    }
+    return;
+    
 }

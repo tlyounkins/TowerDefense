@@ -20,6 +20,8 @@ public:
     // Variables
     int x;
     int y;
+    int game_x;
+    int game_y;
     int range;
     
     // Public interface
