@@ -21,6 +21,7 @@ int tower_max = 5;
 int current_towers = 0;
 bool Tower_flag1 = false;
 bool Moat_flag = false;
+bool hit = false;
 ZombieModel current_enemies[500];
 TowerModel active_towers[5];
 // 0 empty, 9 impassable
@@ -140,7 +141,7 @@ int GameView::Initialize(int argc, char *argv[]) {
     glutMotionFunc(movefunc);
     
     // Set Background Color
-    glClearColor(0.0f, 0.75f, 0.0f, 1.0f);
+    glClearColor(0.0f, 0.25f, 0.0f, 1.0f);
 
     
     //Temp?
@@ -247,8 +248,7 @@ void GameView::display() {
     glRotatef(180.0f, 0.0f, 0.0f, 1.0f);
     //draw objects
     
-    
-    //draw_grid();
+    draw_grid();
     
     draw_castle();
 
@@ -489,7 +489,7 @@ void GameView::draw_text() {
     sprintf(levelStr,"Level:  %d",game->game_model.get_level()+1);
     sprintf(waveStr,"Wave:  %d",game->game_model.get_wave_num()+1);
     sprintf(waveStr,"Wave:  %d",game->game_model.get_wave_num()+1);
-    glColor3f(0.0f,0.0f,1.0f);
+    glColor3f(1.0f,1.0f,1.0f);
     // Set the text to the top left corner
     glRasterPos2f(-18.0f,17.0f);
     for (unsigned int i = 0; i<strlen(healthStr); i++) {
@@ -514,7 +514,7 @@ void GameView::draw_text() {
     
     
     if (game->endgame == true) {
-        glColor3f(0.0f,1.0f,0.0f);
+        glColor3f(1.0f,1.0f,1.0f);
         sprintf(gameoverStr,"GAME OVER");
         glRasterPos2f(-3.0f,2.0f);
         for (unsigned int i = 0; i<strlen(gameoverStr); i++) {
@@ -593,7 +593,7 @@ void GameView::draw_tower(TowerModel tower) {
     glPushMatrix();
         //glTranslatef(4, -4, 0.0f);
         glTranslatef(-(tower.x-20),tower.y-20, 0.0f);
-        glColor3f(0.75f, 0.75f, 0.75f);
+        glColor3f(0.5f, 0.5f, 0.5f);
         //glScalef(0.03, 0.03, 1);
         gluDisk(tower_quadric, 0, 1.5, 100, 100);
         glColor3f(0.0f, 0.0f, 0.0f);
@@ -765,17 +765,19 @@ void GameView::check_tower_proximity(){
                 //start at tower, end at zombie position
                 if(current_enemies[j].health > 0){
                     current_enemies[j].health = current_enemies[j].health - 1;
+                 
+                }
+    
+                if(current_enemies[j].health <= 0){
                     start_hit_x = active_towers[i].x;
                     start_hit_y = active_towers[i].y;
                     end_hit_x = current_enemies[j].x;
                     end_hit_y = current_enemies[j].y;
                     hit = true;
-                }
-    
-                if(current_enemies[j].health <= 0){
                     current_enemies[j].visible = false;
                     current_enemies[j].x = 2000;
                     game->update_total_points();
+                    
                     
                 }
                 //hit = false;
@@ -789,8 +791,8 @@ void GameView::draw_hit(bool hit){
     if(hit == true){
         glPushAttrib(GL_CURRENT_BIT);
             glPushMatrix();
-                glLineWidth(2.5);
-                glColor3f(1.0, 0.0, 0.0);
+                //glLineWidth(2.5);
+                glColor3f(1.0, 0.75, 0.5);
                 glBegin(GL_LINES);
                     glVertex2f(-(start_hit_x - 20), start_hit_y - 20);
                     glVertex2f(-(end_hit_x - 20),end_hit_y - 20);
