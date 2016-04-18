@@ -57,7 +57,6 @@ public:
     void static print_array();
     void static draw_text();
     void static mousefunc(int button, int state, int x, int y);
-    void static movefunc(int x, int y);
     void static check_tower_proximity();
     
 

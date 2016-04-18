@@ -44,7 +44,7 @@ int end_hit_x = 0.0;
 int end_hit_y = 0.0;
 
 // Global animation variables
-GLint fps = 90;
+GLint fps = 10;
 GLint current_time;
 GLint lasttime;
 
@@ -138,7 +138,6 @@ int GameView::Initialize(int argc, char *argv[]) {
     glutKeyboardFunc(keyFunc);
     glutIdleFunc(idleFunc);
     glutMouseFunc(mousefunc);
-    glutMotionFunc(movefunc);
     
     // Set Background Color
     glClearColor(0.0f, 0.25f, 0.0f, 1.0f);
@@ -194,7 +193,8 @@ void GameView::idleFunc(){
                     game->endGame();
                 }
             } else {
-                if(((current_enemies[i].x == 0)&&(current_enemies[i].y == 0))||(!current_enemies[i].visible)) {
+                // Count how many enemies are out of the game
+                if(((current_enemies[i].x == 0)&&(current_enemies[i].y == 0))||(!current_enemies[i].visible)){
                     count++;
                 }
                 // Remaining enemies take a step
@@ -222,7 +222,9 @@ void GameView::idleFunc(){
                 game->game_model.set_wave_num(wave);
             }
             //printf("game_model.get_wave_num() = %i\n",game->game_model.get_wave_num());
-            for(int i = 0; i < game->num_enemies; i++) {
+            
+            // Add wave enemies to current enemies
+            for(int i = 0; i < game->num_enemies; i++){
                 current_enemies[i] = game->game_model.levels.wave_enemies[wave][i];
             }
         }
@@ -615,10 +617,12 @@ void GameView::draw_moat() {
         glVertex3f(1.0f, 5.0f, 0.0f);
     glEnd();
     
-        // Revert Changes
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-        glPopMatrix();
-        glPopAttrib();
+    // Revert Changes
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    glPopMatrix();
+    glPopAttrib();
+    
+    // TODO: Add 9's to map where moat is
 }
 
 // Check area around towers for zombies
@@ -626,7 +630,10 @@ void GameView::check_tower_proximity() {
     for(int i = 0; i < current_towers; i++) {
         // Get tower location
         // go through zombies
-        for(int j = 0; j < game->num_enemies; j++) {
+        
+        // Increase timer on towers
+        active_towers[i].cooldown += 1;
+        for(int j = 0; j < game->num_enemies; j++){
             
             // Check where zombie is on map
             if((abs(current_enemies[j].x - active_towers[i].x) <= active_towers[i].range) && (abs(current_enemies[j].y - active_towers[i].y) <= active_towers[i].range)){
@@ -634,45 +641,43 @@ void GameView::check_tower_proximity() {
                 //printf("Zombie in range! Zombie: %i, %i Tower: %i, %i\n", current_enemies[j].x, current_enemies[j].y, active_towers[i].x, active_towers[i].y);
                 //print_array();
                 
-                // Draw Arrow
-                // start at tower, end at zombie position
-                if(current_enemies[j].health > 0){
-                    current_enemies[j].health = current_enemies[j].health - 1;
-                 
-                }
-    
-                if(current_enemies[j].health <= 0) {
-                    start_hit_x = active_towers[i].x;
-                    start_hit_y = active_towers[i].y;
-                    end_hit_x = current_enemies[j].x;
-                    end_hit_y = current_enemies[j].y;
-                    hit = true;
-                    current_enemies[j].visible = false;
-                    current_enemies[j].x = 2000;
-                    game->update_total_points();
+                // Shoot the zombie if cooldown is up
+                if(active_towers[i].cooldown >= active_towers[i].speed){
                     
+                    // Mark on map where hit occurs
+                    grid_location[current_enemies[j].y][current_enemies[j].x] = 7;
+                    
+                    // Mark hit location
+                    if(!active_towers[i].hit){
+                        active_towers[i].enemy_x = current_enemies[j].x;
+                        active_towers[i].enemy_y = current_enemies[j].y;
+                        active_towers[i].hit = true;
+                    }
+                
+                    // Decrement Zombie Health
+                    if(current_enemies[j].health > 0){
+                        current_enemies[j].health = current_enemies[j].health - 1;
+                 
+                    }
+                    // If Zombie Dead, Remove It
+                    if(current_enemies[j].health <= 0){
+                        
+                        // Remove Zombie
+                        current_enemies[j].visible = false;
+                        current_enemies[j].x = 0;
+                        current_enemies[j].y = 0;
+                        
+                        // Add points
+                        game->update_total_points();
+                    }
+                    
+                    // Restart cooldownc
+                    active_towers[i].cooldown = 0;
+                    glutPostRedisplay();
                 }
+                // Tower can only hit one at a time
+                break;
             }
         }
     }
-}
-
-void GameView::draw_hit(bool hit) {
-    //drawing shot
-    if(hit == true) {
-        glPushAttrib(GL_CURRENT_BIT);
-            glPushMatrix();
-                //glLineWidth(2.5);
-                glColor3f(1.0, 0.75, 0.5);
-                glBegin(GL_LINES);
-                    glVertex2f(-(start_hit_x - 20), start_hit_y - 20);
-                    glVertex2f(-(end_hit_x - 20),end_hit_y - 20);
-                glEnd();
-            glPopMatrix();
-        glPopAttrib();
-        
-        printf("start hit in x: %i y: %i\n",start_hit_x, start_hit_y);
-        printf("end hit in x: %i y: %i\n",end_hit_x, end_hit_y);
-    }
-    return;
 }
