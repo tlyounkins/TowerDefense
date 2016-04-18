@@ -8,7 +8,7 @@
 
 // Constructor
 CastleModel::CastleModel() {
-     castle_health = 20;
+     castle_health = 50;
 }
 
 // Destructor
@@ -22,20 +22,4 @@ int CastleModel::get_castle_health() {
 
 void CastleModel::set_castle_health(int health) {
     this->castle_health = health;
-}
-
-int CastleModel::get_castle_width() {
-    return castle_width;
-}
-
-void CastleModel::set_castle_width(int castle_length) {
-    this->castle_length = castle_length;
-}
-
-int CastleModel::get_castle_length() {
-    return castle_length;
-}
-
-void CastleModel::set_castle_length(int castle_length) {
-    this->castle_length = castle_length;
 }

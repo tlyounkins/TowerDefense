@@ -29,7 +29,7 @@ public:
     
     
     // Public interface
-    void create_level(int waves);
+    void create_level(int waves, int level);
 };
 
 #endif /* LevelModel_hpp */

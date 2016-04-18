@@ -18,12 +18,11 @@ LevelModel::~LevelModel() {
 }
 
 // Create Level
-void LevelModel::create_level(int waves){
+void LevelModel::create_level(int waves, int num_enemies){
     this->wave_amount = waves;
-
     srand(time(NULL));
     for(int i = 0; i < waves; i++) {
-        for(int j = 0; j < 5; j++){
+        for(int j = 0; j < num_enemies; j++){
             int x_pos, y_pos = 0;
             // Switches
             int location =  rand() % 8;
@@ -87,7 +86,7 @@ void LevelModel::create_level(int waves){
             
             ZombieModel zombie;
             zombie.health = 10;
-            zombie.speed = 20;
+            zombie.speed = 5; // Decrease number to increase movement speed
             zombie.x = x_pos;
             zombie.y = y_pos;
             //printf("create %i, %i\n", wave_number, wave_position);

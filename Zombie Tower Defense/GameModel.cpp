@@ -21,8 +21,8 @@ GameModel::~GameModel() {
     
 }
 
-void GameModel::create_levels(){
-    levels.create_level(5);
+void GameModel::create_levels(int num_enemies){
+    levels.create_level(3,num_enemies);
 }
 
 

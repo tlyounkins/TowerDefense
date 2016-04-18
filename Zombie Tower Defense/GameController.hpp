@@ -34,16 +34,14 @@ public:
     bool endgame;
     GameModel game_model;
     CastleModel castle;
+    int num_enemies;
     
     // Public interface
-    void startGame();
     void endGame();
     void startLevel();
     void endLevel();
     void pause_game();
     void update_total_points();
-    void damageCastle(int damage);
-    void spawn_enemy(int wave_num, int level);
     void game_setup();
 };
 
