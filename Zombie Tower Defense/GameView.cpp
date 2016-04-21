@@ -16,14 +16,13 @@ UpgradesModel upgrades;
 GLUquadricObj *tower_quadric;
 
 int enemy_max;
-int tower_max = 5;
+int tower_max = 50;
 int current_towers = 0;
 bool Tower_flag1 = false;
 bool Moat_flag = false;
 bool hit = false;
-ZombieModel current_enemies[500];
-TowerModel active_towers[5];
-
+ZombieModel current_enemies[10000];
+TowerModel active_towers[50];
 
 char healthStr[32];
 char resourcesStr[32];
@@ -44,7 +43,7 @@ int end_hit_x = 0.0;
 int end_hit_y = 0.0;
 
 // Global animation variables
-GLint fps = 10;
+GLint fps = 20; // Increase to increase movement speed
 GLint current_time;
 GLint lasttime;
 
@@ -142,9 +141,8 @@ int GameView::Initialize(int argc, char *argv[]) {
     // Set Background Color
     glClearColor(0.0f, 0.25f, 0.0f, 1.0f);
 
-    
     //Temp?
-    for(int i = 0; i < game->num_enemies; i++) {
+    for (int i = 0; i < game->num_enemies; i++) {
         current_enemies[i] = game->game_model.levels.wave_enemies[0][i];
     }
     
@@ -172,9 +170,9 @@ void GameView::idleFunc(){
         int count = 0;
         
         // Move Zombies
-        for(int i = 0; i < game->num_enemies; i++) {
+        for (int i = 0; i < game->num_enemies; i++) {
             // Check zombie location
-            if((current_enemies[i].x == 20) && (current_enemies[i].y == 25)) {
+            if ((current_enemies[i].x == 20) && (current_enemies[i].y == 25)) {
                 // Zombie made it to castle
                 current_enemies[i].x = 0;
                 current_enemies[i].y = 0;
@@ -194,7 +192,7 @@ void GameView::idleFunc(){
                 }
             } else {
                 // Count how many enemies are out of the game
-                if(((current_enemies[i].x == 0)&&(current_enemies[i].y == 0))||(!current_enemies[i].visible)){
+                if (((current_enemies[i].x == 0) && (current_enemies[i].y == 0)) || (!current_enemies[i].visible)) {
                     count++;
                 }
                 // Remaining enemies take a step
@@ -207,6 +205,7 @@ void GameView::idleFunc(){
         // Next Wave
         if (count == game->num_enemies) {
             printf("Next Wave!\n");
+            
             int wave = game->game_model.get_wave_num();
             // Increase level if last wave
             if (wave == 2) {
@@ -214,7 +213,7 @@ void GameView::idleFunc(){
                 level++;
                 game->game_model.set_level(level);
                 game->startLevel();
-                game->castle.set_castle_health(20);
+                game->castle.set_castle_health(50);
             }
             // Go to next wave instead
             else {
@@ -224,7 +223,7 @@ void GameView::idleFunc(){
             //printf("game_model.get_wave_num() = %i\n",game->game_model.get_wave_num());
             
             // Add wave enemies to current enemies
-            for(int i = 0; i < game->num_enemies; i++){
+            for (int i = 0; i < game->num_enemies; i++) {
                 current_enemies[i] = game->game_model.levels.wave_enemies[wave][i];
             }
         }
@@ -261,15 +260,16 @@ void GameView::display() {
     if (Moat_flag == true) {
         draw_moat();
     }
+    
     draw_castle();
     
     // Draw active towers
-    for(int i = 0; i < current_towers; i++){
+    for(int i = 0; i < current_towers; i++) {
         draw_tower(active_towers[i]);
     }
     
     // Draw shots per tower
-    for(int i = 0; i < current_towers; i++){
+    for(int i = 0; i < current_towers; i++) {
         if(active_towers[i].hit){
             active_towers[i].draw_hit();
         }
@@ -298,12 +298,13 @@ void GameView::keyFunc(unsigned char key, int x, int y)
         delete game;
         exit(0);
     }
+    
     if (game->endgame == true && (key == 'y' || key == 'Y')) {
         // Start new game
         delete game;
         game = new GameController;
         game->game_setup();
-        for(int i = 0; i < game->num_enemies; i++) {
+        for (int i = 0; i < game->num_enemies; i++) {
             current_enemies[i] = game->game_model.levels.wave_enemies[0][i];
         }
     }
@@ -313,8 +314,7 @@ void GameView::keyFunc(unsigned char key, int x, int y)
 void GameView::mousefunc(int button, int state, int x, int y) {
     
     // Store cursor position when left button is clicked
-    if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
-    {
+    if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
         start_x = x;
         start_y = y;
         printf("Mouse func x, y: %f, %f\n", start_x*dt, start_y*dt);
@@ -324,8 +324,8 @@ void GameView::mousefunc(int button, int state, int x, int y) {
 
 // Draw Current Enemies
 void GameView::draw_current_enemies() {
-    for(int i = 0; i < game->num_enemies; i++) {
-        if(current_enemies[i].visible) {
+    for (int i = 0; i < game->num_enemies; i++) {
+        if (current_enemies[i].visible) {
             draw_zombie(current_enemies[i]);
         }
     }
@@ -333,7 +333,7 @@ void GameView::draw_current_enemies() {
 
 // Draw Grid
 void GameView::draw_grid() {
-    for(int i = -20; i <= 20; i++){
+    for (int i = -20; i <= 20; i++) {
         // Draw Vertical Lines
         glPushAttrib(GL_CURRENT_BIT);
         glPushMatrix();
@@ -353,7 +353,7 @@ void GameView::draw_grid() {
         // Draw Horizontal Lines
         glPushAttrib(GL_CURRENT_BIT);
         glPushMatrix();
-            if(j == 0) {
+            if (j == 0) {
                 glColor3f(0.0f, 1.0f, 0.0f);
             } else {
                 glColor3f(0.0f, 0.0f, 0.2f);
@@ -420,6 +420,7 @@ void GameView::draw_text() {
     sprintf(waveStr,"Wave:  %d",game->game_model.get_wave_num()+1);
     sprintf(waveStr,"Wave:  %d",game->game_model.get_wave_num()+1);
     glColor3f(1.0f,1.0f,1.0f);
+    
     // Set the text to the top left corner
     glRasterPos2f(-18.0f,17.0f);
     for (unsigned int i = 0; i<strlen(healthStr); i++) {
