@@ -272,6 +272,7 @@ void GameView::display() {
     for(int i = 0; i < current_towers; i++){
         if(active_towers[i].hit){
             active_towers[i].draw_hit();
+            
         }
     }
     
@@ -651,6 +652,7 @@ void GameView::check_tower_proximity() {
                     if(!active_towers[i].hit){
                         active_towers[i].enemy_x = current_enemies[j].x;
                         active_towers[i].enemy_y = current_enemies[j].y;
+                        active_towers[i].enemy_position = j;
                         active_towers[i].hit = true;
                     }
                 
@@ -661,6 +663,8 @@ void GameView::check_tower_proximity() {
                     }
                     // If Zombie Dead, Remove It
                     if(current_enemies[j].health <= 0){
+                        
+                        printf("Zombie ded\n");
                         
                         // Remove Zombie
                         current_enemies[j].visible = false;

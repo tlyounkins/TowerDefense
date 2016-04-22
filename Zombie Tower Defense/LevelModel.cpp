@@ -38,14 +38,14 @@ void LevelModel::create_level(int waves, int num_enemies){
                 case 1:
                     x_pos = rand() % 20;
                     
-                    y_pos = 20;
+                    y_pos = 1;
                     break;
                     
                     // Case 3 - Top - Top-Right
                 case 2:
                     x_pos = (rand() % 20) + 18;
                     
-                    y_pos = 20;
+                    y_pos = 1;
                     break;
                     
                     // Case 4 - Top - Right
@@ -85,7 +85,6 @@ void LevelModel::create_level(int waves, int num_enemies){
             }
             
             ZombieModel zombie;
-            zombie.health = 10;
             zombie.speed = 5; // Decrease number to increase movement speed
             zombie.x = x_pos;
             zombie.y = y_pos;
