@@ -9,6 +9,7 @@
 // Constructor
 GameController::GameController() : game_model(){
     endgame = false;
+    levelcomplete = false;
 }
 
 // Destructor

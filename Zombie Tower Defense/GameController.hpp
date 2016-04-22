@@ -32,6 +32,7 @@ public:
     
     // Variables
     bool endgame;
+    bool levelcomplete;
     GameModel game_model;
     CastleModel castle;
     int num_enemies;
