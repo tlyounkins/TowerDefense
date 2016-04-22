@@ -22,6 +22,7 @@ int current_towers = 0;
 bool Tower_flag1 = false;
 bool Moat_flag = false;
 bool hit = false;
+bool game_paused = false;
 ZombieModel current_enemies[100];
 TowerModel active_towers[50];
 
@@ -31,6 +32,7 @@ char pointsStr[32];
 char waveStr[32];
 char levelStr[32];
 char gameoverStr[32];
+char levelcompleteStr[32];
 char continueStr[32];
 char yesnoStr[32];
 
@@ -169,7 +171,7 @@ void GameView::idleFunc(){
     current_time = glutGet(GLUT_ELAPSED_TIME);
     
     // Update if past desired interval
-    if (current_time - lasttime > 1000.0f/fps) {
+    if ((current_time - lasttime > 1000.0f/fps) && !game_paused) {
         int count = 0;
         
         // Move Zombies
@@ -212,23 +214,22 @@ void GameView::idleFunc(){
             int wave = game->game_model.get_wave_num();
             // Increase level if last wave
             if (wave == 2) {
-                int level = game->game_model.get_level();
-                level++;
-                game->game_model.set_level(level);
-                game->startLevel();
-                game->castle.set_castle_health(castle_starting_health);
+                game_paused = !game_paused;
+                game->levelcomplete = true;
+                
             }
             // Go to next wave instead
             else {
                 wave++;
                 game->game_model.set_wave_num(wave);
+                // Add wave enemies to current enemies
+                for (int i = 0; i < game->num_enemies; i++) {
+                    current_enemies[i] = game->game_model.levels.wave_enemies[wave][i];
+                }
             }
             //printf("game_model.get_wave_num() = %i\n",game->game_model.get_wave_num());
             
-            // Add wave enemies to current enemies
-            for (int i = 0; i < game->num_enemies; i++) {
-                current_enemies[i] = game->game_model.levels.wave_enemies[wave][i];
-            }
+            
         }
         
         // Pew Pew
@@ -295,6 +296,28 @@ void GameView::keyFunc(unsigned char key, int x, int y)
     // Temp until menu works
     if (key == 27) {
         printf("Main needs to exit!\n");
+        exit(0);
+    }
+    if (key == ' ') {
+        game_paused = !game_paused;
+    }
+    
+    if (game->levelcomplete == true && (key == 'y' || key == 'Y')) {
+        int level = game->game_model.get_level();
+        level++;
+        game->game_model.set_level(level);
+        game->startLevel();
+        game->castle.set_castle_health(castle_starting_health);
+        game->levelcomplete = false;
+        game_paused = !game_paused;
+        // Add wave enemies to current enemies
+        int wave = 0;
+        for (int i = 0; i < game->num_enemies; i++) {
+            current_enemies[i] = game->game_model.levels.wave_enemies[wave][i];
+        }
+    }
+    if (game->levelcomplete == true && (key == 'n' || key == 'N')) {
+        game->endgame == true;
         exit(0);
     }
     
@@ -453,6 +476,24 @@ void GameView::draw_text() {
         glColor3f(1.0f,1.0f,1.0f);
         sprintf(gameoverStr,"GAME OVER");
         glRasterPos2f(-3.0f,2.0f);
+        for (unsigned int i = 0; i<strlen(gameoverStr); i++) {
+            glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, gameoverStr[i]);
+        }
+        sprintf(continueStr,"CONTINUE?");
+        glRasterPos2f(-3.0f,-1.0f);
+        for (unsigned int i = 0; i<strlen(continueStr); i++) {
+            glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, continueStr[i]);
+        }
+        sprintf(yesnoStr,"     Y         N");
+        glRasterPos2f(-3.0f,-3.0f);
+        for (unsigned int i = 0; i<strlen(yesnoStr); i++) {
+            glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, yesnoStr[i]);
+        }
+    }
+    if (game->levelcomplete == true) {
+        glColor3f(1.0f,1.0f,1.0f);
+        sprintf(gameoverStr,"LEVEL COMPLETE!");
+        glRasterPos2f(-4.25f,2.0f);
         for (unsigned int i = 0; i<strlen(gameoverStr); i++) {
             glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, gameoverStr[i]);
         }

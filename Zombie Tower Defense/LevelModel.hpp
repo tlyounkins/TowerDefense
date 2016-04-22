@@ -25,7 +25,7 @@ public:
     // Variables
     int id;
     int wave_amount;
-    ZombieModel wave_enemies[10][5];
+    ZombieModel wave_enemies[5000][5000];
     
     
     // Public interface
