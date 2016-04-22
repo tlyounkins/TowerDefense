@@ -46,7 +46,7 @@ public:
     //void get_color()
     //void set_color(color);
     void draw();
-    virtual void step();
+    virtual void step(int map[][40]);
     
     int get_speed();
     void set_speed(int speed);

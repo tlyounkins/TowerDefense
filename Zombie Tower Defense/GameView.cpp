@@ -19,11 +19,17 @@ int castle_starting_health;
 int enemy_max;
 int tower_max = 50;
 int current_towers = 0;
+int current_powerups = -1;
 bool Tower_flag1 = false;
 bool Moat_flag = false;
 bool hit = false;
 ZombieModel current_enemies[100];
 TowerModel active_towers[50];
+PowerUpModel power_ups[300];
+
+// power up booleans
+bool tower_range = false;
+bool tower_speed = false;
 
 char healthStr[32];
 char resourcesStr[32];
@@ -271,6 +277,11 @@ void GameView::display() {
         draw_tower(active_towers[i]);
     }
     
+    // Draw power ups
+    for(int i = 0; i < current_powerups; i++){
+        draw_powerup(power_ups[i]);
+    }
+    
     // Draw shots per tower
     for (int i = 0; i < current_towers; i++) {
         if (active_towers[i].hit){
@@ -324,6 +335,16 @@ void GameView::mousefunc(int button, int state, int x, int y) {
         start_x = x;
         start_y = y;
         printf("Mouse func x, y: %f, %f\n", start_x*dt, start_y*dt);
+        
+        // Check if mouse clicked on powerup
+        for(int i = 0; i < current_powerups; i++){
+            //printf("X: %i Y: %i \n", power_ups[i].x, power_ups[i].y);
+            if((floor(x*dt) == power_ups[i].x) && (floor(y*dt) == power_ups[i].y)){
+                //for testing
+                //printf("Poke\n");
+                apply_powerup(true);
+            }
+        }
     }
     glutPostRedisplay();
 }
@@ -542,7 +563,7 @@ void GameView::draw_tower(TowerModel tower) {
         gluDisk(tower_quadric, 1.4, 1.5, 100, 100);
         // Firing Range
         glColor3f(1.0f, 0.0f, 0.0f);
-        gluDisk(tower_quadric, 4.95, 5.0, 100, 100);
+        gluDisk(tower_quadric, tower.range - 0.05, tower.range, 100, 100);
     glPopMatrix();
 }
 
@@ -632,6 +653,30 @@ void GameView::draw_moat() {
     // TODO: Add 9's to map where moat is
 }
 
+// Draw Power Up
+void GameView::draw_powerup(PowerUpModel powerup){
+    tower_quadric = gluNewQuadric();
+    gluQuadricDrawStyle(tower_quadric, GLU_FILL);
+    gluQuadricNormals(tower_quadric, GLU_SMOOTH);
+    
+    //printf("Drawing at (%i, %i)\n", zombie.x, zombie.y);
+    // Make Random Color
+    float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+    float g = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+    float b = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+    
+    glPushAttrib(GL_CURRENT_BIT);
+    glPushMatrix();
+        glTranslatef(-(powerup.x-20), powerup.y-20, 0.0f);
+        glColor3f(r, g, b);
+        gluDisk(tower_quadric, 0, 0.3, 100, 100);
+        glColor3f(0.0f, 0.0f, 0.0f);
+        gluDisk(tower_quadric, 0.27, 0.3, 100, 100);
+    glPopMatrix();
+    glPopAttrib();
+
+}
+
 // Check area around towers for zombies
 void GameView::check_tower_proximity() {
     for(int i = 0; i < current_towers; i++) {
@@ -670,7 +715,21 @@ void GameView::check_tower_proximity() {
                     // If Zombie Dead, Remove It
                     if(current_enemies[j].health <= 0){
                         
-                        printf("Zombie ded\n");
+                        // Chance to drop power up
+                        srand(time(NULL));
+                        int ran = rand() % 100;
+                        // Drop Power Up
+                        if(ran <= 100){
+                            printf("spawning power up!\n");
+                            current_powerups++;
+                            
+                            // Spawn Power Up where zombie is
+                            PowerUpModel powerup;
+                            powerup.x = current_enemies[j].x;
+                            powerup.y = current_enemies[j].y;
+                            
+                            power_ups[current_powerups] = powerup;
+                        }
                         
                         // Remove Zombie
                         current_enemies[j].visible = false;
@@ -689,5 +748,53 @@ void GameView::check_tower_proximity() {
                 break;
             }
         }
+    }
+}
+
+// Apply power up
+// Effect is random
+// Beneficial if player hits it
+// Detremental if zombie runs into it
+void GameView::apply_powerup(bool user){
+    
+    // Player gets it
+    if(user){
+        srand(time(NULL));
+        int ran = rand() % 100;
+        
+        // Zombies have less health
+        
+        // Zombies move slower
+        
+        // Tower Range increased
+        if(ran <= 50){
+            if(!tower_range){
+                for(int i = 0; i < current_towers; i++){
+                    active_towers[i].range = active_towers[i].range + 5;
+                }
+                tower_range = true;
+            }
+        }
+        // Tower Speed
+        else if(ran >= 50){
+            if(!tower_speed){
+                for(int i = 0; i < current_towers; i++){
+                    active_towers[i].speed = active_towers[i].speed - 5;
+                }
+                tower_speed = true;
+            }
+        }
+        
+        // Tower can shoot multiple times
+    } else{
+        // Zombies have more health
+        
+        // Zombies move faster
+        
+        // Tower range decreased
+        
+        // Tower Cooldown increased
+        
+        // Zombies deal double damage
     }
 }

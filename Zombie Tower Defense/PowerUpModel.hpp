@@ -17,7 +17,8 @@ public:
     ~PowerUpModel();
     
     // Variables
-   
+    int x;
+    int y;
     
     // Public interface (PowerUpModel's functions)
     

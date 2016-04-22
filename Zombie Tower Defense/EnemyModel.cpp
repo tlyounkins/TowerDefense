@@ -48,7 +48,7 @@ void EnemyModel::set_y_location(int y) {
     this->y = y;
 }
 
-void EnemyModel::step(){
+void EnemyModel::step(int map[][40]){
 
 }
 

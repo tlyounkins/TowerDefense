@@ -166,7 +166,7 @@ void ZombieModel::step(int map[][40]){
             }
         }
         //printf("Next_x, Next_y: %i, %i  Map: %i\n", next_x, next_y, map[next_y][next_x]);
-        /**int ran = rand() % 10;
+        //int ran = rand() % 10;
         // Quadrant 0: Top Left
         if((current_x < 20) && (current_y < 20)){
             // Go Right

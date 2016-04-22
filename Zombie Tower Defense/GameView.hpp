@@ -22,6 +22,7 @@
 #include "UpgradesModel.hpp"
 #include "GameController.hpp"
 #include "TowerModel.cpp"
+#include "PowerUpModel.cpp"
 
 
 
@@ -58,6 +59,8 @@ public:
     void static draw_text();
     void static mousefunc(int button, int state, int x, int y);
     void static check_tower_proximity();
+    void static draw_powerup(PowerUpModel powerup);
+    void static apply_powerup(bool user);
     
 
 };
