@@ -91,21 +91,21 @@ void ZombieModel::step(int map[][40]){
                 next_y = current_y;
             }
             // Left Middle
-            if((current_x <= 15) && (current_y <=25)) {
+            else if((current_x <= 15) && (current_y <=25)) {
                 next_x = current_x;
                 next_y = current_y - 1;
             }
             // Right Middle
-            if((current_x >= 25) && (current_y <= 25)){
-                next_x = current_x;
-                next_y = current_y - 1;
+            else if((current_x >= 25) && (current_y <= 25)){
+                    next_x = current_x;
+                    next_y = current_y - 1;
             }
             // Bottom Middle
-            if((current_x <= 20) && (current_y <= 25)){
+            else if((current_x <= 20) && (current_y >= 25)){
                 next_x = current_x + 1;
                 next_y = current_y;
             }
-            if((current_x >= 20) && (current_y <= 25)){
+            else if((current_x >= 20) && (current_y >= 25)){
                 next_x = current_x + 1;
                 next_y = current_y;
             }

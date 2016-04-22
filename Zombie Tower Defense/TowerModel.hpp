@@ -23,6 +23,7 @@ public:
     int game_x;
     int game_y;
     int range;
+    int enemy_position;
     
     // Save hit location
     int enemy_x;
