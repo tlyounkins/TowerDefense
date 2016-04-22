@@ -15,13 +15,14 @@ GameController *game;
 UpgradesModel upgrades;
 GLUquadricObj *tower_quadric;
 
+int castle_starting_health;
 int enemy_max;
 int tower_max = 50;
 int current_towers = 0;
 bool Tower_flag1 = false;
 bool Moat_flag = false;
 bool hit = false;
-ZombieModel current_enemies[10000];
+ZombieModel current_enemies[100];
 TowerModel active_towers[50];
 
 char healthStr[32];
@@ -125,8 +126,10 @@ int GameView::Initialize(int argc, char *argv[]) {
     
     // Create Game Controller
     game = new GameController();
-    
     game->game_setup();
+    castle_starting_health = game->castle.get_castle_health();
+    printf("Initializing castle health to %i\n\n",castle_starting_health);
+    
 #ifndef OSX
     // Initialize GLEW
     glewInit();
@@ -213,7 +216,7 @@ void GameView::idleFunc(){
                 level++;
                 game->game_model.set_level(level);
                 game->startLevel();
-                game->castle.set_castle_health(50);
+                game->castle.set_castle_health(castle_starting_health);
             }
             // Go to next wave instead
             else {
@@ -264,13 +267,13 @@ void GameView::display() {
     draw_castle();
     
     // Draw active towers
-    for(int i = 0; i < current_towers; i++) {
+    for (int i = 0; i < current_towers; i++) {
         draw_tower(active_towers[i]);
     }
     
     // Draw shots per tower
-    for(int i = 0; i < current_towers; i++) {
-        if(active_towers[i].hit){
+    for (int i = 0; i < current_towers; i++) {
+        if (active_towers[i].hit){
             active_towers[i].draw_hit();
         }
     }
@@ -304,6 +307,8 @@ void GameView::keyFunc(unsigned char key, int x, int y)
         delete game;
         game = new GameController;
         game->game_setup();
+        castle_starting_health = game->castle.get_castle_health();
+        printf("Initializing castle health to %i\n\n",castle_starting_health);
         for (int i = 0; i < game->num_enemies; i++) {
             current_enemies[i] = game->game_model.levels.wave_enemies[0][i];
         }
@@ -337,7 +342,7 @@ void GameView::draw_grid() {
         // Draw Vertical Lines
         glPushAttrib(GL_CURRENT_BIT);
         glPushMatrix();
-            if(i == 0) {
+            if (i == 0) {
                 glColor3f(1.0f,0.0f, 0.0f);
             } else {
                 glColor3f(0.0f, 0.0f, 0.0f);
@@ -633,7 +638,7 @@ void GameView::check_tower_proximity() {
         // go through zombies
         
         // Increase timer on towers
-        active_towers[i].cooldown += 1;
+        active_towers[i].cooldown += 2;
         for(int j = 0; j < game->num_enemies; j++){
             
             // Check where zombie is on map
