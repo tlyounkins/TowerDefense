@@ -6,6 +6,7 @@
 #include "GameView.hpp"
 #define SIZE 500
 #define N 3
+#define TOWER_MAX 50
 
 #define add_tower 0
 #define castle_health_increase 1
@@ -17,7 +18,6 @@ GLUquadricObj *tower_quadric;
 
 int castle_starting_health;
 int enemy_max;
-int tower_max = 50;
 int current_towers = 0;
 int current_powerups = -1;
 bool Tower_flag1 = false;
@@ -25,7 +25,7 @@ bool Moat_flag = false;
 bool hit = false;
 bool game_paused = false;
 ZombieModel current_enemies[100];
-TowerModel active_towers[50];
+TowerModel active_towers[TOWER_MAX];
 PowerUpModel power_ups[300];
 
 // power up variable
@@ -418,6 +418,7 @@ void GameView::keyFunc(unsigned char key, int x, int y)
         game->castle.set_castle_health(castle_starting_health);
         game->levelcomplete = false;
         game_paused = !game_paused;
+        current_powerups = -1;
         // Add wave enemies to current enemies
         int wave = 0;
         for (int i = 0; i < game->num_enemies; i++) {
@@ -425,7 +426,7 @@ void GameView::keyFunc(unsigned char key, int x, int y)
         }
     }
     if (game->levelcomplete == true && (key == 'n' || key == 'N')) {
-        game->endgame == true;
+        game->endgame = true;
         exit(0);
     }
     
@@ -518,7 +519,7 @@ void GameView::draw_grid() {
 void GameView::upgrades_menu(int id) {
     int resources = game->game_model.get_num_resources();
     // Tower Selected
-    if ((id == add_tower) && (current_towers <= tower_max)) {
+    if ((id == add_tower) && (current_towers <= TOWER_MAX)) {
         if (resources >= upgrades.tower_cost) {
             // Create new tower
             TowerModel new_tower;
