@@ -28,9 +28,18 @@ ZombieModel current_enemies[100];
 TowerModel active_towers[50];
 PowerUpModel power_ups[300];
 
-// power up booleans
+// power up variable
 bool tower_range = false;
 bool tower_speed = false;
+bool zombie_health = false;
+bool zombie_speed = false;
+bool multi_shot = false;
+
+int tower_range_timer = 20;
+int tower_speed_timer = 20;
+int zombie_health_timer = 20;
+int zombie_speed_timer = 20;
+int multi_shot_timer = 20;
 
 char healthStr[32];
 char resourcesStr[32];
@@ -41,6 +50,11 @@ char gameoverStr[32];
 char levelcompleteStr[32];
 char continueStr[32];
 char yesnoStr[32];
+char towerRangeStr[32];
+char towerSpeedStr[32];
+char zombieHealthStr[32];
+char zombieSpeedStr[32];
+char multiShotStr[32];
 
 GLfloat start_x = 0.0f;
 GLfloat start_y = 0.0f;
@@ -231,6 +245,12 @@ void GameView::idleFunc(){
                 // Add wave enemies to current enemies
                 for (int i = 0; i < game->num_enemies; i++) {
                     current_enemies[i] = game->game_model.levels.wave_enemies[wave][i];
+                    if(zombie_health){
+                        current_enemies[i].health = 1;
+                    }
+                    if(zombie_speed){
+                        current_enemies[i].speed += 2;
+                    }
                 }
             }
             //printf("game_model.get_wave_num() = %i\n",game->game_model.get_wave_num());
@@ -242,6 +262,83 @@ void GameView::idleFunc(){
         check_tower_proximity();
     
         //print_array();
+        
+        // Check powerups, cancel if timer done
+        // Tower Range Buff
+        if(tower_range){
+            if(tower_range_timer != 0){
+                tower_range_timer--;
+            } else{
+                tower_range = false;
+                
+                // Reset tower range
+                for(int i = 0; i < current_towers; i++){
+                    active_towers[i].range = active_towers[i].range - 5;
+                }
+                
+                // Reset timer
+                tower_range_timer = 20;
+            }
+        }
+        // Caffinated Archers Buff
+        if(tower_speed){
+            if(tower_speed_timer != 0){
+                tower_speed_timer--;
+            } else{
+                tower_speed = false;
+                
+                // Reset tower speed
+                for(int i = 0; i < current_towers; i++){
+                    active_towers[i].speed = active_towers[i].speed - 5;
+                }
+                
+                // Reset Timer
+                tower_speed_timer = 20;
+            }
+        }
+        // Zombie Speed Buff
+        if(zombie_speed){
+            if(zombie_speed_timer != 0){
+                zombie_speed_timer--;
+            } else{
+                zombie_speed = false;
+                
+                // Reset Zombie Speed
+                for(int i = 0; i < game->num_enemies; i++){
+                    current_enemies[i].speed -= 2;
+                }
+                
+                // Reset Timer
+                zombie_speed_timer = 20;
+            }
+        }
+        // Zombie Health Buff
+        if(zombie_health){
+            if(zombie_health_timer != 0){
+                zombie_health_timer--;
+            } else{
+                zombie_health = false;
+                
+                // Reset Health
+                for(int i = 0; i < game->num_enemies; i++){
+                    current_enemies[i].health = 4;
+                }
+                
+                // Reset Timer
+                zombie_speed_timer = 20;
+            }
+        }
+        // Multishot
+        if(multi_shot){
+            if(multi_shot_timer != 0){
+                multi_shot_timer--;
+            } else{
+                multi_shot = false;
+                
+                multi_shot_timer = 20;
+            }
+        }
+        
         // Update lasttime (reset time)
         lasttime = current_time;
     }
@@ -469,6 +566,12 @@ void GameView::draw_text() {
     sprintf(levelStr,"Level:  %d",game->game_model.get_level()+1);
     sprintf(waveStr,"Wave:  %d",game->game_model.get_wave_num()+1);
     sprintf(waveStr,"Wave:  %d",game->game_model.get_wave_num()+1);
+    // Powerup Strings
+    sprintf(towerRangeStr,"Tower Range: %d", tower_range_timer);
+    sprintf(towerSpeedStr, "Tower Speed: %d", tower_speed_timer);
+    sprintf(zombieHealthStr, "Zombie HP: %d", zombie_health_timer);
+    sprintf(zombieSpeedStr, "Zombie Slow: %d", zombie_speed_timer);
+    sprintf(multiShotStr, "Multishot: %d", multi_shot_timer);
     glColor3f(1.0f,1.0f,1.0f);
     
     // Set the text to the top left corner
@@ -491,6 +594,39 @@ void GameView::draw_text() {
     glRasterPos2f(15.0f,16.0f);
     for (unsigned int i = 0; i<strlen(waveStr); i++) {
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, waveStr[i]);
+    }
+    
+    // Set Power Up Text to Bottom Left Corner
+    // Positive
+    if(tower_range){
+        glRasterPos2f(-19.0f, -18.0f);
+        for(unsigned int i = 0; i < strlen(towerRangeStr); i++){
+            glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, towerRangeStr[i]);
+        }
+    }
+    if(tower_speed){
+        glRasterPos2f(-11.0f, -18.0f);
+        for(unsigned int i = 0; i < strlen(towerSpeedStr); i++){
+            glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, towerSpeedStr[i]);
+        }
+    }
+    if(zombie_health){
+        glRasterPos2f(-3.0f, -18.0f);
+        for(unsigned int i = 0; i < strlen(zombieHealthStr); i++){
+            glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, zombieHealthStr[i]);
+        }
+    }
+    if(zombie_speed){
+        glRasterPos2f(5.0f, -18.0f);
+        for(unsigned int i = 0; i < strlen(zombieSpeedStr); i++){
+            glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, zombieSpeedStr[i]);
+        }
+    }
+    if(multi_shot){
+        glRasterPos2f(13.0f, -18.0f);
+        for(unsigned int i = 0; i < strlen(multiShotStr); i++){
+            glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, multiShotStr[i]);
+        }
     }
     
     if (game->endgame == true) {
@@ -724,6 +860,9 @@ void GameView::check_tower_proximity() {
         // Get tower location
         // go through zombies
         
+        // For Multishot power up
+        int shot_count = 0;
+        
         // Increase timer on towers
         active_towers[i].cooldown += 2;
         for(int j = 0; j < game->num_enemies; j++){
@@ -736,6 +875,8 @@ void GameView::check_tower_proximity() {
                 
                 // Shoot the zombie if cooldown is up
                 if(active_towers[i].cooldown >= active_towers[i].speed){
+                    
+                    shot_count++;
                     
                     // Mark on map where hit occurs
                     grid_location[current_enemies[j].y][current_enemies[j].x] = 7;
@@ -779,14 +920,27 @@ void GameView::check_tower_proximity() {
                         
                         // Add points
                         game->update_total_points();
-                    }
+                    } 
                     
-                    // Restart cooldownc
-                    active_towers[i].cooldown = 0;
+                    // Restart cooldown if power up not applied
+                    if(!multi_shot) {
+                        active_towers[i].cooldown = 0;
+                    } else{
+                        if(shot_count >= 1){
+                            active_towers[i].cooldown = 0;
+                        }
+                    }
                     glutPostRedisplay();
                 }
-                // Tower can only hit one at a time
-                break;
+                
+                // Tower can only hit one at a time unless poweruped
+                if(!multi_shot){
+                    break;
+                } else{
+                    if(shot_count >= 1){
+                        break;
+                    }
+                }
             }
         }
     }
@@ -804,29 +958,69 @@ void GameView::apply_powerup(bool user){
         int ran = rand() % 100;
         
         // Zombies have less health
-        
+        if(ran <= 20){
+            if(!zombie_health){
+                // Apply to all current enemies
+                for(int i = 0; i < game->num_enemies; i++){
+                    current_enemies[i].health = 1;
+                }
+                zombie_health = true;
+            } else{
+                zombie_health_timer += 20;
+            }
+        }
         // Zombies move slower
+        else if(ran <= 40){
+            if(!zombie_speed){
+                // Apply to all current enemies
+                for(int i = 0; i < game->num_enemies; i++){
+                    current_enemies[i].speed += 2;
+                }
+                zombie_speed = true;
+            } else{
+                zombie_speed_timer += 20;
+            }
+            printf("Zombie Speed Applied!\n");
+        }
         
         // Tower Range increased
-        if(ran <= 50){
+        else if(ran <= 60){
             if(!tower_range){
+                // Apply to all active towers
                 for(int i = 0; i < current_towers; i++){
                     active_towers[i].range = active_towers[i].range + 5;
                 }
                 tower_range = true;
+            } else {
+                // Increase timer instead
+                tower_range_timer += 20;
             }
+            printf("Tower Range Applied!\n");
         }
         // Tower Speed
-        else if(ran >= 50){
+        else if(ran <= 80){
             if(!tower_speed){
+                // Apply to all active towers
                 for(int i = 0; i < current_towers; i++){
                     active_towers[i].speed = active_towers[i].speed - 5;
                 }
                 tower_speed = true;
+            } else {
+                // Increase timer instead
+                tower_range_timer += 20;
             }
+            printf("Tower Speed Applied!\n");
         }
-        
         // Tower can shoot multiple times
+        else if(ran <= 100){
+            if(!multi_shot){
+                multi_shot = true;
+            } else {
+                // Increase timer
+                multi_shot_timer += 20;
+            }
+            printf("Multi-Shot Applied!\n");
+        }
     } else{
         // Zombies have more health
         

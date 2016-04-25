@@ -15,7 +15,7 @@ ZombieModel::ZombieModel() {
     this->path_location = 0;
     this->down=true;
     this->visible = true;
-    this->health = 1;
+    this->health = 4;
 }
 
 // Destructor
@@ -30,8 +30,8 @@ void ZombieModel::step(int map[][40]){
     int current_y = this->y;
     int next_x = 0;
     int next_y = 0;
-    //this->count += 1;
-    //if(count == this->speed){
+    this->count += 1;
+    if(count == this->speed){
         // For testing
         //printf("location: %i, length: %i\n", this->path_location, this->path_length);
         
@@ -316,5 +316,5 @@ void ZombieModel::step(int map[][40]){
         this->x = next_x;
         this->y = next_y;
         this->count = 0;
-    //}
+    }
 }

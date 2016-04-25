@@ -85,7 +85,7 @@ void LevelModel::create_level(int waves, int num_enemies){
             }
             
             ZombieModel zombie;
-            zombie.speed = 5; // Decrease number to increase movement speed
+            zombie.speed = 1; // Decrease number to increase movement speed
             zombie.x = x_pos;
             zombie.y = y_pos;
             //printf("create %i, %i\n", wave_number, wave_position);
