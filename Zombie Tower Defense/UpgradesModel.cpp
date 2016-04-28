@@ -12,6 +12,7 @@ UpgradesModel::UpgradesModel() {
     castle_health_upgrade_cost = 5;
     castle_health_upgrade = 5;
     moat_upgrade_cost = 10;
+    mage_tower_cost = 20;
 }
 
 // Destructor

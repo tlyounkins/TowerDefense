@@ -11,6 +11,7 @@
 #define add_tower 0
 #define castle_health_increase 1
 #define add_moat 2
+#define add_mage_tower 3
 
 GameController *game;
 UpgradesModel upgrades;
@@ -19,6 +20,7 @@ GLUquadricObj *tower_quadric;
 int castle_starting_health;
 int enemy_max;
 int current_towers = 0;
+int current_mage_towers = 0;
 int current_powerups = -1;
 bool Tower_flag1 = false;
 bool Moat_flag = false;
@@ -26,6 +28,8 @@ bool hit = false;
 bool game_paused = false;
 ZombieModel current_enemies[100];
 TowerModel active_towers[TOWER_MAX];
+TowerModel active_mage_towers[TOWER_MAX];
+
 PowerUpModel power_ups[300];
 
 // power up variable
@@ -66,7 +70,7 @@ int end_hit_x = 0.0;
 int end_hit_y = 0.0;
 
 // Global animation variables
-GLint fps = 20; // Increase to increase movement speed
+GLint fps = 10; // Increase to increase movement speed
 GLint current_time;
 GLint lasttime;
 
@@ -176,6 +180,8 @@ int GameView::Initialize(int argc, char *argv[]) {
     glutAddMenuEntry("Add Tower: 500 resources",add_tower);
     glutAddMenuEntry("Increase Castle Health by 5: 500 resources",castle_health_increase);
     glutAddMenuEntry("Add Moat: 1000 resources",add_moat);
+    glutAddMenuEntry("Add Mage Tower: 2000 resources",add_mage_tower);
+    
     glutAttachMenu(GLUT_RIGHT_BUTTON);
     
     // Begin event loop
@@ -260,6 +266,7 @@ void GameView::idleFunc(){
         
         // Pew Pew
         check_tower_proximity();
+        check_mage_tower_proximity();
     
         //print_array();
         
@@ -276,6 +283,10 @@ void GameView::idleFunc(){
                     active_towers[i].range = active_towers[i].range - 5;
                 }
                 
+                // Reset mage tower range
+                for(int i = 0; i < current_towers; i++){
+                    active_mage_towers[i].range = active_mage_towers[i].range - 5;
+                }
                 // Reset timer
                 tower_range_timer = 20;
             }
@@ -291,6 +302,12 @@ void GameView::idleFunc(){
                 for(int i = 0; i < current_towers; i++){
                     active_towers[i].speed = active_towers[i].speed - 5;
                 }
+                
+                // Reset mage tower speed
+                for(int i = 0; i < current_mage_towers; i++){
+                    active_mage_towers[i].speed = active_mage_towers[i].speed - 5;
+                }
+
                 
                 // Reset Timer
                 tower_speed_timer = 20;
@@ -375,6 +392,11 @@ void GameView::display() {
         draw_tower(active_towers[i]);
     }
     
+    // Draw active mage towers
+    for (int i = 0; i < current_mage_towers; i++) {
+        draw_mage_tower(active_mage_towers[i]);
+    }
+    
     // Draw power ups
     for(int i = 0; i < current_powerups; i++){
         draw_powerup(power_ups[i]);
@@ -384,6 +406,14 @@ void GameView::display() {
     for (int i = 0; i < current_towers; i++) {
         if (active_towers[i].hit){
             active_towers[i].draw_hit();
+            
+        }
+    }
+    
+    // Draw shots per mage tower
+    for (int i = 0; i < current_mage_towers; i++) {
+        if (active_mage_towers[i].hit){
+            active_mage_towers[i].draw_hit();
             
         }
     }
@@ -464,6 +494,8 @@ void GameView::mousefunc(int button, int state, int x, int y) {
                 //for testing
                 //printf("Poke\n");
                 apply_powerup(true);
+                //power_ups[i].x = 0;
+                //power_ups[i].y = 0;
             }
         }
     }
@@ -536,8 +568,29 @@ void GameView::upgrades_menu(int id) {
             resources = resources - upgrades.tower_cost;
             game->game_model.set_num_resources(resources);
         }
-    // Health increased
-    } else if (id == castle_health_increase) {
+    // Mage Tower
+    } else if((id == add_mage_tower) && (current_mage_towers <= TOWER_MAX)){
+        if(resources >= upgrades.mage_tower_cost){
+            //creates new mage tower
+            TowerModel new_mage_tower;
+            printf("Mage Tower x y: %f, %f\n", start_x*dt, start_y*dt);
+            new_mage_tower.x = start_x*dt;
+            new_mage_tower.y = start_y*dt;
+            new_mage_tower.range = 3;
+            new_mage_tower.cooldown = 5;
+            //adds mage tower to active tower array
+            active_mage_towers[current_mage_towers] = new_mage_tower;
+            // increment current number of towers
+            current_mage_towers++;
+            grid_location[new_mage_tower.y][new_mage_tower.x] = 8;
+            
+            // decrease resources
+            resources = resources - upgrades.mage_tower_cost;
+            game->game_model.set_num_resources(resources);
+        }
+        
+     // Health increased
+    }else if (id == castle_health_increase) {
         if (resources >= upgrades.castle_health_upgrade_cost) {
             int health = game->castle.get_castle_health();
             health = health + upgrades.castle_health_upgrade;
@@ -739,12 +792,34 @@ void GameView::draw_tower(TowerModel tower) {
         gluDisk(tower_quadric, 0, 1.5, 100, 100);
         glColor3f(0.0f, 0.0f, 0.0f);
         gluDisk(tower_quadric, 1.4, 1.5, 100, 100);
-        // Firing Range
+        //Firing Range
         glColor3f(1.0f, 0.0f, 0.0f);
         gluDisk(tower_quadric, tower.range - 0.05, tower.range, 100, 100);
     glPopMatrix();
+    glPopAttrib();
 }
 
+//Draw mage tower
+void GameView::draw_mage_tower(TowerModel mage_tower){
+    tower_quadric = gluNewQuadric();
+    gluQuadricDrawStyle(tower_quadric, GLU_FILL);
+    gluQuadricNormals(tower_quadric, GLU_SMOOTH);
+
+    glPushAttrib(GL_CURRENT_BIT);
+    glPushMatrix();
+        //glTranslatef(4, -4, 0.0f);
+        glTranslatef(-(mage_tower.x-20),mage_tower.y-20, 0.0f);
+        glColor3f(0.2f, 0.2f, 0.2f);
+        //glScalef(0.03, 0.03, 1);
+        gluDisk(tower_quadric, 0, 1.5, 100, 100);
+        glColor3f(0.0f, 0.0f, 0.0f);
+        gluDisk(tower_quadric, 1.4, 1.5, 100, 100);
+        //Firing Range
+        glColor3f(1.0f, 0.0f, 1.0f);
+        gluDisk(tower_quadric, mage_tower.range - 0.05, mage_tower.range, 100, 100);
+    glPopMatrix();
+    glPopAttrib();
+}
 // Start Wave
 void GameView::draw_wave(int wave_num, int level) {
     printf("Wave %i starting\n", wave_num);
@@ -929,6 +1004,83 @@ void GameView::check_tower_proximity() {
                     } else{
                         if(shot_count >= 1){
                             active_towers[i].cooldown = 0;
+                        }
+                    }
+                    glutPostRedisplay();
+                }
+                
+                // Tower can only hit one at a time unless poweruped
+                if(!multi_shot){
+                    break;
+                } else{
+                    if(shot_count >= 1){
+                        break;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Check area around towers for zombies
+void GameView::check_mage_tower_proximity() {
+    for(int i = 0; i < current_towers; i++) {
+        // Get tower location
+        // go through zombies
+        
+        // For Multishot power up
+        int shot_count = 0;
+        
+        // Increase timer on towers
+        active_towers[i].cooldown += 2;
+        for(int j = 0; j < game->num_enemies; j++){
+            
+            // Check where zombie is on map
+            if((abs(current_enemies[j].x - active_mage_towers[i].x) <= active_mage_towers[i].range) && (abs(current_enemies[j].y - active_mage_towers[i].y) <= active_mage_towers[i].range)){
+                // For Testing
+                //printf("Zombie in range! Zombie: %i, %i Tower: %i, %i\n", current_enemies[j].x, current_enemies[j].y, active_towers[i].x, active_towers[i].y);
+                //print_array();
+                
+                // Shoot the zombie if cooldown is up
+                if(active_mage_towers[i].cooldown >= active_mage_towers[i].speed){
+                    
+                    shot_count++;
+                    
+                    // Mark on map where hit occurs
+                    grid_location[current_enemies[j].y][current_enemies[j].x] = 7;
+                    
+                    // Mark hit location
+                    if(!active_mage_towers[i].hit){
+                        active_mage_towers[i].enemy_x = current_enemies[j].x;
+                        active_mage_towers[i].enemy_y = current_enemies[j].y;
+                        active_mage_towers[i].enemy_position = j;
+                        active_mage_towers[i].hit = true;
+                    }
+                    
+                    // Decrement Zombie Health
+                    if(current_enemies[j].health > 0){
+                        current_enemies[j].health = current_enemies[j].health - 1;
+                        
+                    }
+                    // If Zombie Dead, Remove It
+                    if(current_enemies[j].health <= 0){
+                        
+
+                        // Remove Zombie
+                        current_enemies[j].visible = false;
+                        current_enemies[j].x = 0;
+                        current_enemies[j].y = 0;
+                        
+                        // Add points
+                        game->update_total_points();
+                    }
+                    
+                    // Restart cooldown if power up not applied
+                    if(!multi_shot) {
+                        active_mage_towers[i].cooldown = 0;
+                    } else{
+                        if(shot_count >= 1){
+                            active_mage_towers[i].cooldown = 0;
                         }
                     }
                     glutPostRedisplay();

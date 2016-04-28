@@ -22,6 +22,7 @@ public:
     int castle_health_upgrade_cost;
     int castle_health_upgrade;
     int moat_upgrade_cost;
+    int mage_tower_cost;
     // Public interface
     
 };
