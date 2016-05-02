@@ -1024,7 +1024,7 @@ void GameView::check_tower_proximity() {
 
 // Check area around towers for zombies
 void GameView::check_mage_tower_proximity() {
-    for(int i = 0; i < current_towers; i++) {
+    for(int i = 0; i < current_mage_towers; i++) {
         // Get tower location
         // go through zombies
         
@@ -1032,7 +1032,7 @@ void GameView::check_mage_tower_proximity() {
         int shot_count = 0;
         
         // Increase timer on towers
-        active_towers[i].cooldown += 2;
+        active_mage_towers[i].cooldown += 2;
         for(int j = 0; j < game->num_enemies; j++){
             
             // Check where zombie is on map
@@ -1065,6 +1065,22 @@ void GameView::check_mage_tower_proximity() {
                     // If Zombie Dead, Remove It
                     if(current_enemies[j].health <= 0){
                         
+                        // Chance to drop power up
+                        srand(time(NULL));
+                        int ran = rand() % 100;
+                        // Drop Power Up
+                        if(ran <= 100){
+                            printf("spawning power up!\n");
+                            current_powerups++;
+                            
+                            // Spawn Power Up where zombie is
+                            PowerUpModel powerup;
+                            powerup.x = current_enemies[j].x;
+                            powerup.y = current_enemies[j].y;
+                            
+                            power_ups[current_powerups] = powerup;
+                        }
+
 
                         // Remove Zombie
                         current_enemies[j].visible = false;
@@ -1117,7 +1133,7 @@ void GameView::apply_powerup(bool user){
                 for(int i = 0; i < game->num_enemies; i++){
                     current_enemies[i].health = 1;
                 }
-                zombie_health = true;
+                                zombie_health = true;
             } else{
                 zombie_health_timer += 20;
             }
@@ -1143,6 +1159,9 @@ void GameView::apply_powerup(bool user){
                 for(int i = 0; i < current_towers; i++){
                     active_towers[i].range = active_towers[i].range + 5;
                 }
+                for(int j = 0; j < current_mage_towers; j++){
+                    active_mage_towers[j].range = active_mage_towers[j].range + 5;
+                }
                 tower_range = true;
             } else {
                 // Increase timer instead
@@ -1156,6 +1175,9 @@ void GameView::apply_powerup(bool user){
                 // Apply to all active towers
                 for(int i = 0; i < current_towers; i++){
                     active_towers[i].speed = active_towers[i].speed - 5;
+                }
+                for(int j = 0; j < current_mage_towers; j++){
+                    active_mage_towers[j].speed = active_mage_towers[j].speed - 5;
                 }
                 tower_speed = true;
             } else {
