@@ -31,7 +31,7 @@ void ZombieModel::step(int map[][40]){
     int next_x = 0;
     int next_y = 0;
     this->count += 1;
-    if(count == this->speed){
+    if(count >= this->speed){
         // For testing
         //printf("location: %i, length: %i\n", this->path_location, this->path_length);
         

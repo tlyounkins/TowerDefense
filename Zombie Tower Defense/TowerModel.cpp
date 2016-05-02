@@ -12,7 +12,7 @@
 TowerModel::TowerModel() {
     range = 5;
     speed = 0;
-    cooldown = 0;
+    cooldown = 1;
     hit = false;
 }
 
