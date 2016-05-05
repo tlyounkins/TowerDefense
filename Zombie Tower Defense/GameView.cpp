@@ -599,7 +599,7 @@ void GameView::mousefunc(int button, int state, int x, int y) {
     if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
         start_x = x;
         start_y = y;
-        printf("Mouse func x, y: %f, %f\n", start_x*dt, start_y*dt);
+        //printf("Mouse func x, y: %f, %f\n", start_x*dt, start_y*dt);
         
         // Check if mouse clicked on powerup
         for(int i = 0; i < current_powerups; i++){
@@ -669,7 +669,7 @@ void GameView::upgrades_menu(int id) {
         if (resources >= upgrades.tower_cost) {
             // Create new tower
             TowerModel new_tower;
-            printf("Tower x y: %f, %f\n", start_x*dt, start_y*dt);
+            //printf("Tower x y: %f, %f\n", start_x*dt, start_y*dt);
             new_tower.x = start_x*dt;
             new_tower.y = start_y*dt;
             // Add new tower to array
@@ -687,7 +687,7 @@ void GameView::upgrades_menu(int id) {
         if(resources >= upgrades.mage_tower_cost){
             //creates new mage tower
             TowerModel new_mage_tower;
-            printf("Mage Tower x y: %f, %f\n", start_x*dt, start_y*dt);
+            //printf("Mage Tower x y: %f, %f\n", start_x*dt, start_y*dt);
             new_mage_tower.x = start_x*dt;
             new_mage_tower.y = start_y*dt;
             new_mage_tower.range = 3;
@@ -976,7 +976,7 @@ void GameView::draw_mage_tower(TowerModel mage_tower){
 }
 // Start Wave
 void GameView::draw_wave(int wave_num, int level) {
-    printf("Wave %i starting\n", wave_num);
+    //printf("Wave %i starting\n", wave_num);
     for(int i = 0; i < game->num_enemies; i++) {
         draw_zombie(game->game_model.levels.wave_enemies[wave_num][i]);
     }
@@ -1350,7 +1350,7 @@ void GameView::apply_powerup(bool user){
             //printf("Multi-Shot Applied!\n");
         }
     } else{
-        printf("Zombie got it!\n");
+        //printf("Zombie got it!\n");
         int ran = rand()%100;
         
         // Zombies have more health
@@ -1364,7 +1364,7 @@ void GameView::apply_powerup(bool user){
             } else{
                 neg_zombie_health_timer += 20;
             }
-            printf("Neg Zombie Health Applied!\n");
+            //printf("Neg Zombie Health Applied!\n");
         }
         // Zombies move faster
         else if(ran <= 40){
@@ -1377,7 +1377,7 @@ void GameView::apply_powerup(bool user){
             } else{
                 neg_zombie_speed_timer += 20;
             }
-            printf("Neg Zombie Speed Applied!\n");
+            //printf("Neg Zombie Speed Applied!\n");
         }
         // Tower range decreased
         else if(ran <= 60){
@@ -1394,7 +1394,7 @@ void GameView::apply_powerup(bool user){
                 // Increase timer instead
                 neg_tower_range_timer += 20;
             }
-            printf("Neg Tower Range Applied!\n");
+            //printf("Neg Tower Range Applied!\n");
         }
         // Tower Cooldown increased
         else if(ran <= 80){
@@ -1411,7 +1411,7 @@ void GameView::apply_powerup(bool user){
                 // Increase timer instead
                 neg_tower_range_timer += 20;
             }
-            printf("Neg Tower Speed Applied!\n");
+           // printf("Neg Tower Speed Applied!\n");
         }
         // Zombies deal double damage
         else{
