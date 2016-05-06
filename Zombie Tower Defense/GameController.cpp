@@ -47,7 +47,7 @@ void GameController::startLevel() {
     game_model.create_levels(num_enemies);
     printf("Level: %i, Number of enemies: %i\n", level+1, num_enemies);
     // Update starting resources for level
-    game_model.set_num_resources((level + 1) * 500);
+    game_model.set_num_resources((level + 1) * 40);
 }
 
 // End level

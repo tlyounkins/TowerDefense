@@ -12,7 +12,7 @@ GameModel::GameModel() :levels()
     total_points = 0;
     wave_num = 0;
     current_level = 0;
-    num_resources = 500;
+    num_resources = 40;
     
 }
 

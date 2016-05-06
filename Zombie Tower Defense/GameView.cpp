@@ -197,10 +197,10 @@ int GameView::Initialize(int argc, char *argv[]) {
     
     // Create upgrades men
     glutCreateMenu(upgrades_menu);
-    glutAddMenuEntry("Add Tower: 500 resources",add_tower);
-    glutAddMenuEntry("Increase Castle Health by 5: 500 resources",castle_health_increase);
-    glutAddMenuEntry("Add Moat: 1000 resources",add_moat);
-    glutAddMenuEntry("Add Mage Tower: 2000 resources",add_mage_tower);
+    glutAddMenuEntry("Add Tower: 20 resources",add_tower);
+    glutAddMenuEntry("Increase Castle Health by 5: 20 resources",castle_health_increase);
+    glutAddMenuEntry("Add Moat: 35 resources",add_moat);
+    glutAddMenuEntry("Add Mage Tower: 50 resources",add_mage_tower);
     
     glutAttachMenu(GLUT_RIGHT_BUTTON);
     
