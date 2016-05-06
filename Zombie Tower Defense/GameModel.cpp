@@ -22,7 +22,7 @@ GameModel::~GameModel() {
 }
 
 void GameModel::create_levels(int num_enemies){
-    levels.create_level(3,num_enemies);
+    levels.create_level(10,num_enemies);
 }
 
 

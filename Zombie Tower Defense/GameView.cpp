@@ -21,7 +21,7 @@ int castle_starting_health;
 int enemy_max;
 int current_towers = 0;
 int current_mage_towers = 0;
-int current_powerups = -1;
+int current_powerups = 0;
 bool Tower_flag1 = false;
 bool Moat_flag = false;
 bool hit = false;
@@ -268,7 +268,7 @@ void GameView::idleFunc(){
             
             int wave = game->game_model.get_wave_num();
             // Increase level if last wave
-            if (wave == 2) {
+            if (wave == 9) {
                 game_paused = !game_paused;
                 game->levelcomplete = true;
                 
@@ -562,7 +562,7 @@ void GameView::keyFunc(unsigned char key, int x, int y)
         game->castle.set_castle_health(castle_starting_health);
         game->levelcomplete = false;
         game_paused = !game_paused;
-        current_powerups = -1;
+        current_powerups = 0;
         // Add wave enemies to current enemies
         int wave = 0;
         for (int i = 0; i < game->num_enemies; i++) {
@@ -740,10 +740,10 @@ void GameView::draw_text() {
     sprintf(zombieHealthStr, "Zombie HP: %d", zombie_health_timer);
     sprintf(zombieSpeedStr, "Zombie Slow: %d", zombie_speed_timer);
     sprintf(multiShotStr, "Multishot: %d", multi_shot_timer);
-    sprintf(towerRangeStr,"Tower Range: %d", neg_tower_range_timer);
-    sprintf(towerSpeedStr, "Tower Speed: %d", neg_tower_speed_timer);
-    sprintf(zombieHealthStr, "Zombie HP: %d", neg_zombie_health_timer);
-    sprintf(zombieSpeedStr, "Zombie Slow: %d", neg_zombie_speed_timer);
+    sprintf(negTowerRangeStr,"Tower Range: %d", neg_tower_range_timer);
+    sprintf(negTowerSpeedStr, "Tower Speed: %d", neg_tower_speed_timer);
+    sprintf(negZombieHealthStr, "Zombie HP: %d", neg_zombie_health_timer);
+    sprintf(negZombieSpeedStr, "Zombie Slow: %d", neg_zombie_speed_timer);
     sprintf(doubleCastleStr, "Double Damage: %d", double_castle_timer);
     glColor3f(1.0f,1.0f,1.0f);
     
@@ -804,25 +804,25 @@ void GameView::draw_text() {
     // Negative
     glColor3f(1.0f, 0.0f, 0.0f);
     if(neg_tower_range){
-        glRasterPos2f(-19.0f, 0.0f);
+        glRasterPos2f(-19.0f, -19.0f);
         for(unsigned int i = 0; i < strlen(negTowerRangeStr); i++){
             glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, negTowerRangeStr[i]);
         }
     }
     if(neg_tower_speed){
-        glRasterPos2f(-11.0f, 0.0f);
+        glRasterPos2f(-11.0f, -19.0f);
         for(unsigned int i = 0; i < strlen(negTowerSpeedStr); i++){
             glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, negTowerSpeedStr[i]);
         }
     }
     if(neg_zombie_health){
-        glRasterPos2f(-3.0f, 0.0f);
+        glRasterPos2f(-3.0f, -19.0f);
         for(unsigned int i = 0; i < strlen(negZombieHealthStr); i++){
             glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, negZombieHealthStr[i]);
         }
     }
     if(neg_zombie_speed){
-        glRasterPos2f(5.0f, 0.0f);
+        glRasterPos2f(5.0f, -19.0f);
         for(unsigned int i = 0; i < strlen(negZombieSpeedStr); i++){
             glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, negZombieSpeedStr[i]);
         }
@@ -1133,7 +1133,6 @@ void GameView::check_tower_proximity() {
                         // Drop Power Up
                         if(ran <= 100){
                             //printf("spawning power up!\n");
-                            current_powerups++;
                             
                             // Spawn Power Up where zombie is
                             PowerUpModel powerup;
@@ -1141,6 +1140,8 @@ void GameView::check_tower_proximity() {
                             powerup.y = current_enemies[j].y;
                             
                             power_ups[current_powerups] = powerup;
+                            
+                            current_powerups++;
                         }
                         
                         // Remove Zombie
@@ -1224,8 +1225,6 @@ void GameView::check_mage_tower_proximity() {
                         int ran = rand() % 100;
                         // Drop Power Up
                         if(ran <= 100){
-                            //printf("spawning power up!\n");
-                            current_powerups++;
                             
                             // Spawn Power Up where zombie is
                             PowerUpModel powerup;
@@ -1233,6 +1232,9 @@ void GameView::check_mage_tower_proximity() {
                             powerup.y = current_enemies[j].y;
                             
                             power_ups[current_powerups] = powerup;
+                            
+                            //printf("spawning power up!\n");
+                            current_powerups++;
                         }
 
 
