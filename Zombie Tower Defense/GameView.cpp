@@ -197,10 +197,10 @@ int GameView::Initialize(int argc, char *argv[]) {
     
     // Create upgrades men
     glutCreateMenu(upgrades_menu);
-    glutAddMenuEntry("Add Tower: 500 resources",add_tower);
-    glutAddMenuEntry("Increase Castle Health by 5: 500 resources",castle_health_increase);
-    glutAddMenuEntry("Add Moat: 1000 resources",add_moat);
-    glutAddMenuEntry("Add Mage Tower: 2000 resources",add_mage_tower);
+    glutAddMenuEntry("Add Tower: 20 resources",add_tower);
+    glutAddMenuEntry("Increase Castle Health by 5: 20 resources",castle_health_increase);
+    glutAddMenuEntry("Add Moat: 35 resources",add_moat);
+    glutAddMenuEntry("Add Mage Tower: 50 resources",add_mage_tower);
     
     glutAttachMenu(GLUT_RIGHT_BUTTON);
     
@@ -603,7 +603,7 @@ void GameView::mousefunc(int button, int state, int x, int y) {
     if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
         start_x = x;
         start_y = y;
-        printf("Mouse func x, y: %f, %f\n", start_x*dt, start_y*dt);
+        //printf("Mouse func x, y: %f, %f\n", start_x*dt, start_y*dt);
         
         // Check if mouse clicked on powerup
         for(int i = 0; i < current_powerups; i++){
@@ -678,7 +678,7 @@ void GameView::upgrades_menu(int id) {
         if (resources >= upgrades.tower_cost) {
             // Create new tower
             TowerModel new_tower;
-            printf("Tower x y: %f, %f\n", start_x*dt, start_y*dt);
+            //printf("Tower x y: %f, %f\n", start_x*dt, start_y*dt);
             new_tower.x = start_x*dt;
             new_tower.y = start_y*dt;
             // Add new tower to array
@@ -696,7 +696,7 @@ void GameView::upgrades_menu(int id) {
         if(resources >= upgrades.mage_tower_cost){
             //creates new mage tower
             TowerModel new_mage_tower;
-            printf("Mage Tower x y: %f, %f\n", start_x*dt, start_y*dt);
+            //printf("Mage Tower x y: %f, %f\n", start_x*dt, start_y*dt);
             new_mage_tower.x = start_x*dt;
             new_mage_tower.y = start_y*dt;
             new_mage_tower.range = 3;
@@ -984,7 +984,7 @@ void GameView::draw_mage_tower(TowerModel mage_tower){
 }
 // Start Wave
 void GameView::draw_wave(int wave_num, int level) {
-    printf("Wave %i starting\n", wave_num);
+    //printf("Wave %i starting\n", wave_num);
     for(int i = 0; i < game->num_enemies; i++) {
         draw_zombie(game->game_model.levels.wave_enemies[wave_num][i]);
     }
