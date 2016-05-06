@@ -271,6 +271,10 @@ void GameView::idleFunc(){
             if (wave == 9) {
                 game_paused = !game_paused;
                 game->levelcomplete = true;
+                // Loop back around
+                if(game->game_model.current_level == 9){
+                    game->game_model.current_level = -1;
+                }
                 
             }
             // Go to next wave instead
@@ -393,12 +397,12 @@ void GameView::idleFunc(){
                 
                 // Reset tower range
                 for(int i = 0; i < current_towers; i++){
-                    active_towers[i].range = active_towers[i].range + 2;
+                    active_towers[i].range += 2;
                 }
                 
                 // Reset mage tower range
                 for(int i = 0; i < current_towers; i++){
-                    active_mage_towers[i].range = active_mage_towers[i].range + 1;
+                    active_mage_towers[i].range += 1;
                 }
                 
                 neg_tower_range_timer = 20;
@@ -413,12 +417,12 @@ void GameView::idleFunc(){
                 
                 // Reset tower speed
                 for(int i = 0; i < current_towers; i++){
-                    active_towers[i].speed = active_towers[i].speed + 5;
+                    active_towers[i].speed += 5;
                 }
                 
                 // Reset mage tower speed
                 for(int i = 0; i < current_mage_towers; i++){
-                    active_mage_towers[i].speed = active_mage_towers[i].speed + 5;
+                    active_mage_towers[i].speed += 5;
                 }
                 
                 
@@ -612,6 +616,11 @@ void GameView::mousefunc(int button, int state, int x, int y) {
                 power_ups[i].y = 100;
             }
         }
+    }
+    if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN){
+        start_x = x;
+        start_y = y;
+        printf("Mouse func x, y: %f, %f\n", start_x*dt, start_y*dt);
     }
     glutPostRedisplay();
 }
@@ -900,8 +909,7 @@ void GameView::draw_castle() {
     glPushAttrib(GL_CURRENT_BIT);
     glPushMatrix();
         glColor3f(0.5f, 0.5f, 0.5f);
-        glBegin(GL_POLYGON);
-            // Counter-ClockWise around origin
+        glBegin(GL_POLYGON);            // Counter-ClockWise around origin
             // Top Left
             glVertex3f(-5.0f, 5.0f, 0.0f);
             glVertex3f(-5.0f, -5.0f, 0.0f);
@@ -1352,7 +1360,7 @@ void GameView::apply_powerup(bool user){
             //printf("Multi-Shot Applied!\n");
         }
     } else{
-        printf("Zombie got it!\n");
+        //printf("Zombie got it!\n");
         int ran = rand()%100;
         
         // Zombies have more health
@@ -1366,7 +1374,7 @@ void GameView::apply_powerup(bool user){
             } else{
                 neg_zombie_health_timer += 20;
             }
-            printf("Neg Zombie Health Applied!\n");
+            //printf("Neg Zombie Health Applied!\n");
         }
         // Zombies move faster
         else if(ran <= 40){
@@ -1379,7 +1387,7 @@ void GameView::apply_powerup(bool user){
             } else{
                 neg_zombie_speed_timer += 20;
             }
-            printf("Neg Zombie Speed Applied!\n");
+            //printf("Neg Zombie Speed Applied!\n");
         }
         // Tower range decreased
         else if(ran <= 60){
@@ -1396,7 +1404,7 @@ void GameView::apply_powerup(bool user){
                 // Increase timer instead
                 neg_tower_range_timer += 20;
             }
-            printf("Neg Tower Range Applied!\n");
+            //printf("Neg Tower Range Applied!\n");
         }
         // Tower Cooldown increased
         else if(ran <= 80){
@@ -1413,7 +1421,7 @@ void GameView::apply_powerup(bool user){
                 // Increase timer instead
                 neg_tower_range_timer += 20;
             }
-            printf("Neg Tower Speed Applied!\n");
+            //printf("Neg Tower Speed Applied!\n");
         }
         // Zombies deal double damage
         else{
