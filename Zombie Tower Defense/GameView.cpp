@@ -1139,7 +1139,7 @@ void GameView::check_tower_proximity() {
                         srand(time(NULL));
                         int ran = rand() % 100;
                         // Drop Power Up
-                        if(ran <= 100){
+                        if(ran <= 30){
                             //printf("spawning power up!\n");
                             
                             // Spawn Power Up where zombie is
@@ -1159,6 +1159,9 @@ void GameView::check_tower_proximity() {
                         
                         // Add points
                         game->update_total_points();
+                        
+                        // Add resoures
+                        game->game_model.num_resources += 1;
                     } 
                     
                     // Restart cooldown if power up not applied
@@ -1173,13 +1176,13 @@ void GameView::check_tower_proximity() {
                 }
                 
                 // Tower can only hit one at a time unless poweruped
-                if(!multi_shot){
+                //if(!multi_shot){
                     break;
-                } else{
-                    if(shot_count >= 1){
+                //} else{
+                  //  if(shot_count >= 1){
                         break;
-                    }
-                }
+                 //   }
+               // }
             }
         }
     }
@@ -1232,7 +1235,7 @@ void GameView::check_mage_tower_proximity() {
                         srand(time(NULL));
                         int ran = rand() % 100;
                         // Drop Power Up
-                        if(ran <= 100){
+                        if(ran <= 30){
                             
                             // Spawn Power Up where zombie is
                             PowerUpModel powerup;
@@ -1253,6 +1256,8 @@ void GameView::check_mage_tower_proximity() {
                         
                         // Add points
                         game->update_total_points();
+                        game->game_model.num_resources += 1;
+
                     }
                     
                     // Restart cooldown if power up not applied
